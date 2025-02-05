@@ -9,7 +9,8 @@
       "NODE_VERSION": "20",
       "NEXT_TELEMETRY_DISABLED": "1",
       "DATABASE_URL": "@supabase_postgres_prisma_url",
-      "DIRECT_DATABASE_URL": "@supabase_postgres_url_non_pooling"
+      "DIRECT_DATABASE_URL": "@supabase_postgres_url_non_pooling",
+      "CACHE_BUST": "1"
     }
   },
   "git": {
