@@ -8,8 +8,8 @@
     "env": {
       "NODE_VERSION": "20",
       "NEXT_TELEMETRY_DISABLED": "1",
-      "DATABASE_URL": "postgresql://postgres.oidodmfqcwlrobbeppcz:r#JvsEN@92A89J9@aws-0-us-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true",
-      "DIRECT_DATABASE_URL": "postgresql://postgres.oidodmfqcwlrobbeppcz:r#JvsEN@92A89J9@aws-0-us-east-1.pooler.supabase.com:5432/postgres"
+      "DATABASE_URL": "postgresql://postgres.oidodmfqcwlrobbeppcz:r%23JvsEN%4092A89J9@aws-0-us-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true",
+      "DIRECT_DATABASE_URL": "postgresql://postgres.oidodmfqcwlrobbeppcz:r%23JvsEN%4092A89J9@aws-0-us-east-1.pooler.supabase.com:5432/postgres"
     }
   },
   "git": {
