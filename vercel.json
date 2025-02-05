@@ -1,14 +1,6 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next"
-    }
-  ],
-  "scripts": {
-    "build": "prisma generate && prisma db push --accept-data-loss && next build"
-  },
+  "buildCommand": "prisma generate && prisma db push --accept-data-loss && next build",
   "installCommand": "npm install",
   "framework": "nextjs",
   "build": {
