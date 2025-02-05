@@ -1,0 +1,401 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
+  schemas   = ["public"]
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String?
+  email         String         @unique
+  password      String?
+  image         String?
+  emailVerified DateTime?
+  isAdmin       Boolean        @default(false)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  isBanned      Boolean        @default(false)
+  bio           String?
+  location      String?
+  preferences   Json?          @default("{}")
+  website       String?
+  activities    ActivityLog[]
+  collections   Collection[]
+  comments      Comment[]
+  developer     Developer?
+  downloads     Download[]
+  favorites     Favorite[]
+  notifications Notification[]
+  ratings       Rating[]
+
+  @@schema("public")
+}
+
+model Developer {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  companyName String?
+  verified    Boolean  @default(false)
+  apps        App[]
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  iconName    String?
+  parentId    String?
+  parent      Category? @relation("CategoryToCategory", fields: [parentId], references: [id], onDelete: SetNull)
+  children    Category[] @relation("CategoryToCategory")
+  apps        App[]     @relation("CategoryToApp")
+  subApps     App[]     @relation("SubcategoryToApp")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  macUpdateId String?   @unique
+  
+  @@unique([name, parentId])
+  @@schema("public")
+}
+
+model App {
+  id                String          @id @default(cuid())
+  name              String
+  description       String
+  icon              String?
+  website           String?
+  categoryId        String
+  subcategoryId     String?
+  tags              String[]
+  published         Boolean         @default(false)
+  developerId       String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  screenshots       String[]
+  fullContent       String?
+  shortDescription  String?
+  bundleIds         String[]
+  downloadCount     Int?
+  downloadUrl       String?
+  isBeta            Boolean         @default(false)
+  isSupported       Boolean         @default(true)
+  lastScanDate      DateTime?
+  license           String?
+  price             String?
+  purchaseUrl       String?
+  releaseDate       DateTime?
+  vendor            String?
+  vendorId          String?
+  fileSize          BigInt?
+  originalCategory  String?
+  otherRequirements String?
+  requirements      String?
+  version           String?
+  category          Category        @relation("CategoryToApp", fields: [categoryId], references: [id])
+  subcategory       Category?       @relation("SubcategoryToApp", fields: [subcategoryId], references: [id])
+  developer         Developer       @relation(fields: [developerId], references: [id], onDelete: Cascade)
+  vendorData        Vendor?         @relation(fields: [vendorId], references: [id])
+  monetization      Monetization[]
+  collections       CollectionApp[]
+  comments          Comment[]
+  downloads         Download[]
+  favorites         Favorite[]
+  ratings           Rating[]
+  versions          Version[]
+
+  @@index([categoryId])
+  @@index([subcategoryId])
+  @@index([vendorId])
+  @@schema("public")
+}
+
+model Version {
+  id           String     @id @default(cuid())
+  version      String
+  changelog    String?
+  appId        String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  fileSize     BigInt
+  fileUrl      String
+  minOsVersion String
+  sha256Hash   String
+  downloads    Download[]
+  app          App        @relation(fields: [appId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model Rating {
+  id        String   @id @default(cuid())
+  rating    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  appId     String
+  userId    String
+  app       App      @relation(fields: [appId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, appId])
+  @@index([appId])
+  @@index([userId])
+  @@schema("public")
+}
+
+model Comment {
+  id        String    @id @default(cuid())
+  comment   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  isHidden  Boolean   @default(false)
+  parentId  String?
+  appId     String
+  userId    String
+  app       App       @relation(fields: [appId], references: [id], onDelete: Cascade)
+  parent    Comment?  @relation("CommentToComment", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   Comment[] @relation("CommentToComment")
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([appId])
+  @@index([userId])
+  @@index([parentId])
+  @@schema("public")
+}
+
+model Download {
+  id        String   @id @default(cuid())
+  userId    String
+  appId     String
+  versionId String
+  createdAt DateTime @default(now())
+  app       App      @relation(fields: [appId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  version   Version  @relation(fields: [versionId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  appId     String
+  createdAt DateTime @default(now())
+  app       App      @relation(fields: [appId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, appId])
+  @@schema("public")
+}
+
+model SiteSettings {
+  id                       String   @id @default(cuid())
+  siteName                 String   @default("App Store")
+  siteDescription          String   @default("Your trusted source for applications")
+  allowAppSubmissions      Boolean  @default(true)
+  maxFileSize              Int      @default(104857600)
+  allowUserRegistration    Boolean  @default(true)
+  requireEmailVerification Boolean  @default(true)
+  socialLinks              Json     @default("{}")
+  sitemapExcludeNoindex   Boolean  @default(true)
+  sitemapExcludePatterns  String[] @default([])
+  sitemapAdditionalUrls   String[] @default([])
+  updatedAt                DateTime @updatedAt
+
+  @@schema("public")
+}
+
+model ActivityLog {
+  id         String   @id @default(cuid())
+  userId     String
+  action     String
+  entityType String
+  entityId   String
+  details    Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([entityType])
+  @@index([createdAt])
+  @@schema("public")
+}
+
+model Collection {
+  id          String          @id @default(cuid())
+  name        String
+  description String?
+  isPublic    Boolean         @default(true)
+  userId      String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  apps        CollectionApp[]
+
+  @@index([userId])
+  @@schema("public")
+}
+
+model CollectionApp {
+  id           String     @id @default(cuid())
+  collectionId String
+  appId        String
+  addedAt      DateTime   @default(now())
+  app          App        @relation(fields: [appId], references: [id], onDelete: Cascade)
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+
+  @@unique([collectionId, appId])
+  @@index([collectionId])
+  @@index([appId])
+  @@schema("public")
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  data      Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@schema("public")
+}
+
+model Job {
+  id        String   @id @default(cuid())
+  type      String
+  status    String
+  progress  Int      @default(0)
+  total     Int      @default(0)
+  error     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@schema("public")
+}
+
+model Vendor {
+  id          String   @id @default(cuid())
+  externalId  Int?     @unique
+  slug        String   @unique
+  title       String
+  description String?
+  logoUrl     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  apps        App[]
+
+  @@index([slug])
+  @@index([externalId])
+  @@schema("public")
+}
+
+model Monetization {
+  id        String   @id @default(cuid())
+  type      String
+  title     String
+  appId     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  app       App      @relation(fields: [appId], references: [id], onDelete: Cascade)
+
+  @@unique([appId, type])
+  @@index([appId])
+  @@index([type])
+  @@schema("public")
+}
+
+model SeoMetaTag {
+  id          String   @id @default(cuid())
+  page        String   @unique
+  title       String
+  description String
+  keywords    String?
+  canonical   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@schema("public")
+}
+
+model SitemapConfig {
+  id         String   @id @default(cuid())
+  path       String   @unique
+  changefreq String   @default("weekly")
+  priority   Float    @default(0.5)
+  enabled    Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@schema("public")
+}
+
+model RobotsConfig {
+  id              String   @id @default(cuid())
+  useCustomContent Boolean @default(false)
+  customContent    String?
+  rules           Json     @default("[]")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@schema("public")
+}
+
+model SocialMeta {
+  id        String   @id @default(cuid())
+  og        Json     @default("{}")
+  twitter   Json     @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@schema("public")
+}
+
+// Filter Options Models
+model FilterOption {
+  id        String   @id @default(cuid())
+  type      String   // "sort", "price", "time", "rating"
+  label     String
+  value     String
+  stars     Int?     // Only for rating options
+  order     Int      @default(0)
+  isDefault Boolean  @default(false)
+  isEnabled Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([type, value])
+  @@index([type, order])
+  @@schema("public")
+}
+
+model SyncLog {
+  id        String   @id @default(cuid())
+  startedAt DateTime @default(now())
+  endedAt   DateTime?
+  status    String   // "running" | "completed" | "failed"
+  added     Int      @default(0)
+  updated   Int      @default(0)
+  unchanged Int      @default(0)
+  removed   Int      @default(0)
+  errors    Int      @default(0)
+  error     String?  // Error message if failed
+
+  @@schema("public")
+}

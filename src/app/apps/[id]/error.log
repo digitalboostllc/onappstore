@@ -1,0 +1,7 @@
+main-app.js?v=1737886737748:2278 Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
+app-star-rating.tsx:28 [RATING_TRACK] Props updated: {initialRating: 0, initialAverage: 5, initialTotal: undefined}initialAverage: 5initialRating: 0initialTotal: undefined[[Prototype]]: Object
+script.debug.js:1 [Vercel Web Analytics] Debug mode is enabled by default in development. No requests will be sent to the server.
+script.debug.js:1 [Vercel Web Analytics] [pageview] http://localhost:3000/apps/cm6bviq2t000kovmwsyktg6jz {o: 'http://localhost:3000/apps/cm6bviq2t000kovmwsyktg6jz', sv: '0.1.2', sdkn: '@vercel/analytics/react', sdkv: '1.4.1', ts: 1737886741591, …}f: undefinedo: "http://localhost:3000/apps/cm6bviq2t000kovmwsyktg6jz"r: ""sdkn: "@vercel/analytics/react"sdkv: "1.4.1"sv: "0.1.2"ts: 1737886741591[[Prototype]]: Object
+app-star-rating.tsx:39 [RATING_TRACK] Rating submission started: {appId: 'cm6bviq2t000kovmwsyktg6jz', rating: 5, currentRating: 0, isSubmitting: false}appId: "cm6bviq2t000kovmwsyktg6jz"currentRating: 0isSubmitting: falserating: 5[[Prototype]]: Object
+app-star-rating.tsx:54 [RATING_TRACK] Making API request: {method: 'POST', rating: 5}
+app-star-rating.tsx:73 [RATING_TRACK] API response: {rating: 5, averageRating: 5, totalRatings: 1}averageRating: 5rating: 5totalRatings: 1[[Prototype]]: Object

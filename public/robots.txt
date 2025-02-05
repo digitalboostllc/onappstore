@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /apps
+Allow: /categories
+Disallow: /admin
+Disallow: /api
+Disallow: /private
+
+Sitemap: https://macappshub.com/sitemap.xml

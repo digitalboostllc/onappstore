@@ -1,0 +1,222 @@
+import { prisma } from "@/lib/db"
+import { scrapeMacUpdate } from "@/lib/services/scraper"
+import type { AppData } from "@/lib/services/scraper"
+
+export type JobStatus = "pending" | "processing" | "completed" | "failed"
+
+export interface Job {
+  id: string
+  type: "import" | "sync"
+  status: JobStatus
+  progress: number
+  total: number
+  error?: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+export async function createImportJob() {
+  return prisma.job.create({
+    data: {
+      type: "import",
+      status: "pending",
+      progress: 0,
+      total: 0,
+    },
+  })
+}
+
+export async function updateJobProgress(jobId: string, progress: number, total: number) {
+  return prisma.job.update({
+    where: { id: jobId },
+    data: {
+      progress,
+      total,
+      updatedAt: new Date(),
+    },
+  })
+}
+
+export async function completeJob(jobId: string) {
+  return prisma.job.update({
+    where: { id: jobId },
+    data: {
+      status: "completed",
+      updatedAt: new Date(),
+    },
+  })
+}
+
+export async function failJob(jobId: string, error: string) {
+  return prisma.job.update({
+    where: { id: jobId },
+    data: {
+      status: "failed",
+      error,
+      updatedAt: new Date(),
+    },
+  })
+}
+
+export async function processImportJob(jobId: string, limit?: number) {
+  try {
+    // Update job status to processing
+    await prisma.job.update({
+      where: { id: jobId },
+      data: { status: "processing" },
+    })
+
+    // Get all apps from MacUpdate
+    const apps = await scrapeMacUpdate(limit) // Pass the limit parameter
+    console.log(`Retrieved ${apps.length} apps from MacUpdate`)
+    
+    // Create system developer if it doesn't exist
+    const systemDev = await prisma.developer.upsert({
+      where: { id: "system" },
+      update: {},
+      create: {
+        id: "system",
+        userId: "system",
+      },
+    })
+
+    // Import apps in batches
+    const batchSize = 10
+    for (let i = 0; i < apps.length; i += batchSize) {
+      const batch = apps.slice(i, i + batchSize)
+      
+      // Process batch
+      await Promise.all(
+        batch.map(async (app: AppData) => {
+          try {
+            // Check if app already exists
+            const existingApp = await prisma.app.findFirst({
+              where: { name: app.name },
+            })
+
+            if (!existingApp) {
+              await prisma.app.create({
+                data: {
+                  name: app.name,
+                  description: app.description,
+                  fullContent: app.fullContent,
+                  category: app.category,
+                  website: app.website,
+                  icon: app.icon,
+                  published: false,
+                  developerId: systemDev.id,
+                  tags: [],
+                  screenshots: app.screenshots || [],
+                  versions: app.version ? {
+                    create: {
+                      version: app.version,
+                      changelog: app.requirements,
+                      minOsVersion: app.requirements || "macOS 10.0",
+                      fileUrl: "",
+                      fileSize: BigInt(0),
+                      sha256Hash: "",
+                    }
+                  } : undefined,
+                },
+              })
+            }
+          } catch (error) {
+            console.error(`Failed to import app: ${app.name}`, error)
+          }
+        })
+      )
+
+      // Update progress
+      await updateJobProgress(jobId, i + batch.length, apps.length)
+    }
+
+    await completeJob(jobId)
+  } catch (error) {
+    console.error("Import job failed:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
+    await failJob(jobId, errorMessage)
+  }
+}
+
+// Function to check for new apps daily
+export async function syncNewApps() {
+  let jobId: string | undefined
+  try {
+    // Create a new sync job
+    const job = await prisma.job.create({
+      data: {
+        type: "sync",
+        status: "processing",
+        progress: 0,
+        total: 0,
+      },
+    })
+    jobId = job.id
+
+    // Get latest apps from MacUpdate
+    const newApps = await scrapeMacUpdate(50) // Check last 50 apps
+    
+    // Get system developer
+    const systemDev = await prisma.developer.findUnique({
+      where: { id: "system" },
+    })
+
+    if (!systemDev) {
+      throw new Error("System developer not found")
+    }
+
+    let processed = 0
+    for (const app of newApps) {
+      try {
+        // Check if app already exists
+        const existingApp = await prisma.app.findFirst({
+          where: { name: app.name },
+        })
+
+        if (!existingApp) {
+          await prisma.app.create({
+            data: {
+              name: app.name,
+              description: app.description,
+              fullContent: app.fullContent,
+              category: app.category,
+              website: app.website,
+              icon: app.icon,
+              published: false,
+              developerId: systemDev.id,
+              tags: [],
+              screenshots: app.screenshots || [],
+              versions: app.version ? {
+                create: {
+                  version: app.version,
+                  changelog: app.requirements,
+                  minOsVersion: app.requirements || "macOS 10.0",
+                  fileUrl: "",
+                  fileSize: BigInt(0),
+                  sha256Hash: "",
+                }
+              } : undefined,
+            },
+          })
+        }
+
+        processed++
+        if (jobId) {
+          await updateJobProgress(jobId, processed, newApps.length)
+        }
+      } catch (error) {
+        console.error(`Failed to sync app: ${app.name}`, error)
+      }
+    }
+
+    if (jobId) {
+      await completeJob(jobId)
+    }
+  } catch (error) {
+    console.error("Sync job failed:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
+    if (jobId) {
+      await failJob(jobId, errorMessage)
+    }
+  }
+}

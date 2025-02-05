@@ -1,0 +1,2287 @@
+{
+  "props": {
+    "pageProps": {
+      "cookies": {
+        "AWSALBTG": "Mg4fGVX8B+hf3OVS5fAYIkTVZ3KTEUDhz9w/9JyxwYkPC84UlXIYD21o5ilVbWOWyN2r1l6+6WPW/Te2Zor0XycE17dqx+bx2pSPzqCSLiVW/jYVEZk+eSGDodnKv23BcOcGPhGaautZUs7oiQnndSAiuTFrIony9gVdGKosjnOogPD/6bI=",
+        "__eoi": "ID=999a40fd2f856c13:T=1737372939:RT=1737375641:S=AA-AfjaPZw8qq22SaxIkWL3v3rXZ",
+        "__gads": "ID=c9c564765cae3f25:T=1737372939:RT=1737375641:S=ALNI_Ma5loVDE05N8Nw47c83De0ncqcx7w",
+        "__gpi": "UID=00000ff34bbec797:T=1737372939:RT=1737375641:S=ALNI_MZ5XoErzUhRQ2T37FX7IvBisgU6Pg",
+        "__lxG__consent__v2": "1|1737292817|1737244800000|89|1745068817340|2|1|1|1737244800000|1|17372928140819712|1|181||1111111||1",
+        "__lxG__consent__v2_daisybit": "CQLeoUAQLeoUAA_AFAENBZFsAP_gAEPgAAAAJ2JD7C7NbWFCwHp3YLsAcAkDxNAAQsQAAASBAGABQAKQIAQCgkAQBASgBAACABAAICRBIQAkCAAQAEAAQAAAIAAEIAAAAAAIAAAAgAAAAgAIAAACAIAAEAAIgAIAEgAAmAgAAAIAGEAAgAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAACAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQNVgZAALAAeABUAC4AHAAQAAkABkADQAHgARAAjgBMACkAFUALoAYgA9AB-AEIAIgARwAnABRgDAAGGAMoAcgA9gB-gEIAIsARwAvoBigDPgHEAOoAe0BF4CkQFNgLRAXmAvoBf4DBIGTAZOAywBqoAA.YAAAAAAAAAAA",
+        "__lxG__consent__v2_gdaisybit": "~1~70..19.4.15..14..27..47..63..52..12..92..71.81.45..34..290..117..70..44.2.108..71..25..114..34..121.7.74..65..49..105.8.11..183.2.179..273..42.34.102..513.",
+        "_cc_id": "db36e74b623d3b74139b614cfb022831",
+        "_ga": "GA1.1.686673688.1737292814",
+        "_ga_XXN905B2V6": "GS1.1.1738039482.41.1.1738039576.0.0.0",
+        "appCardViewType": "box",
+        "cto_bidid": "TDLn319zJTJCZFZEWjhJMm1tcXNWUEo2SnVCd3phZlB6Wkh3NTc1Nk5NaVQ4R1J3TUlSRnBHcnFHWWtCQ3lzck9ubDMzZUNVSmhCM09Rc2NUTFdBRFh6NDhjaHl5JTJGbyUyQnQlMkJFdTI2azY0bnlHNkpkalRVZnVZSFltZjBXellNQmdTeDA2WU5MdjV2Zk52THBCWklDNUFPbTFEN1pIUSUzRCUzRA",
+        "cto_bundle": "Ca8E9F9TaWtIcHJ5M2QlMkJZUVZyNVdSQ2p1enRqNGNYNm9sS0RPVTZ3VUV0TktSamolMkZ4U09NUlZDQzBTRmJyWHk0SG9rUXgyYW13JTJCTUhQanUzdGtrcHA4RERuVGZZd09UZks3Tm1rZWJkUEpWcEpmaHg1YVlld3l4S2ZDZXdVM2NWU0pHY2ljZzJHRHclMkJha1FnMnJoeGlSOGJudFNmRyUyRjBUJTJGaHR1TThjNmQ4TXFlRUNvTXFvZ2VLUjA4MkhpRDZKdEhVUjc4UElFN3RzWWpPODlpVmsxVzE5ME9RJTNEJTNE",
+        "m-cookie-policy-accept": "1737308928936",
+        "panoramaId": "44e53ef9658765782ae0115254034945a702017674193c108dc7d42190605c60",
+        "panoramaIdType": "panoIndiv",
+        "panoramaId_expiry": "1738582436799",
+        "rv_prebid_position": "706",
+        "rv_test_position": "509",
+        "session_id": "LfmuVXuMa62AdqgHEvb8u1SN9K1Hvo9OzMN7lZtn",
+        "session_token": "2b9a52042f2bd3a84a0ee9563ee25615:3ad7bd50c04e12dbe1b04ced668b984e"
+      },
+      "country": {
+        "code": "TH",
+        "name": "Thailand",
+        "is_eu": false
+      },
+      "isMobile": false,
+      "asPath": "/app/mac/51283/wondershare-mobiletrans",
+      "query": {
+        "id": "51283",
+        "slug": "wondershare-mobiletrans"
+      },
+      "memberData": {
+        "id": 3208740,
+        "email": "sado.buss@gmail.com",
+        "first_name": "sadobuss",
+        "last_name": "sadobuss",
+        "screen_name": "sadobuss",
+        "address": null,
+        "company": "",
+        "website": "",
+        "last_visit": {
+          "date": "2025-01-24T23:53:08+00:00",
+          "timestamp": 1737762788
+        },
+        "visit_count": 3,
+        "created_on": {
+          "date": "2022-08-08T12:23:49+00:00",
+          "timestamp": 1659961429
+        },
+        "creation_source": "Google account",
+        "is_verified": true,
+        "is_free": true,
+        "is_affiliate": false,
+        "is_developer": false,
+        "is_admin": false,
+        "is_mud": false,
+        "roles": [
+          {
+            "id": 1,
+            "name": "free",
+            "expires": null
+          }
+        ],
+        "permissions": null,
+        "ava": null,
+        "download_method": "scan",
+        "preferences": {
+          "id": 3830231,
+          "gdpr_email_consent": true,
+          "gdpr_name_in_mail_consent": null
+        },
+        "session_token": null
+      },
+      "categoriesData": {
+        "data": [
+          {
+            "id": 315,
+            "parent_id": null,
+            "slug": "ai",
+            "name": "AI",
+            "description": null,
+            "url": "https://www.macupdate.com/explore/categories/ai"
+          },
+          {
+            "id": 1,
+            "parent_id": null,
+            "slug": "browsing",
+            "name": "Browsing",
+            "description": "Select the best browser app to match your needs. We’ve got a wide variety of extensions to simplify your web surfing routine.",
+            "url": "https://www.macupdate.com/explore/categories/browsing",
+            "children": [
+              {
+                "id": 23,
+                "parent_id": 1,
+                "slug": "browsing/safari-extensions",
+                "name": "Safari Extensions",
+                "description": "Adding an extension gives a Safari browser new superpowers. Block ads, translate webpages, or sort your bookmarks — elevate your browsing experience with free or paid Safari add-ons.",
+                "parent_name": "Browsing",
+                "url": "https://www.macupdate.com/explore/categories/browsing/safari-extensions"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "parent_id": null,
+            "slug": "business",
+            "name": "Business",
+            "description": "Make complex business routines easy. Good software can help your company grow, and we’ve got lots of this: from office suites and task managers to specific CRM or SEO solutions.",
+            "url": "https://www.macupdate.com/explore/categories/business",
+            "children": [
+              {
+                "id": 29,
+                "parent_id": 2,
+                "slug": "business/crm",
+                "name": "CRM",
+                "description": "Keep track of your clients with an easy Customer Relationships Management app. Organizing your customer’s info in one place will help you work smarter, plan better and grow your business faster.",
+                "parent_name": "Business",
+                "url": "https://www.macupdate.com/explore/categories/business/crm"
+              },
+              {
+                "id": 31,
+                "parent_id": 2,
+                "slug": "business/inventory-management",
+                "name": "Inventory Management",
+                "description": "Automatically track and control stock levels. Try inventory management software to make sure your company always has enough stock, invoicing runs easily, and customers remain happy.",
+                "parent_name": "Business",
+                "url": "https://www.macupdate.com/explore/categories/business/inventory-management"
+              },
+              {
+                "id": 28,
+                "parent_id": 2,
+                "slug": "business/project-management",
+                "name": "Project Management",
+                "description": "Focus on what’s important for your business and leave boring routines behind. Here you’ll find task managers, time trackers, mind-mappers, business data analyzers, and many more.",
+                "parent_name": "Business",
+                "url": "https://www.macupdate.com/explore/categories/business/project-management"
+              },
+              {
+                "id": 38,
+                "parent_id": 2,
+                "slug": "business/seo",
+                "name": "SEO",
+                "description": "Improve your website ranking with pro tools. Check our collection of SEO apps to help your site stand out and easily optimize it for search engines.",
+                "parent_name": "Business",
+                "url": "https://www.macupdate.com/explore/categories/business/seo"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "parent_id": null,
+            "slug": "customization",
+            "name": "Customization",
+            "description": "Change the way your desktop looks and feels. Browse the curated app collection designed to save time, simplify your Mac experience, or just bring more fun into your daily routine.",
+            "children": [
+              {
+                "id": 51,
+                "parent_id": 3,
+                "slug": "customization/cursor",
+                "name": "Cursor",
+                "description": "The mouse pointer is all yours. Highlight it, hide it, manage your cursor through your keyboard, or add special trail effects.",
+                "parent_name": "Customization",
+                "url": "https://www.macupdate.com/explore/categories/customization/cursor"
+              },
+              {
+                "id": 48,
+                "parent_id": 3,
+                "slug": "customization/dashboard-widgets",
+                "name": "Dashboard Widgets",
+                "description": "Enjoy easier access to what you need through handy widgets. Games, weather, sport — widgets will always keep you posted.",
+                "parent_name": "Customization",
+                "url": "https://www.macupdate.com/explore/categories/customization/dashboard-widgets"
+              },
+              {
+                "id": 45,
+                "parent_id": 3,
+                "slug": "customization/desktop",
+                "name": "Desktop",
+                "description": "We own a rich collection of apps to transform your Mac desktop experience. Choose ones to organize files, make screenshots easier, stop sleep time, or adjust your menu bar just the way you want to.",
+                "parent_name": "Customization",
+                "url": "https://www.macupdate.com/explore/categories/customization/desktop"
+              },
+              {
+                "id": 50,
+                "parent_id": 3,
+                "slug": "customization/keyboard-touch-bar",
+                "name": "Keyboard \u0026 Touch Bar",
+                "description": "Adjust your Mac keyboard your way. Remap it, change shortcuts, add sounds after keystrokes, change your Touch Bar look, or even use a simulation of it if you don’t have one.",
+                "parent_name": "Customization",
+                "url": "https://www.macupdate.com/explore/categories/customization/keyboard-touch-bar"
+              },
+              {
+                "id": 46,
+                "parent_id": 3,
+                "slug": "customization/screensavers",
+                "name": "Screensavers",
+                "description": "Change the boring black screen of a sleeping Mac into something more captivating. Scenic, neon, space-themed, or something wilder — find your perfect screensaver below.",
+                "parent_name": "Customization",
+                "url": "https://www.macupdate.com/explore/categories/customization/screensavers"
+              },
+              {
+                "id": 53,
+                "parent_id": 3,
+                "slug": "customization/wallpapers",
+                "name": "Wallpapers",
+                "description": "Light up your desktop with an amazing new wallpaper. Trade the default one into a fresh and vivid aesthetic that fits your personality best.",
+                "parent_name": "Customization",
+                "url": "https://www.macupdate.com/explore/categories/customization/wallpapers"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/customization"
+          },
+          {
+            "id": 4,
+            "parent_id": null,
+            "slug": "developer-tools",
+            "name": "Developer Tools",
+            "description": "Improve your workflow to create apps or build websites hassle-free. Here’s our collection of life-saving apps for devs.",
+            "children": [
+              {
+                "id": 62,
+                "parent_id": 4,
+                "slug": "developer-tools/applescript",
+                "name": "AppleScript",
+                "description": "Build Mac automation scripts easier. Sync and automate your AppleScript workflow with time-saving tools in the list below.",
+                "parent_name": "Developer Tools",
+                "url": "https://www.macupdate.com/explore/categories/developer-tools/applescript"
+              },
+              {
+                "id": 60,
+                "parent_id": 4,
+                "slug": "developer-tools/compilers-interpreters",
+                "name": "Compilers \u0026 Interpreters",
+                "description": "Simplify converting the source code with a handy app that does the job effectively. Try compiler or interpreter software to automate your Mac programming routine.",
+                "parent_name": "Developer Tools",
+                "url": "https://www.macupdate.com/explore/categories/developer-tools/compilers-interpreters"
+              },
+              {
+                "id": 56,
+                "parent_id": 4,
+                "slug": "developer-tools/components-libraries",
+                "name": "Components \u0026 Libraries",
+                "description": "Organize your development workflow with the help of  frameworks, plug-ins, or toolboxes.",
+                "parent_name": "Developer Tools",
+                "url": "https://www.macupdate.com/explore/categories/developer-tools/components-libraries"
+              },
+              {
+                "id": 63,
+                "parent_id": 4,
+                "slug": "developer-tools/database",
+                "name": "Database",
+                "description": "Create, edit, or restore damaged databases with the help of these awesome handy apps. Enjoy simple graphical frontend and simultaneous access to multiple database systems.",
+                "parent_name": "Developer Tools",
+                "url": "https://www.macupdate.com/explore/categories/developer-tools/database"
+              },
+              {
+                "id": 64,
+                "parent_id": 4,
+                "slug": "developer-tools/debugging",
+                "name": "Debugging",
+                "description": "Automate your app development workflow. Try life-saving tools like bug trackers or code testing apps for stress-free debugging.",
+                "parent_name": "Developer Tools",
+                "url": "https://www.macupdate.com/explore/categories/developer-tools/debugging"
+              },
+              {
+                "id": 65,
+                "parent_id": 4,
+                "slug": "developer-tools/ide-software",
+                "name": "IDE Software",
+                "description": "IDE, or integrated development environment, combines common developer tools into a single graphical user interface. Try powerful and lightweight IDE apps.",
+                "parent_name": "Developer Tools",
+                "url": "https://www.macupdate.com/explore/categories/developer-tools/ide-software"
+              },
+              {
+                "id": 61,
+                "parent_id": 4,
+                "slug": "developer-tools/manuals-tutorials",
+                "name": "Manuals \u0026 Tutorials",
+                "description": "Learning programming is easier with the help of a good app. We’ve got the list below to help you master Java, Swift, Python, PHP, Objective-C, or other languages.",
+                "parent_name": "Developer Tools",
+                "url": "https://www.macupdate.com/explore/categories/developer-tools/manuals-tutorials"
+              },
+              {
+                "id": 59,
+                "parent_id": 4,
+                "slug": "developer-tools/programming-languages",
+                "name": "Programming Languages",
+                "description": "Download the development environment or an HTML editor you’re missing. Make software development easier.",
+                "parent_name": "Developer Tools",
+                "url": "https://www.macupdate.com/explore/categories/developer-tools/programming-languages"
+              },
+              {
+                "id": 58,
+                "parent_id": 4,
+                "slug": "developer-tools/source-code-management",
+                "name": "Source Code Management",
+                "description": "Elevate your team’s productivity with tracking source code changes to spark faster delivery.",
+                "parent_name": "Developer Tools",
+                "url": "https://www.macupdate.com/explore/categories/developer-tools/source-code-management"
+              },
+              {
+                "id": 57,
+                "parent_id": 4,
+                "slug": "developer-tools/web-development",
+                "name": "Web Development",
+                "description": "Choose a web editor to start building websites faster and streamline your development workflow.",
+                "parent_name": "Developer Tools",
+                "url": "https://www.macupdate.com/explore/categories/developer-tools/web-development"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/developer-tools"
+          },
+          {
+            "id": 5,
+            "parent_id": null,
+            "slug": "education",
+            "name": "Education",
+            "description": "You can’t know everything, but you can grow your knowledge with these educational apps for virtually anything — from languages and music to math or science.",
+            "children": [
+              {
+                "id": 82,
+                "parent_id": 5,
+                "slug": "education/e-readers",
+                "name": "E-Readers",
+                "description": "Convert your ebook format, read comic books, or manage your online library. Browse our e-reader app collection that bookworms absolutely love.",
+                "parent_name": "Education",
+                "url": "https://www.macupdate.com/explore/categories/education/e-readers"
+              },
+              {
+                "id": 80,
+                "parent_id": 5,
+                "slug": "education/geography",
+                "name": "Geography",
+                "description": "Create accurate yet beautiful maps with the geography tools we’ve picked for you. Convert coordinates easily and enjoy access to Geographic Information System (GIS).",
+                "parent_name": "Education",
+                "url": "https://www.macupdate.com/explore/categories/education/geography"
+              },
+              {
+                "id": 84,
+                "parent_id": 5,
+                "slug": "education/language-learning",
+                "name": "Language Learning",
+                "description": "Enhance your writing with these great apps. Always pick the right word with our pro collection of dictionary, spell-checker, or thesaurus tools.",
+                "parent_name": "Education",
+                "url": "https://www.macupdate.com/explore/categories/education/language-learning"
+              },
+              {
+                "id": 74,
+                "parent_id": 5,
+                "slug": "education/learning",
+                "name": "Learning",
+                "description": "Master new skills with handy tutorial apps that teach you literally everything — from touch typing to the periodic table.",
+                "parent_name": "Education",
+                "url": "https://www.macupdate.com/explore/categories/education/learning"
+              },
+              {
+                "id": 77,
+                "parent_id": 5,
+                "slug": "education/math",
+                "name": "Math",
+                "description": "Use magically smart apps to make calculations easier, create graphs, convert units, solve equations, or handle complex math tricks.",
+                "parent_name": "Education",
+                "url": "https://www.macupdate.com/explore/categories/education/math"
+              },
+              {
+                "id": 83,
+                "parent_id": 5,
+                "slug": "education/medical-education",
+                "name": "Medical Education",
+                "description": "Practice makes perfect. Use medical education software to pass your certification exams or study healthcare terms.",
+                "parent_name": "Education",
+                "url": "https://www.macupdate.com/explore/categories/education/medical-education"
+              },
+              {
+                "id": 86,
+                "parent_id": 5,
+                "slug": "education/music-education",
+                "name": "Music Education",
+                "description": "Everyone can master chords. You just need a good music app to do it. Learn any instrument you crave including the guitar, piano, harmonica, ukulele, mandolin.",
+                "parent_name": "Education",
+                "url": "https://www.macupdate.com/explore/categories/education/music-education"
+              },
+              {
+                "id": 89,
+                "parent_id": 5,
+                "slug": "education/reference-management",
+                "name": "Reference Management",
+                "description": "Easily organize academic research citations using massive libraries of quotes.",
+                "parent_name": "Education",
+                "url": "https://www.macupdate.com/explore/categories/education/reference-management"
+              },
+              {
+                "id": 76,
+                "parent_id": 5,
+                "slug": "education/science",
+                "name": "Science",
+                "description": "Research and explore the most complex things on Earth. Get an app to help you study molecular biology, galaxies, crystal structures, or anything science-based.",
+                "parent_name": "Education",
+                "url": "https://www.macupdate.com/explore/categories/education/science"
+              },
+              {
+                "id": 90,
+                "parent_id": 5,
+                "slug": "education/student",
+                "name": "Student",
+                "description": "Use an app to organize your hectic studying routine. Monitor grades, plan your exams, and live a better, more productive student life.",
+                "parent_name": "Education",
+                "url": "https://www.macupdate.com/explore/categories/education/student"
+              },
+              {
+                "id": 78,
+                "parent_id": 5,
+                "slug": "education/translation",
+                "name": "Translation",
+                "description": "Translate faster using smart translators and text converters that erase language barriers.",
+                "parent_name": "Education",
+                "url": "https://www.macupdate.com/explore/categories/education/translation"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/education"
+          },
+          {
+            "id": 6,
+            "parent_id": null,
+            "slug": "finance",
+            "name": "Finance",
+            "description": "Spending wisely and putting money away helps grow your savings. So let’s kit you out with the essential financial apps to help you count easier, invest better, and make financial predictions more accurate.",
+            "children": [
+              {
+                "id": 100,
+                "parent_id": 6,
+                "slug": "finance/accounting",
+                "name": "Accounting",
+                "description": "Elevate tracking business expenses with a nice accounting or bookkeeping app.",
+                "parent_name": "Finance",
+                "url": "https://www.macupdate.com/explore/categories/finance/accounting"
+              },
+              {
+                "id": 103,
+                "parent_id": 6,
+                "slug": "finance/banking",
+                "name": "Banking",
+                "description": "Skip visiting your bank by downloading a banking app that simply does this job for you.",
+                "parent_name": "Finance",
+                "url": "https://www.macupdate.com/explore/categories/finance/banking"
+              },
+              {
+                "id": 102,
+                "parent_id": 6,
+                "slug": "finance/billing",
+                "name": "Billing",
+                "description": "Automatically create and manage your invoices, get bill reminders, and live a happier, more organized financial life.",
+                "parent_name": "Finance",
+                "url": "https://www.macupdate.com/explore/categories/finance/billing"
+              },
+              {
+                "id": 99,
+                "parent_id": 6,
+                "slug": "finance/calculators-converters",
+                "name": "Calculators \u0026 Converters",
+                "description": "Pick a smart app for basic accounting, scientific computing,  calculating interests, or converting units.",
+                "parent_name": "Finance",
+                "url": "https://www.macupdate.com/explore/categories/finance/calculators-converters"
+              },
+              {
+                "id": 111,
+                "parent_id": 6,
+                "slug": "finance/cryptocurrency",
+                "name": "Cryptocurrency",
+                "description": "Whether you’re ready to start mining crypto, or just looking for rate trackers and digital wallets, you’re in the right place here.",
+                "parent_name": "Finance",
+                "url": "https://www.macupdate.com/explore/categories/finance/cryptocurrency"
+              },
+              {
+                "id": 98,
+                "parent_id": 6,
+                "slug": "finance/financial-analysis",
+                "name": "Financial Analysis",
+                "description": "Create financial dashboards to analyze your business stats and make reliable forecasts.",
+                "parent_name": "Finance",
+                "url": "https://www.macupdate.com/explore/categories/finance/financial-analysis"
+              },
+              {
+                "id": 106,
+                "parent_id": 6,
+                "slug": "finance/investment-management",
+                "name": "Investment Management",
+                "description": "Track stocks and get the latest market updates to make smart investments to help grow your money.",
+                "parent_name": "Finance",
+                "url": "https://www.macupdate.com/explore/categories/finance/investment-management"
+              },
+              {
+                "id": 97,
+                "parent_id": 6,
+                "slug": "finance/personal-finance",
+                "name": "Personal Finance",
+                "description": "Spend less and save more by managing your daily expenses more effectively.",
+                "parent_name": "Finance",
+                "url": "https://www.macupdate.com/explore/categories/finance/personal-finance"
+              },
+              {
+                "id": 105,
+                "parent_id": 6,
+                "slug": "finance/spreadsheet",
+                "name": "Spreadsheet",
+                "description": "Organize your data in beautiful spreadsheets, easily created with an automatic app.",
+                "parent_name": "Finance",
+                "url": "https://www.macupdate.com/explore/categories/finance/spreadsheet"
+              },
+              {
+                "id": 104,
+                "parent_id": 6,
+                "slug": "finance/trading",
+                "name": "Trading",
+                "description": "Find profit-making opportunities with software that ensures trading stocks is easier than ever before.",
+                "parent_name": "Finance",
+                "url": "https://www.macupdate.com/explore/categories/finance/trading"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/finance"
+          },
+          {
+            "id": 7,
+            "parent_id": null,
+            "slug": "games",
+            "name": "Games",
+            "description": "Indulge yourself in these fun games and discover new favorites. Our collection covers all game genres.",
+            "children": [
+              {
+                "id": 113,
+                "parent_id": 7,
+                "slug": "games/action",
+                "name": "Action",
+                "description": "How fast can you react? Test your coordination by helping characters successfully overcome physical challenges.",
+                "parent_name": "Games",
+                "url": "https://www.macupdate.com/explore/categories/games/action"
+              },
+              {
+                "id": 120,
+                "parent_id": 7,
+                "slug": "games/adventure",
+                "name": "Adventure",
+                "description": "Explore the fictional worlds of RPG and adventure games, and hunt for hidden gems to make your character stronger.",
+                "parent_name": "Games",
+                "url": "https://www.macupdate.com/explore/categories/games/adventure"
+              },
+              {
+                "id": 114,
+                "parent_id": 7,
+                "slug": "games/arcade",
+                "name": "Arcade",
+                "description": "Hop on to play addictive arcade games — from retro classics to space mazes, you’ll find the one for you.",
+                "parent_name": "Games",
+                "url": "https://www.macupdate.com/explore/categories/games/arcade"
+              },
+              {
+                "id": 124,
+                "parent_id": 7,
+                "slug": "games/board-games",
+                "name": "Board Games",
+                "description": "Test your thinking and luck with the most popular board games, including chess, dominoes, backgammon,  mahjong, or tic-tac-toe.",
+                "parent_name": "Games",
+                "url": "https://www.macupdate.com/explore/categories/games/board-games"
+              },
+              {
+                "id": 118,
+                "parent_id": 7,
+                "slug": "games/card-games",
+                "name": "Card Games",
+                "description": "Play your favorite card game, featuring timeless classics like bridge, poker, or solitaire.",
+                "parent_name": "Games",
+                "url": "https://www.macupdate.com/explore/categories/games/card-games"
+              },
+              {
+                "id": 117,
+                "parent_id": 7,
+                "slug": "games/gaming-tools-utilities",
+                "name": "Gaming Tools \u0026 Utilities",
+                "description": "Play like a pro: access cheat codes, connect joysticks, or emulate incompatible games with the help of these apps.",
+                "parent_name": "Games",
+                "url": "https://www.macupdate.com/explore/categories/games/gaming-tools-utilities"
+              },
+              {
+                "id": 119,
+                "parent_id": 7,
+                "slug": "games/puzzles",
+                "name": "Puzzles",
+                "description": "Train your brain and solve the best puzzles we could find on the web.",
+                "parent_name": "Games",
+                "url": "https://www.macupdate.com/explore/categories/games/puzzles"
+              },
+              {
+                "id": 126,
+                "parent_id": 7,
+                "slug": "games/racing",
+                "name": "Racing",
+                "description": "Feel the speed and be the next champ by playing some exciting racing games.",
+                "parent_name": "Games",
+                "url": "https://www.macupdate.com/explore/categories/games/racing"
+              },
+              {
+                "id": 127,
+                "parent_id": 7,
+                "slug": "games/shooting",
+                "name": "Shooting",
+                "description": "Shoot true to take out enemies and leave the gaming battlefield as the only winner.",
+                "parent_name": "Games",
+                "url": "https://www.macupdate.com/explore/categories/games/shooting"
+              },
+              {
+                "id": 122,
+                "parent_id": 7,
+                "slug": "games/simulation",
+                "name": "Simulation",
+                "description": "Try living in someone’s shoes and experiencing a new profession, lifestyle, or even another world.",
+                "parent_name": "Games",
+                "url": "https://www.macupdate.com/explore/categories/games/simulation"
+              },
+              {
+                "id": 115,
+                "parent_id": 7,
+                "slug": "games/sports",
+                "name": "Sports",
+                "description": "Enjoy playing virtual sports with games realistic enough to make you feel ultra-engaged.",
+                "parent_name": "Games",
+                "url": "https://www.macupdate.com/explore/categories/games/sports"
+              },
+              {
+                "id": 116,
+                "parent_id": 7,
+                "slug": "games/strategy",
+                "name": "Strategy",
+                "description": "Keep your mind sharp by playing strategy games that make you think one step ahead at all times.",
+                "parent_name": "Games",
+                "url": "https://www.macupdate.com/explore/categories/games/strategy"
+              },
+              {
+                "id": 131,
+                "parent_id": 7,
+                "slug": "games/war",
+                "name": "War",
+                "description": "Combat and defend to win virtual battles in your new favorite war game.",
+                "parent_name": "Games",
+                "url": "https://www.macupdate.com/explore/categories/games/war"
+              },
+              {
+                "id": 125,
+                "parent_id": 7,
+                "slug": "games/word-games",
+                "name": "Word Games",
+                "description": "Give your brain a workout by solving numerous crosswords and addictive word puzzles.",
+                "parent_name": "Games",
+                "url": "https://www.macupdate.com/explore/categories/games/word-games"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/games"
+          },
+          {
+            "id": 8,
+            "parent_id": null,
+            "slug": "graphic-design",
+            "name": "Graphic Design",
+            "description": "Whether you are a web designer, illustrator, or a graphic artist, you’ll find the right app here. Explore the font and icon packs, CAD and 3D modeling software, PDF converters, Photoshop plug-ins, or others.",
+            "children": [
+              {
+                "id": 144,
+                "parent_id": 8,
+                "slug": "graphic-design/3d-modeling",
+                "name": "3D Modeling",
+                "description": "Sculpt realistic models and create 3D design concepts using smart graphics and rendering tools.",
+                "parent_name": "Graphic Design",
+                "url": "https://www.macupdate.com/explore/categories/graphic-design/3d-modeling"
+              },
+              {
+                "id": 141,
+                "parent_id": 8,
+                "slug": "graphic-design/animation",
+                "name": "Animation",
+                "description": "Whether you need to create simple animated GIFs, or a complex 3D animation, you’ll find the right app below.",
+                "parent_name": "Graphic Design",
+                "url": "https://www.macupdate.com/explore/categories/graphic-design/animation"
+              },
+              {
+                "id": 142,
+                "parent_id": 8,
+                "slug": "graphic-design/authorship-copyright",
+                "name": "Authorship \u0026 Copyright",
+                "description": "Protect ownership of your creations by using simple watermark makers, media cataloging apps, or other handy apps.",
+                "parent_name": "Graphic Design",
+                "url": "https://www.macupdate.com/explore/categories/graphic-design/authorship-copyright"
+              },
+              {
+                "id": 149,
+                "parent_id": 8,
+                "slug": "graphic-design/cad-software",
+                "name": "CAD Software",
+                "description": "Automate drafting with CAD (computer-aided design) apps for architects and engineers that simulate how a design looks in the real world.",
+                "parent_name": "Graphic Design",
+                "url": "https://www.macupdate.com/explore/categories/graphic-design/cad-software"
+              },
+              {
+                "id": 146,
+                "parent_id": 8,
+                "slug": "graphic-design/desktop-publishing",
+                "name": "Desktop Publishing",
+                "description": "Easily create books, brochures, or booklets with automatic layouts and professional publishing features.",
+                "parent_name": "Graphic Design",
+                "url": "https://www.macupdate.com/explore/categories/graphic-design/desktop-publishing"
+              },
+              {
+                "id": 147,
+                "parent_id": 8,
+                "slug": "graphic-design/diagrams-graphs",
+                "name": "Diagrams \u0026 Graphs",
+                "description": "Create clear flow charts and graphs to present  data in the most visually appealing way possible.",
+                "parent_name": "Graphic Design",
+                "url": "https://www.macupdate.com/explore/categories/graphic-design/diagrams-graphs"
+              },
+              {
+                "id": 150,
+                "parent_id": 8,
+                "slug": "graphic-design/fonts",
+                "name": "Fonts",
+                "description": "Enjoy apps with hundreds of free and premium fonts that will help your artistic creations stand out.",
+                "parent_name": "Graphic Design",
+                "url": "https://www.macupdate.com/explore/categories/graphic-design/fonts"
+              },
+              {
+                "id": 143,
+                "parent_id": 8,
+                "slug": "graphic-design/icons",
+                "name": "Icons",
+                "description": "Generate icons from images, convert their format, or explore curated icon collections.",
+                "parent_name": "Graphic Design",
+                "url": "https://www.macupdate.com/explore/categories/graphic-design/icons"
+              },
+              {
+                "id": 140,
+                "parent_id": 8,
+                "slug": "graphic-design/illustration",
+                "name": "Illustration",
+                "description": "Create beautiful artworks using vector graphic apps with a rich drawing toolset.",
+                "parent_name": "Graphic Design",
+                "url": "https://www.macupdate.com/explore/categories/graphic-design/illustration"
+              },
+              {
+                "id": 148,
+                "parent_id": 8,
+                "slug": "graphic-design/pdf",
+                "name": "PDF",
+                "description": "Master any document in the PDF format. Read, edit, convert, and sign them using life-saving PDF apps.",
+                "parent_name": "Graphic Design",
+                "url": "https://www.macupdate.com/explore/categories/graphic-design/pdf"
+              },
+              {
+                "id": 145,
+                "parent_id": 8,
+                "slug": "graphic-design/photoshop-plug-ins",
+                "name": "Photoshop Plug-ins",
+                "description": "Unleash your creativity in Adobe Photoshop by adding plugins to enable the use of new effects, filters, or correction tools.",
+                "parent_name": "Graphic Design",
+                "url": "https://www.macupdate.com/explore/categories/graphic-design/photoshop-plug-ins"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/graphic-design"
+          },
+          {
+            "id": 9,
+            "parent_id": null,
+            "slug": "health-fitness",
+            "name": "Health \u0026 Fitness",
+            "description": "Get the most out of your wellness lifestyle with great apps to simplify your yoga routine, enhance meditation practice, or just eat healthier.",
+            "url": "https://www.macupdate.com/explore/categories/health-fitness",
+            "children": [
+              {
+                "id": 154,
+                "parent_id": 9,
+                "slug": "health-fitness/meditation-relaxation",
+                "name": "Meditation \u0026 Relaxation",
+                "description": "Discover living in peace and harmony with the help of sound therapy apps.",
+                "parent_name": "Health \u0026 Fitness",
+                "url": "https://www.macupdate.com/explore/categories/health-fitness/meditation-relaxation"
+              },
+              {
+                "id": 153,
+                "parent_id": 9,
+                "slug": "health-fitness/nutrition",
+                "name": "Nutrition",
+                "description": "Try an app to track your personal calorie count or water balance to live healthier.",
+                "parent_name": "Health \u0026 Fitness",
+                "url": "https://www.macupdate.com/explore/categories/health-fitness/nutrition"
+              },
+              {
+                "id": 152,
+                "parent_id": 9,
+                "slug": "health-fitness/workout-fitness",
+                "name": "Workout \u0026 Fitness",
+                "description": "Track your workout exercises and enjoy a better yoga experience using smart helper apps.",
+                "parent_name": "Health \u0026 Fitness",
+                "url": "https://www.macupdate.com/explore/categories/health-fitness/workout-fitness"
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "parent_id": null,
+            "slug": "internet-utilities",
+            "name": "Internet Utilities",
+            "description": "Browse our curated collection of messengers, email clients, file managers, and other apps to simplify your online experience.",
+            "children": [
+              {
+                "id": 174,
+                "parent_id": 10,
+                "slug": "internet-utilities/cloud-storage",
+                "name": "Cloud Storage",
+                "description": "Keep your docs and photos in cloud storage. Share easier, access anywhere, and enjoy extra security for your files.",
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/cloud-storage"
+              },
+              {
+                "id": 168,
+                "parent_id": 10,
+                "slug": "internet-utilities/download-managers",
+                "name": "Download Managers",
+                "description": "Use special download apps to capture entire websites and their audio or video content. Get torrent clients and management apps to organize your downloads.",
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/download-managers"
+              },
+              {
+                "id": 161,
+                "parent_id": 10,
+                "slug": "internet-utilities/email-clients",
+                "name": "Email Clients",
+                "description": "Smart email clients will help you discover how much a mailbox can do.",
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/email-clients"
+              },
+              {
+                "id": 314,
+                "parent_id": 10,
+                "slug": "internet-utilities/email-converters",
+                "name": "Email Converters",
+                "description": null,
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/email-converters"
+              },
+              {
+                "id": 163,
+                "parent_id": 10,
+                "slug": "internet-utilities/email-servers",
+                "name": "Email Servers",
+                "description": "Try smart software to personalize the look of your emails or easily back up your important inbox conversations.",
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/email-servers"
+              },
+              {
+                "id": 170,
+                "parent_id": 10,
+                "slug": "internet-utilities/file-sharing",
+                "name": "File Sharing",
+                "description": "Check out the easiest ways of transferring your files to cloud storage or other external devices.",
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/file-sharing"
+              },
+              {
+                "id": 167,
+                "parent_id": 10,
+                "slug": "internet-utilities/ftp-software",
+                "name": "FTP Software",
+                "description": "FTP, or File Transfer Protocol apps, are designed to securely upload and download files directly from servers, which makes files accessible from anywhere with the internet connection.",
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/ftp-software"
+              },
+              {
+                "id": 169,
+                "parent_id": 10,
+                "slug": "internet-utilities/internet-radio-players",
+                "name": "Internet Radio Players",
+                "description": "Listen to live radio stations or record them using smart radio software.",
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/internet-radio-players"
+              },
+              {
+                "id": 160,
+                "parent_id": 10,
+                "slug": "internet-utilities/messengers",
+                "name": "Messengers",
+                "description": "Send instant messages or make video calls with fast and secure chat apps.",
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/messengers"
+              },
+              {
+                "id": 183,
+                "parent_id": 10,
+                "slug": "internet-utilities/newsreaders",
+                "name": "Newsreaders",
+                "description": "Use newsreader apps to catch up with the latest news stories and stay up to date with what’s going on worldwide.",
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/newsreaders"
+              },
+              {
+                "id": 164,
+                "parent_id": 10,
+                "slug": "internet-utilities/online-tv-players",
+                "name": "Online TV Players",
+                "description": "Watch TV on Mac when you want to. Access unavailable  TV channels with the help of handy apps.",
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/online-tv-players"
+              },
+              {
+                "id": 171,
+                "parent_id": 10,
+                "slug": "internet-utilities/remote-management",
+                "name": "Remote Management",
+                "description": "Use remote access tools to control your Mac or help others troubleshoot important issues.",
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/remote-management"
+              },
+              {
+                "id": 165,
+                "parent_id": 10,
+                "slug": "internet-utilities/rss",
+                "name": "RSS",
+                "description": "Get instant updates from your favorite websites. Download an RSS reader and never miss a thing.",
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/rss"
+              },
+              {
+                "id": 162,
+                "parent_id": 10,
+                "slug": "internet-utilities/server-software",
+                "name": "Server Software",
+                "description": "Create a personal local server or manage your web servers using special software.",
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/server-software"
+              },
+              {
+                "id": 175,
+                "parent_id": 10,
+                "slug": "internet-utilities/social-network-software",
+                "name": "Social Network Software",
+                "description": "Experiment with social media interfaces, add new functions, or just share posts more easily.",
+                "parent_name": "Internet Utilities",
+                "url": "https://www.macupdate.com/explore/categories/internet-utilities/social-network-software"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/internet-utilities"
+          },
+          {
+            "id": 11,
+            "parent_id": null,
+            "slug": "lifestyle-hobby",
+            "name": "Lifestyle \u0026 Hobby",
+            "description": "What are you interested in? Whatever you answer, we might already have an app for that. Check out our transport, cooking, shopping, weather, or religion apps to simplify your everyday routine.",
+            "children": [
+              {
+                "id": 193,
+                "parent_id": 11,
+                "slug": "lifestyle-hobby/barcode",
+                "name": "Barcode",
+                "description": "Read QR codes, create your own ones, or scan barcodes using highly-rated reader apps.",
+                "parent_name": "Lifestyle \u0026 Hobby",
+                "url": "https://www.macupdate.com/explore/categories/lifestyle-hobby/barcode"
+              },
+              {
+                "id": 184,
+                "parent_id": 11,
+                "slug": "lifestyle-hobby/cooking",
+                "name": "Cooking",
+                "description": "Bon appétit! Discover new delicious recipes and store your favorite ones using a smart cooking app.",
+                "parent_name": "Lifestyle \u0026 Hobby",
+                "url": "https://www.macupdate.com/explore/categories/lifestyle-hobby/cooking"
+              },
+              {
+                "id": 189,
+                "parent_id": 11,
+                "slug": "lifestyle-hobby/food-drink",
+                "name": "Food \u0026 Drink",
+                "description": "If you love brewing, winery, or coffee, you’ll love apps to level up your food and drink skills.",
+                "parent_name": "Lifestyle \u0026 Hobby",
+                "url": "https://www.macupdate.com/explore/categories/lifestyle-hobby/food-drink"
+              },
+              {
+                "id": 197,
+                "parent_id": 11,
+                "slug": "lifestyle-hobby/genealogy",
+                "name": "Genealogy",
+                "description": "Digitally lay out your family tree and go explore your ancestral roots!",
+                "parent_name": "Lifestyle \u0026 Hobby",
+                "url": "https://www.macupdate.com/explore/categories/lifestyle-hobby/genealogy"
+              },
+              {
+                "id": 185,
+                "parent_id": 11,
+                "slug": "lifestyle-hobby/kids",
+                "name": "Kids",
+                "description": "Try out apps designed solely for children: from coloring booklets to programming for kids, all with parental controls in place.",
+                "parent_name": "Lifestyle \u0026 Hobby",
+                "url": "https://www.macupdate.com/explore/categories/lifestyle-hobby/kids"
+              },
+              {
+                "id": 187,
+                "parent_id": 11,
+                "slug": "lifestyle-hobby/religion",
+                "name": "Religion",
+                "description": "Religious apps will help you study sacred texts, holy books, and get prayer time alerts.",
+                "parent_name": "Lifestyle \u0026 Hobby",
+                "url": "https://www.macupdate.com/explore/categories/lifestyle-hobby/religion"
+              },
+              {
+                "id": 192,
+                "parent_id": 11,
+                "slug": "lifestyle-hobby/shopping",
+                "name": "Shopping",
+                "description": "Pick software to monitor the lowest prices, post eBay auctions, or easily check your delivery status.",
+                "parent_name": "Lifestyle \u0026 Hobby",
+                "url": "https://www.macupdate.com/explore/categories/lifestyle-hobby/shopping"
+              },
+              {
+                "id": 191,
+                "parent_id": 11,
+                "slug": "lifestyle-hobby/sports",
+                "name": "Sports",
+                "description": "Stay on top of the latest golf, basketball, or football updates, and track your sport stats.",
+                "parent_name": "Lifestyle \u0026 Hobby",
+                "url": "https://www.macupdate.com/explore/categories/lifestyle-hobby/sports"
+              },
+              {
+                "id": 188,
+                "parent_id": 11,
+                "slug": "lifestyle-hobby/transport",
+                "name": "Transport",
+                "description": "Check out our automotive app collection covering everything from car mileage to railroad DCC decoders.",
+                "parent_name": "Lifestyle \u0026 Hobby",
+                "url": "https://www.macupdate.com/explore/categories/lifestyle-hobby/transport"
+              },
+              {
+                "id": 186,
+                "parent_id": 11,
+                "slug": "lifestyle-hobby/weather",
+                "name": "Weather",
+                "description": "Is it time for an umbrella? Always know for sure with a convenient weather forecast app.",
+                "parent_name": "Lifestyle \u0026 Hobby",
+                "url": "https://www.macupdate.com/explore/categories/lifestyle-hobby/weather"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/lifestyle-hobby"
+          },
+          {
+            "id": 12,
+            "parent_id": null,
+            "slug": "medical-software",
+            "name": "Medical Software",
+            "description": "Find apps for easier medical imaging, anatomy modeling, or exploring the entire medication dataset.",
+            "url": "https://www.macupdate.com/explore/categories/medical-software"
+          },
+          {
+            "id": 13,
+            "parent_id": null,
+            "slug": "music-audio",
+            "name": "Music \u0026 Audio",
+            "description": "Record, stream, mix, or share your tracks with these great audio apps. Designed both for music fans and pro artists.",
+            "children": [
+              {
+                "id": 206,
+                "parent_id": 13,
+                "slug": "music-audio/audio-converters",
+                "name": "Audio Converters",
+                "description": "Easily convert audio files of any format, be it MP3, AAC, WAV, CD, MIDI or others.",
+                "parent_name": "Music \u0026 Audio",
+                "url": "https://www.macupdate.com/explore/categories/music-audio/audio-converters"
+              },
+              {
+                "id": 203,
+                "parent_id": 13,
+                "slug": "music-audio/audio-players",
+                "name": "Audio Players",
+                "description": "Stream the music you love with a variety of audio players. Surely, there’s one here to match you in the list.",
+                "parent_name": "Music \u0026 Audio",
+                "url": "https://www.macupdate.com/explore/categories/music-audio/audio-players"
+              },
+              {
+                "id": 210,
+                "parent_id": 13,
+                "slug": "music-audio/audio-plug-ins",
+                "name": "Audio Plug-ins",
+                "description": "Change the way tracks sound with these audio plug-in apps. Visualize tracks, add synths, improve the playback quality, or something else — you decide.",
+                "parent_name": "Music \u0026 Audio",
+                "url": "https://www.macupdate.com/explore/categories/music-audio/audio-plug-ins"
+              },
+              {
+                "id": 205,
+                "parent_id": 13,
+                "slug": "music-audio/audio-production",
+                "name": "Audio Production",
+                "description": "Master songwriting and polish your tracks with these apps. Create new tracks, mix them, add samples or audio loops until you achieve pure audio perfection.",
+                "parent_name": "Music \u0026 Audio",
+                "url": "https://www.macupdate.com/explore/categories/music-audio/audio-production"
+              },
+              {
+                "id": 204,
+                "parent_id": 13,
+                "slug": "music-audio/audio-recording",
+                "name": "Audio Recording",
+                "description": "Record sound from any source using specific audio recording apps that make this process as simple as possible.",
+                "parent_name": "Music \u0026 Audio",
+                "url": "https://www.macupdate.com/explore/categories/music-audio/audio-recording"
+              },
+              {
+                "id": 209,
+                "parent_id": 13,
+                "slug": "music-audio/audio-streaming",
+                "name": "Audio Streaming",
+                "description": "Stream your own music library of favorite songs with these handy apps.",
+                "parent_name": "Music \u0026 Audio",
+                "url": "https://www.macupdate.com/explore/categories/music-audio/audio-streaming"
+              },
+              {
+                "id": 211,
+                "parent_id": 13,
+                "slug": "music-audio/dj-mixing-software",
+                "name": "DJ Mixing Software",
+                "description": "Easily mix, scratch, and remix multiple tracks using these DJ apps.",
+                "parent_name": "Music \u0026 Audio",
+                "url": "https://www.macupdate.com/explore/categories/music-audio/dj-mixing-software"
+              },
+              {
+                "id": 208,
+                "parent_id": 13,
+                "slug": "music-audio/music-management",
+                "name": "Music Management",
+                "description": "Organize your audio files with these tag editors, duplicate removers, and other great music apps.",
+                "parent_name": "Music \u0026 Audio",
+                "url": "https://www.macupdate.com/explore/categories/music-audio/music-management"
+              },
+              {
+                "id": 207,
+                "parent_id": 13,
+                "slug": "music-audio/radio",
+                "name": "Radio",
+                "description": "Tune in to easily listen to radio broadcasts from all over the world.",
+                "parent_name": "Music \u0026 Audio",
+                "url": "https://www.macupdate.com/explore/categories/music-audio/radio"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/music-audio"
+          },
+          {
+            "id": 14,
+            "parent_id": null,
+            "slug": "photography",
+            "name": "Photography",
+            "description": "Capture any moment and give imperfect photos a second life. Edit them, blend them, and polish until you have transformed them into works of art.",
+            "children": [
+              {
+                "id": 222,
+                "parent_id": 14,
+                "slug": "photography/album-collage-makers",
+                "name": "Album \u0026 Collage Makers",
+                "description": "Use these apps to save precious moments in nice photo albums or stunning collages.",
+                "parent_name": "Photography",
+                "url": "https://www.macupdate.com/explore/categories/photography/album-collage-makers"
+              },
+              {
+                "id": 223,
+                "parent_id": 14,
+                "slug": "photography/image-capture",
+                "name": "Image Capture",
+                "description": "Save any moment by snapping the screen. Use these photo booth and screenshot apps.",
+                "parent_name": "Photography",
+                "url": "https://www.macupdate.com/explore/categories/photography/image-capture"
+              },
+              {
+                "id": 218,
+                "parent_id": 14,
+                "slug": "photography/image-converters",
+                "name": "Image Converters",
+                "description": "Change the picture format, or easily convert entire webpages and docs into ones.",
+                "parent_name": "Photography",
+                "url": "https://www.macupdate.com/explore/categories/photography/image-converters"
+              },
+              {
+                "id": 217,
+                "parent_id": 14,
+                "slug": "photography/photo-editors",
+                "name": "Photo Editors",
+                "description": "Tweak your photos from okay to awesome. Use free and paid image editors to crop, resize, and transform your pictures into art pieces.",
+                "parent_name": "Photography",
+                "url": "https://www.macupdate.com/explore/categories/photography/photo-editors"
+              },
+              {
+                "id": 219,
+                "parent_id": 14,
+                "slug": "photography/photo-management",
+                "name": "Photo Management",
+                "description": "When tons of photos pile up, you can try these apps to organize them, remove duplicates, or resize your images.",
+                "parent_name": "Photography",
+                "url": "https://www.macupdate.com/explore/categories/photography/photo-management"
+              },
+              {
+                "id": 216,
+                "parent_id": 14,
+                "slug": "photography/photo-viewers",
+                "name": "Photo Viewers",
+                "description": "Pick a lightweight app to view your images faster or edit them while on the go.",
+                "parent_name": "Photography",
+                "url": "https://www.macupdate.com/explore/categories/photography/photo-viewers"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/photography"
+          },
+          {
+            "id": 15,
+            "parent_id": null,
+            "slug": "productivity",
+            "name": "Productivity",
+            "description": "The secret to getting more done is having an organized assistant by your side. Boost your productivity with these amazing apps.",
+            "children": [
+              {
+                "id": 231,
+                "parent_id": 15,
+                "slug": "productivity/calendars",
+                "name": "Calendars",
+                "description": "Pick the best calendar for you — from tiny ones in the menu bar to desktop apps with automatic sync and task overview.",
+                "parent_name": "Productivity",
+                "url": "https://www.macupdate.com/explore/categories/productivity/calendars"
+              },
+              {
+                "id": 230,
+                "parent_id": 15,
+                "slug": "productivity/contact-management",
+                "name": "Contact Management",
+                "description": "Manage all your address books from one place. Add photos, back up contacts, and never lose anything important.",
+                "parent_name": "Productivity",
+                "url": "https://www.macupdate.com/explore/categories/productivity/contact-management"
+              },
+              {
+                "id": 235,
+                "parent_id": 15,
+                "slug": "productivity/mind-mapping",
+                "name": "Mind Mapping",
+                "description": "Outline, visualize, and spark creative ideas in your brainstorming sessions with these apps.",
+                "parent_name": "Productivity",
+                "url": "https://www.macupdate.com/explore/categories/productivity/mind-mapping"
+              },
+              {
+                "id": 228,
+                "parent_id": 15,
+                "slug": "productivity/personal-information-managers",
+                "name": "Personal Information Managers",
+                "description": "Keep your notes, thoughts, and to-dos organized in a digital scrapbook.",
+                "parent_name": "Productivity",
+                "url": "https://www.macupdate.com/explore/categories/productivity/personal-information-managers"
+              },
+              {
+                "id": 232,
+                "parent_id": 15,
+                "slug": "productivity/presentations",
+                "name": "Presentations",
+                "description": "Make an impact with a presentation app or screen recorder that ensures your slides stand out.",
+                "parent_name": "Productivity",
+                "url": "https://www.macupdate.com/explore/categories/productivity/presentations"
+              },
+              {
+                "id": 151,
+                "parent_id": 15,
+                "slug": "productivity/reminders",
+                "name": "Reminders",
+                "description": "Simple reminder apps will make sure you don’t miss a break or any important news.",
+                "parent_name": "Productivity",
+                "url": "https://www.macupdate.com/explore/categories/productivity/reminders"
+              },
+              {
+                "id": 229,
+                "parent_id": 15,
+                "slug": "productivity/text-editors",
+                "name": "Text Editors",
+                "description": "Write it down: we’ve got everything from plain text editors to notepads with advanced features.",
+                "parent_name": "Productivity",
+                "url": "https://www.macupdate.com/explore/categories/productivity/text-editors"
+              },
+              {
+                "id": 226,
+                "parent_id": 15,
+                "slug": "productivity/time-management",
+                "name": "Time Management",
+                "description": "Stay focused: these time tracker apps will help you take a break and concentrate on what really matters.",
+                "parent_name": "Productivity",
+                "url": "https://www.macupdate.com/explore/categories/productivity/time-management"
+              },
+              {
+                "id": 227,
+                "parent_id": 15,
+                "slug": "productivity/word-processing",
+                "name": "Word Processing",
+                "description": "Pick a minimalist typing app or a complete office suite in our collection of free and paid word processors.",
+                "parent_name": "Productivity",
+                "url": "https://www.macupdate.com/explore/categories/productivity/word-processing"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/productivity"
+          },
+          {
+            "id": 16,
+            "parent_id": null,
+            "slug": "security",
+            "name": "Security",
+            "description": "Protect what matters most. Safeguard your personal files and data with reliable security apps that do the job effectively.",
+            "children": [
+              {
+                "id": 261,
+                "parent_id": 16,
+                "slug": "security/access-control",
+                "name": "Access Control",
+                "description": "Manage access to specific files or folders. Set a password to open them or simply hide the secret ones using these apps.",
+                "parent_name": "Security",
+                "url": "https://www.macupdate.com/explore/categories/security/access-control"
+              },
+              {
+                "id": 254,
+                "parent_id": 16,
+                "slug": "security/ad-blockers",
+                "name": "Ad Blockers",
+                "description": "Set your browsing free from annoying banners with a handy ad blocker app.",
+                "parent_name": "Security",
+                "url": "https://www.macupdate.com/explore/categories/security/ad-blockers"
+              },
+              {
+                "id": 251,
+                "parent_id": 16,
+                "slug": "security/antiviruses",
+                "name": "Antiviruses",
+                "description": "Protect your Mac from adware, spyware, or other viruses using powerful antiviruses that remove infections easily.",
+                "parent_name": "Security",
+                "url": "https://www.macupdate.com/explore/categories/security/antiviruses"
+              },
+              {
+                "id": 255,
+                "parent_id": 16,
+                "slug": "security/encryption-decryption",
+                "name": "Encryption \u0026 Decryption",
+                "description": "Use complex security algorithms to protect top secret files or entire disks.",
+                "parent_name": "Security",
+                "url": "https://www.macupdate.com/explore/categories/security/encryption-decryption"
+              },
+              {
+                "id": 253,
+                "parent_id": 16,
+                "slug": "security/firewall",
+                "name": "Firewall",
+                "description": "Firewall apps will make sure your Mac stays safe from undesirables looking to access your device through the internet.",
+                "parent_name": "Security",
+                "url": "https://www.macupdate.com/explore/categories/security/firewall"
+              },
+              {
+                "id": 258,
+                "parent_id": 16,
+                "slug": "security/locker-apps",
+                "name": "Locker Apps",
+                "description": "Automatically lock your Mac screen when you go away, or remotely unlock it with these apps.",
+                "parent_name": "Security",
+                "url": "https://www.macupdate.com/explore/categories/security/locker-apps"
+              },
+              {
+                "id": 248,
+                "parent_id": 16,
+                "slug": "security/network-security",
+                "name": "Network Security",
+                "description": "Find apps to track how apps consume your traffic, apply web filters, or need extra Wi-Fi protection.",
+                "parent_name": "Security",
+                "url": "https://www.macupdate.com/explore/categories/security/network-security"
+              },
+              {
+                "id": 250,
+                "parent_id": 16,
+                "slug": "security/parental-control",
+                "name": "Parental Control",
+                "description": "You don’t need to limit the internet time for your kids or protect them from explicit content. These apps can do that for you.",
+                "parent_name": "Security",
+                "url": "https://www.macupdate.com/explore/categories/security/parental-control"
+              },
+              {
+                "id": 260,
+                "parent_id": 16,
+                "slug": "security/password-generators",
+                "name": "Password Generators",
+                "description": "No more 123456 or qwerty. Automatically create strong passwords that will take virtually million years to hack.",
+                "parent_name": "Security",
+                "url": "https://www.macupdate.com/explore/categories/security/password-generators"
+              },
+              {
+                "id": 249,
+                "parent_id": 16,
+                "slug": "security/password-managers",
+                "name": "Password Managers",
+                "description": "Why keep forgetting passwords? Instead, use these special apps to store and manage them securely.",
+                "parent_name": "Security",
+                "url": "https://www.macupdate.com/explore/categories/security/password-managers"
+              },
+              {
+                "id": 256,
+                "parent_id": 16,
+                "slug": "security/privacy",
+                "name": "Privacy",
+                "description": "Securely delete your history, stop tracking cookies, and make sure your private matters stay private.",
+                "parent_name": "Security",
+                "url": "https://www.macupdate.com/explore/categories/security/privacy"
+              },
+              {
+                "id": 259,
+                "parent_id": 16,
+                "slug": "security/vpn",
+                "name": "VPN",
+                "description": "Change your virtual location and browse anonymously through a VPN (Virtual Private Network) client.",
+                "parent_name": "Security",
+                "url": "https://www.macupdate.com/explore/categories/security/vpn"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/security"
+          },
+          {
+            "id": 17,
+            "parent_id": null,
+            "slug": "system-utilities",
+            "name": "System Utilities",
+            "description": "Kit out your system’s productivity with must-have utilities. Clean junk files, manage files, back up or recover them, diagnose system issues, and try out a better clock or context menu.",
+            "children": [
+              {
+                "id": 264,
+                "parent_id": 17,
+                "slug": "system-utilities/automation",
+                "name": "Automation",
+                "description": "Make routine tasks simple. Launch apps, manage your clipboard, or change hotkeys.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/automation"
+              },
+              {
+                "id": 273,
+                "parent_id": 17,
+                "slug": "system-utilities/backup",
+                "name": "Backup",
+                "description": "Sync all your files so you never lose an important one ever again. Try these backup, disk cloning, and recovery utilities.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/backup"
+              },
+              {
+                "id": 269,
+                "parent_id": 17,
+                "slug": "system-utilities/cleaners",
+                "name": "Cleaners",
+                "description": "Delete useless junk files that waste your disk space with automatic cleaning software.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/cleaners"
+              },
+              {
+                "id": 282,
+                "parent_id": 17,
+                "slug": "system-utilities/clocks-alarms",
+                "name": "Clocks \u0026 Alarms",
+                "description": "Whether you want a full-screen clock, a floating one, or a tiny timekeeper in your menu bar, we’ve got a lot of choices.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/clocks-alarms"
+              },
+              {
+                "id": 285,
+                "parent_id": 17,
+                "slug": "system-utilities/compression",
+                "name": "Compression",
+                "description": "Archive, zip, or extract files until you’re happy with their size and protection level.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/compression"
+              },
+              {
+                "id": 281,
+                "parent_id": 17,
+                "slug": "system-utilities/contextual-menus",
+                "name": "Contextual Menus",
+                "description": "Add enhanced features to customize your contextual menu with these apps.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/contextual-menus"
+              },
+              {
+                "id": 277,
+                "parent_id": 17,
+                "slug": "system-utilities/diagnostic-software",
+                "name": "Diagnostic Software",
+                "description": "Use these apps to monitor your disk of battery health and quickly troubleshoot them.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/diagnostic-software"
+              },
+              {
+                "id": 275,
+                "parent_id": 17,
+                "slug": "system-utilities/disk-utilities",
+                "name": "Disk Utilities",
+                "description": "Try special software to read NTFS drives, format your disk, erase data, or do anything with your storage.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/disk-utilities"
+              },
+              {
+                "id": 265,
+                "parent_id": 17,
+                "slug": "system-utilities/emulation",
+                "name": "Emulation",
+                "description": "Run software from a completely different device on your Mac, or emulate the command line in Terminal.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/emulation"
+              },
+              {
+                "id": 268,
+                "parent_id": 17,
+                "slug": "system-utilities/file-management",
+                "name": "File Management",
+                "description": "Tweak Finder or try a smart app to organize files the way you want to.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/file-management"
+              },
+              {
+                "id": 274,
+                "parent_id": 17,
+                "slug": "system-utilities/font-managers",
+                "name": "Font Managers",
+                "description": "Whether you need to quickly find fonts, or repair the damaged ones, there’s a good app for that.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/font-managers"
+              },
+              {
+                "id": 270,
+                "parent_id": 17,
+                "slug": "system-utilities/maintenance-optimization",
+                "name": "Maintenance \u0026 Optimization",
+                "description": "Boost your Mac performance and do things faster with effective optimization apps.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/maintenance-optimization"
+              },
+              {
+                "id": 272,
+                "parent_id": 17,
+                "slug": "system-utilities/network-software",
+                "name": "Network Software",
+                "description": "Check your Wi-Fi status and troubleshoot wireless networks using these apps.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/network-software"
+              },
+              {
+                "id": 266,
+                "parent_id": 17,
+                "slug": "system-utilities/printer-scanner-drivers",
+                "name": "Printer \u0026 Scanner Drivers",
+                "description": "Keep your docs sorted with specific printer drivers or scanner software.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/printer-scanner-drivers"
+              },
+              {
+                "id": 267,
+                "parent_id": 17,
+                "slug": "system-utilities/recovery",
+                "name": "Recovery",
+                "description": "Check out apps that easily recover lost or deleted files on your Mac or iPhone.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/recovery"
+              },
+              {
+                "id": 283,
+                "parent_id": 17,
+                "slug": "system-utilities/synchronization",
+                "name": "Synchronization",
+                "description": "Sync your contacts, files, or folders across multiple browsers or devices.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/synchronization"
+              },
+              {
+                "id": 276,
+                "parent_id": 17,
+                "slug": "system-utilities/usb-drivers",
+                "name": "USB Drivers",
+                "description": "Make a wireless mouse, tablet, or keyboard fully compatible with your Mac.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/usb-drivers"
+              },
+              {
+                "id": 280,
+                "parent_id": 17,
+                "slug": "system-utilities/virtualization",
+                "name": "Virtualization",
+                "description": "Use these apps to launch Windows apps alongside Mac apps without rebooting.",
+                "parent_name": "System Utilities",
+                "url": "https://www.macupdate.com/explore/categories/system-utilities/virtualization"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/system-utilities"
+          },
+          {
+            "id": 18,
+            "parent_id": null,
+            "slug": "travel",
+            "name": "Travel",
+            "description": "Whether it’s just a vacation, a 5-day trek, or a world cruise, you’ll get the most out of each with reliable travel apps.",
+            "children": [
+              {
+                "id": 297,
+                "parent_id": 18,
+                "slug": "travel/navigation",
+                "name": "Navigation",
+                "description": "You won’t get lost with a good GPS mapping app that displays a correct route.",
+                "parent_name": "Travel",
+                "url": "https://www.macupdate.com/explore/categories/travel/navigation"
+              },
+              {
+                "id": 298,
+                "parent_id": 18,
+                "slug": "travel/transport-planning",
+                "name": "Transport Planning",
+                "description": "Pro travelers use pro apps to schedule the pilot flight route or even model railways.",
+                "parent_name": "Travel",
+                "url": "https://www.macupdate.com/explore/categories/travel/transport-planning"
+              },
+              {
+                "id": 299,
+                "parent_id": 18,
+                "slug": "travel/trip-planners",
+                "name": "Trip Planners",
+                "description": "Plan your next trip with a handy app that keeps all journey info in one place.",
+                "parent_name": "Travel",
+                "url": "https://www.macupdate.com/explore/categories/travel/trip-planners"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/travel"
+          },
+          {
+            "id": 19,
+            "parent_id": null,
+            "slug": "video",
+            "name": "Video",
+            "description": "Create personal movies or fun clips with the help of video software suitable for both beginners and pros.",
+            "children": [
+              {
+                "id": 309,
+                "parent_id": 19,
+                "slug": "video/dvd-software",
+                "name": "DVD Software",
+                "description": "Rip and convert DVDs to a variety of formats with these apps.",
+                "parent_name": "Video",
+                "url": "https://www.macupdate.com/explore/categories/video/dvd-software"
+              },
+              {
+                "id": 308,
+                "parent_id": 19,
+                "slug": "video/video-converters",
+                "name": "Video Converters",
+                "description": "Video won’t open? Change its format or recode it with one of these converter apps.",
+                "parent_name": "Video",
+                "url": "https://www.macupdate.com/explore/categories/video/video-converters"
+              },
+              {
+                "id": 305,
+                "parent_id": 19,
+                "slug": "video/video-editors",
+                "name": "Video Editors",
+                "description": "Create, render, and cut stunning videos using free and paid editor apps.",
+                "parent_name": "Video",
+                "url": "https://www.macupdate.com/explore/categories/video/video-editors"
+              },
+              {
+                "id": 306,
+                "parent_id": 19,
+                "slug": "video/video-players",
+                "name": "Video Players",
+                "description": "Pick a media player that supports virtually any format to help enhance your viewing experience.",
+                "parent_name": "Video",
+                "url": "https://www.macupdate.com/explore/categories/video/video-players"
+              },
+              {
+                "id": 311,
+                "parent_id": 19,
+                "slug": "video/video-recording",
+                "name": "Video Recording",
+                "description": "If you need to capture what’s happening on your desktop screen or on your webcam, here are the apps to help.",
+                "parent_name": "Video",
+                "url": "https://www.macupdate.com/explore/categories/video/video-recording"
+              },
+              {
+                "id": 313,
+                "parent_id": 19,
+                "slug": "video/video-streaming",
+                "name": "Video Streaming",
+                "description": "Stream video over the air to any device. The apps below can work this magic.",
+                "parent_name": "Video",
+                "url": "https://www.macupdate.com/explore/categories/video/video-streaming"
+              }
+            ],
+            "url": "https://www.macupdate.com/explore/categories/video"
+          }
+        ]
+      },
+      "appData": {
+        "success": true,
+        "timestamp": 1738040239,
+        "error": null,
+        "data": {
+          "id": 51283,
+          "group_id": 51283,
+          "title": "Wondershare MobileTrans",
+          "title_slug": "wondershare-mobiletrans",
+          "seo_title": "Wondershare MobileTrans",
+          "description": "\u003cp\u003e\u003cstrong\u003e\u003ca href=\"https://www.tkqlhce.com/click-100137959-14436562?url=https%3A%2F%2Fmobiletrans.wondershare.com%2F\" target=\"_blank\"\u003eWondershare MobileTrans\u003c/a\u003e\u003c/strong\u003e - The Best Secure Phone to Phone Transfer Solution, MobileTrans is software that helps 500,000+ users to transfer, backup and restore data between phones. Move everything with clicks, save your time now!\u003c/p\u003e",
+          "short_description": "One-click phone to phone content transfer.",
+          "version": "1.3.16",
+          "date": {
+            "date": "2025-01-27T11:08:20+00:00",
+            "timestamp": 1737976100
+          },
+          "requirements": {
+            "minimum_os": "macOS 12",
+            "supports_macos": true,
+            "supports_ios": false,
+            "is_64bit": true,
+            "is_32bit": false,
+            "architectures": ["Intel 64", "Apple Silicon"],
+            "other_list": ["Memory: Minimum 4 GB of RAM", "Free Disk Space: Minimum 4GB", "Web Browsers for the Sophos Home Dashboard: Google Chrome or Mozilla Firefox"],
+            "other": "\u003cul\u003e\u003cli\u003eMemory: Minimum 4 GB of RAM\u003c/li\u003e\u003cli\u003eFree Disk Space: Minimum 4GB\u003c/li\u003e\u003cli\u003eWeb Browsers for the Sophos Home Dashboard: Google Chrome or Mozilla Firefox\u003c/li\u003e\u003c/ul\u003e"
+          },
+          "file_size": 3174,
+          "release_notes": "\u003cp\u003e\u003cstrong\u003eNote:\u003c/strong\u003e The downloadable file is an installer that will install the product when opened.\u003c/p\u003e \r\n\r\n\u003cul\u003e \r\n\t\u003cli\u003eRelease notes were unavailable when this listing was updated.\u003c/li\u003e \r\n\u003c/ul\u003e",
+          "bundle_identifiers": [
+            "com.wondershare.mobiletrans"
+          ],
+          "price": {
+            "value": 4499,
+            "currency": "USD"
+          },
+          "download_count": 3698,
+          "download_url": {
+            "type": "app_page",
+            "url": "https://www.tkqlhce.com/click-100137959-14436562?url=https%3A%2F%2Fmobiletrans.wondershare.com%2F"
+          },
+          "origin_download_url": "https://download.wondershare.com/inst/mobiletrans_setup_full5794.dmg",
+          "purchase_url": "https://www.tkqlhce.com/click-100137959-14436562?url=https%3A%2F%2Fmobiletrans.wondershare.com%2F",
+          "video": [
+            
+          ],
+          "logo": {
+            "id": 2052380,
+            "source": "https://dl2.macupdate.com/images/icons256/51283.png?time=1654528024",
+            "s_webp": "https://static.macupdate.com/products/51283/s/wondershare-mobiletrans-logo.webp?v=1654528025",
+            "s_png": "https://static.macupdate.com/products/51283/s/wondershare-mobiletrans-logo.png?v=1654528025",
+            "m_webp": "https://static.macupdate.com/products/51283/m/wondershare-mobiletrans-logo.webp?v=1654528026",
+            "m_png": "https://static.macupdate.com/products/51283/m/wondershare-mobiletrans-logo.png?v=1654528026",
+            "l_webp": "https://static.macupdate.com/products/51283/l/wondershare-mobiletrans-logo.webp?v=1654528027",
+            "l_png": "https://static.macupdate.com/products/51283/l/wondershare-mobiletrans-logo.png?v=1654528027",
+            "created": {
+              "date": "2022-06-06 19:07:19.000000",
+              "timezone_type": 1,
+              "timezone": "+00:00"
+            },
+            "updated": {
+              "date": "2022-06-06 19:07:19.000000",
+              "timezone_type": 1,
+              "timezone": "+00:00"
+            }
+          },
+          "screenshots": [
+            {
+              "id": 2052381,
+              "source": "https://screenshots.macupdate.com/JPG/51283/51283_1654528019_scr.jpg",
+              "s_webp": null,
+              "s_png": null,
+              "m_webp": "https://static.macupdate.com/screenshots/337806/m/wondershare-mobiletrans-screenshot.webp?v=1654528041",
+              "m_png": "https://static.macupdate.com/screenshots/337806/m/wondershare-mobiletrans-screenshot.png?v=1654528042",
+              "l_webp": null,
+              "l_png": null,
+              "created": {
+                "date": "2022-06-06 19:07:27.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              },
+              "updated": {
+                "date": "2022-06-06 19:07:27.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              }
+            },
+            {
+              "id": 2052382,
+              "source": "https://screenshots.macupdate.com/JPG/51283/51283_1654528019_scr_uc1.jpg",
+              "s_webp": null,
+              "s_png": null,
+              "m_webp": "https://static.macupdate.com/screenshots/337807/m/wondershare-mobiletrans-screenshot.webp?v=1654528049",
+              "m_png": "https://static.macupdate.com/screenshots/337807/m/wondershare-mobiletrans-screenshot.png?v=1654528050",
+              "l_webp": null,
+              "l_png": null,
+              "created": {
+                "date": "2022-06-06 19:07:36.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              },
+              "updated": {
+                "date": "2022-06-06 19:07:36.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              }
+            },
+            {
+              "id": 2052383,
+              "source": "https://screenshots.macupdate.com/JPG/51283/51283_1654528019_scr_uc2.jpg",
+              "s_webp": null,
+              "s_png": null,
+              "m_webp": "https://static.macupdate.com/screenshots/337808/m/wondershare-mobiletrans-screenshot.webp?v=1654528057",
+              "m_png": "https://static.macupdate.com/screenshots/337808/m/wondershare-mobiletrans-screenshot.png?v=1654528058",
+              "l_webp": null,
+              "l_png": null,
+              "created": {
+                "date": "2022-06-06 19:07:38.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              },
+              "updated": {
+                "date": "2022-06-06 19:07:38.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              }
+            },
+            {
+              "id": 2052384,
+              "source": "https://screenshots.macupdate.com/JPG/51283/51283_1654528019_scr_uc3.jpg",
+              "s_webp": null,
+              "s_png": null,
+              "m_webp": "https://static.macupdate.com/screenshots/337809/m/wondershare-mobiletrans-screenshot.webp?v=1654528061",
+              "m_png": "https://static.macupdate.com/screenshots/337809/m/wondershare-mobiletrans-screenshot.png?v=1654528062",
+              "l_webp": null,
+              "l_png": null,
+              "created": {
+                "date": "2022-06-06 19:07:53.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              },
+              "updated": {
+                "date": "2022-06-06 19:07:53.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              }
+            },
+            {
+              "id": 2052385,
+              "source": "https://screenshots.macupdate.com/JPG/51283/51283_1654528019_scr_uc4.jpg",
+              "s_webp": null,
+              "s_png": null,
+              "m_webp": "https://static.macupdate.com/screenshots/337810/m/wondershare-mobiletrans-screenshot.webp?v=1654528075",
+              "m_png": "https://static.macupdate.com/screenshots/337810/m/wondershare-mobiletrans-screenshot.png?v=1654528077",
+              "l_webp": null,
+              "l_png": null,
+              "created": {
+                "date": "2022-06-06 19:08:05.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              },
+              "updated": {
+                "date": "2022-06-06 19:08:05.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              }
+            }
+          ],
+          "rating": 2.75,
+          "review_count": 2,
+          "rate_count": 2,
+          "license": "Shareware",
+          "vendor": {
+            "id": 49,
+            "slug": "wondershare",
+            "title": "Wondershare",
+            "description": "Wondershare is a global provider of integrated lifestyle technology solutions spanning creativity, video enhancing, diag...",
+            "logo": {
+              "id": 1817236,
+              "source": "https://static.macupdate.com/dump/vendor/49.png",
+              "s_webp": null,
+              "s_png": null,
+              "m_webp": "https://static.macupdate.com/vendor/49/m/wondershare-logo.webp?v=1600761591",
+              "m_png": "https://static.macupdate.com/vendor/49/m/wondershare-logo.png?v=1600761591",
+              "l_webp": null,
+              "l_png": null,
+              "created": {
+                "date": "2020-09-22 11:59:51.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              },
+              "updated": {
+                "date": "2020-09-22 11:59:51.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              }
+            }
+          },
+          "computed_rank": 10429,
+          "category": {
+            "id": 17,
+            "parent_id": null,
+            "parent_name": null,
+            "slug": "system-utilities",
+            "google_slug": "UtilitiesApplication",
+            "name": "System Utilities",
+            "description": "Kit out your system’s productivity with must-have utilities. Clean junk files, manage files, back up or recover them, diagnose system issues, and try out a better clock or context menu.",
+            "url": "https://www.macupdate.com/explore/categories/system-utilities",
+            "children": null
+          },
+          "subcategory": {
+            "id": 268,
+            "parent_id": 17,
+            "parent_name": "System Utilities",
+            "slug": "system-utilities/file-management",
+            "google_slug": null,
+            "name": "File Management",
+            "description": "Tweak Finder or try a smart app to organize files the way you want to.",
+            "url": "https://www.macupdate.com/explore/categories/system-utilities/file-management",
+            "children": null
+          },
+          "unsupported": null,
+          "redirect": null,
+          "faq": null,
+          "learn_more": null,
+          "is_following": false,
+          "is_mud_install_available": true,
+          "versions": [
+            {
+              "id": 60843,
+              "group_id": 51283,
+              "title_slug": "wondershare-mobiletrans",
+              "file_size": 46797,
+              "download_count": 2863,
+              "version": "6.9.4",
+              "download_url": {
+                "type": "download_file",
+                "url": "http://download.wondershare.com/cbs_down/mobiletrans_full1692.dmg"
+              },
+              "price": {
+                "value": 3996,
+                "currency": "USD"
+              },
+              "date": {
+                "date": "2017-11-28T18:41:36+00:00",
+                "timestamp": 1511894496
+              },
+              "min_os": "Mac OS X 10.6.8"
+            }
+          ],
+          "last_scan": null,
+          "monetization": [
+            {
+              "id": 5,
+              "type": "Paid",
+              "title": "One-Time Purchase"
+            }
+          ],
+          "member_rating": null,
+          "member_review": null,
+          "author_review": null,
+          "review_report": {
+            "rating": [
+              {
+                "question_id": 1,
+                "x_question_title": "Value",
+                "x_total_rating": "1.0"
+              },
+              {
+                "question_id": 2,
+                "x_question_title": "Ease of use",
+                "x_total_rating": "1.0"
+              },
+              {
+                "question_id": 3,
+                "x_question_title": "Features",
+                "x_total_rating": "2.0"
+              },
+              {
+                "question_id": 4,
+                "x_question_title": "Reliability",
+                "x_total_rating": "1.0"
+              },
+              {
+                "question_id": 5,
+                "x_question_title": "Customer support",
+                "x_total_rating": "1.0"
+              }
+            ],
+            "label_positive": [
+              {
+                "label_id": 8,
+                "x_label_title": "Privacy",
+                "x_label_weight": "1.0000",
+                "x_label_counter": 1
+              }
+            ],
+            "label_negative": [
+              {
+                "label_id": 1,
+                "x_label_title": "Performance",
+                "x_label_weight": "-1.0000",
+                "x_label_counter": 1
+              },
+              {
+                "label_id": 2,
+                "x_label_title": "Stability",
+                "x_label_weight": "-1.0000",
+                "x_label_counter": 1
+              },
+              {
+                "label_id": 13,
+                "x_label_title": "Social media integration",
+                "x_label_weight": "-1.0000",
+                "x_label_counter": 1
+              }
+            ]
+          },
+          "developer": {
+            "name": "Wondershare",
+            "url": "https://mobiletrans.wondershare.com/",
+            "support": "https://support.wondershare.com/",
+            "email": "hulf@wondershare.cn"
+          },
+          "nofollow": {
+            "purchase": "1",
+            "developer": "1"
+          },
+          "is_hidden": 0,
+          "is_beta": 0,
+          "custom_url": null,
+          "custom_favicon": null,
+          "abTest": false
+        }
+      },
+      "appComments": {
+        "total": 2,
+        "data": [
+          {
+            "id": 686377,
+            "review_id": null,
+            "parent_id": null,
+            "to_comment_id": null,
+            "member": {
+              "id": 943461,
+              "name": "RaymondM4682",
+              "avatar": null
+            },
+            "to_member": null,
+            "type": "member",
+            "version": "1.1.0",
+            "answer": "c\u0026#039;est nul cela ne fonctionne jamais on me demande de payer à nouveau alors que je viens de l\u0026#039;acheter et je ne peut pas m\u0026#039;en servir",
+            "rating": null,
+            "children_count": 0,
+            "vote_total": 0,
+            "vote_up": 0,
+            "vote_down": 0,
+            "vote_member": null,
+            "suspicious": null,
+            "created_at": {
+              "date": "2021-07-14 18:40:30.000000",
+              "timezone_type": 3,
+              "timezone": "UTC"
+            }
+          },
+          {
+            "id": 543488,
+            "review_id": null,
+            "parent_id": null,
+            "to_comment_id": null,
+            "member": {
+              "id": 83783,
+              "name": "Xenophile",
+              "avatar": {
+                "id": 1246660,
+                "entity": "mu_members",
+                "entity_id": 83783,
+                "type": "avatar",
+                "name": "83783",
+                "source": "https://www.macupdate.com/images/user_img/83783",
+                "small_webp": null,
+                "small_png": null,
+                "medium_webp": null,
+                "medium_png": null,
+                "large_webp": null,
+                "large_png": null,
+                "priority": null,
+                "active": true,
+                "created_at": "2019-12-25 15:44:39",
+                "updated_at": "2019-12-25 15:44:39"
+              }
+            },
+            "to_member": null,
+            "type": "member",
+            "version": "3.1.0.11",
+            "answer": "Beware!  I tried Wondershare's MobileGo which claims to backup Android phones and Tablets to a Mac.  It never recognized a Nexus 7 2013 tablet running kitkat, which it claims to support.  \n\nWhile the MobileGo app appears to do nothing, it installs and launches Wondershare Helper Compact  in the background.  This app connects to download.wondershare.com and proceeds to suck down vast amounts of data.  I use a special OS X volume to test new software, so I let it go for half an hour, and all it did was suck down data at about 2 KB/s.  The MobileGo app never did anything except ask me to register.",
+            "rating": null,
+            "children_count": 0,
+            "vote_total": "2",
+            "vote_up": "2",
+            "vote_down": "0",
+            "vote_member": null,
+            "suspicious": null,
+            "created_at": {
+              "date": "2014-06-12 00:51:57.000000",
+              "timezone_type": 3,
+              "timezone": "UTC"
+            }
+          }
+        ]
+      },
+      "appQuickRatings": {
+        "total": 2,
+        "data": [
+          {
+            "id": 681592,
+            "member": {
+              "id": 3134526,
+              "name": "fahadrzaa123",
+              "avatar": null
+            },
+            "rating": 5,
+            "app_version": null,
+            "created_at": {
+              "date": "2020-12-11 04:35:00.000000",
+              "timezone_type": 3,
+              "timezone": "UTC"
+            }
+          },
+          {
+            "id": 656599,
+            "member": {
+              "id": 2710610,
+              "name": "jwfw",
+              "avatar": null
+            },
+            "rating": 0.5,
+            "app_version": null,
+            "created_at": {
+              "date": "2018-09-05 23:41:21.000000",
+              "timezone_type": 3,
+              "timezone": "UTC"
+            }
+          }
+        ]
+      },
+      "similarAppFromServer": {
+        "total": 2,
+        "data": [
+          {
+            "id": 26317,
+            "title": "SyncMate",
+            "title_slug": "syncmate",
+            "short_description": "Sync your Mac with Android, iOS, other Macs, and more.",
+            "logo": {
+              "id": 2048184,
+              "source": "https://dl2.macupdate.com/images/icons256/26317.png?time=1653118261",
+              "s_webp": "https://static.macupdate.com/products/26317/s/syncmate-logo.webp?v=1653118263",
+              "s_png": "https://static.macupdate.com/products/26317/s/syncmate-logo.png?v=1653118263",
+              "m_webp": "https://static.macupdate.com/products/26317/m/syncmate-logo.webp?v=1653118264",
+              "m_png": "https://static.macupdate.com/products/26317/m/syncmate-logo.png?v=1653118265",
+              "l_webp": "https://static.macupdate.com/products/26317/l/syncmate-logo.webp?v=1653118265",
+              "l_png": "https://static.macupdate.com/products/26317/l/syncmate-logo.png?v=1653118266",
+              "created": {
+                "date": "2022-05-21 11:31:06.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              },
+              "updated": {
+                "date": "2022-05-21 11:31:06.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              }
+            },
+            "version": "8.5.504",
+            "price": {
+              "value": 3996,
+              "currency": "USD"
+            },
+            "rating": 3.3567,
+            "sim_prod_id": 172346,
+            "root_product_id": 51283,
+            "votes": 1,
+            "bump_up": 1,
+            "bump_down": 0,
+            "current_member_vote": null
+          },
+          {
+            "id": 49739,
+            "title": "Android File Transfer",
+            "title_slug": "android-file-transfer",
+            "short_description": "Gives access to MTP devices over USB.",
+            "logo": {
+              "id": 1639035,
+              "source": "https://dl2.macupdate.com/images/icons256/49739.png",
+              "s_webp": "https://static.macupdate.com/products/49739/s/android-file-transfer-logo.webp?v=1580225777",
+              "s_png": "https://static.macupdate.com/products/49739/s/android-file-transfer-logo.png?v=1580225778",
+              "m_webp": "https://static.macupdate.com/products/49739/m/android-file-transfer-logo.webp?v=1580225778",
+              "m_png": "https://static.macupdate.com/products/49739/m/android-file-transfer-logo.png?v=1580225779",
+              "l_webp": "https://static.macupdate.com/products/49739/l/android-file-transfer-logo.webp?v=1580225779",
+              "l_png": "https://static.macupdate.com/products/49739/l/android-file-transfer-logo.png?v=1580225780",
+              "created": {
+                "date": "2020-01-28 20:36:20.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              },
+              "updated": {
+                "date": "2020-01-28 20:36:20.000000",
+                "timezone_type": 1,
+                "timezone": "+00:00"
+              }
+            },
+            "version": "1.0.12",
+            "price": {
+              "value": 0,
+              "currency": "USD"
+            },
+            "rating": 2.5333,
+            "sim_prod_id": 162082,
+            "root_product_id": 51283,
+            "votes": -1,
+            "bump_up": 0,
+            "bump_down": -1,
+            "current_member_vote": null
+          }
+        ]
+      },
+      "publishedReviews": {
+        "total": 0,
+        "data": [
+          
+        ]
+      },
+      "vendorApps": null
+    }
+  },
+  "page": "/app",
+  "query": {
+    "id": "51283",
+    "slug": "wondershare-mobiletrans"
+  },
+  "buildId": "3.94.0.66bb4a4",
+  "runtimeConfig": {
+    "appBaseUrl": "https://www.macupdate.com",
+    "downloadBaseUrl": "https://download.macupdate.com",
+    "memberBaseUrl": "https://member.macupdate.com",
+    "apiURL": "https://api.macupdate.com",
+    "appURL": "/app/mac/",
+    "searchURL": "/v1/find/mac/",
+    "secureInstallerUrl": "https://d.macupdate.com/secure/MacUpdateSafetyScanner.dmg?appid=",
+    "fbAppId": 2284330441618679,
+    "XClientId": "vijgyb6v1gjc7m6l",
+    "googleCaptchaSecret": "6LcvZbcqAAAAACakItnO1PLf-Yb7Jts04Rf4Yj5U",
+    "googleInvisibleCaptchaSecret": "6LcCZLcqAAAAACUsPB7fzRzToyctFUMxdmidBUr0",
+    "googleClientId": "1002244991304-7qi4jsqdkj1qnpmppb797mkg58f5liem.apps.googleusercontent.com",
+    "ga4MeasurementId": "G-XXN905B2V6",
+    "exitPopupUrl": "https://hooks.zapier.com/hooks/catch/5322288/ooofhg9/",
+    "sentry_backup": {
+      "dsn": "https://b23a6d79c09c43d3bbf0c15f7435ea67@sentry.cloudmccloud.com/78",
+      "token": "42d39c94893f11e9818a123a5fe7d271"
+    },
+    "sentry": {
+      "dsn": "",
+      "token": ""
+    },
+    "images": {
+      "avatarWebp": "https://static.macupdate.com/site/img/member/avatar/default.webp",
+      "avatarPng": "https://static.macupdate.com/site/img/member/avatar/default.png",
+      "appLogoWebp": "https://static.macupdate.com/site/img/app/logo/default.webp",
+      "appLogoPng": "https://static.macupdate.com/site/img/app/logo/default.png"
+    },
+    "appId": {
+      "clario": 62644
+    },
+    "softonic": {
+      "publisherName": "macupdate"
+    }
+  },
+  "isFallback": false,
+  "customServer": true,
+  "gip": true,
+  "appGip": true,
+  "scriptLoader": [
+    
+  ]
+}
