@@ -7,10 +7,7 @@
   "build": {
     "env": {
       "NODE_VERSION": "20",
-      "NEXT_TELEMETRY_DISABLED": "1",
-      "DATABASE_URL": "@supabase_postgres_prisma_url",
-      "DIRECT_DATABASE_URL": "@supabase_postgres_url_non_pooling",
-      "NEXTAUTH_SECRET": "qpglHgESc6Ogwn3ij1sjgw0omxPgbK1Ttola/ACHF2E="
+      "NEXT_TELEMETRY_DISABLED": "1"
     }
   },
   "git": {
