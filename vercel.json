@@ -1,1 +1,25 @@
- 
+{
+  "version": 2,
+  "buildCommand": "rm -rf node_modules/.prisma && prisma generate && next build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "builds": [
+    {
+      "src": "next.config.js",
+      "use": "@vercel/next"
+    }
+  ],
+  "build": {
+    "env": {
+      "NODE_VERSION": "20",
+      "NEXT_TELEMETRY_DISABLED": "1"
+    }
+  },
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  },
+  "regions": ["iad1"]
+} 
