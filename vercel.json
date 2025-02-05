@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "prisma generate && prisma db push --accept-data-loss && next build",
+  "buildCommand": "export DATABASE_URL=\"$DATABASE_URL\" && export DIRECT_DATABASE_URL=\"$DIRECT_DATABASE_URL\" && prisma generate && prisma db push --accept-data-loss && next build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
