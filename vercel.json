@@ -1,14 +1,13 @@
 {
   "version": 2,
-  "buildCommand": "prisma generate && prisma db push --accept-data-loss && next build",
+  "buildCommand": "rm -rf node_modules/.prisma && export DATABASE_URL=\"$SUPABASE_POSTGRES_PRISMA_URL\" && export DIRECT_DATABASE_URL=\"$SUPABASE_POSTGRES_URL_NON_POOLING\" && prisma generate && prisma db push --accept-data-loss && next build",
+  "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
   "build": {
     "env": {
       "NODE_VERSION": "20",
-      "NEXT_TELEMETRY_DISABLED": "1",
-      "DATABASE_URL": "@supabase_postgres_prisma_url",
-      "DIRECT_DATABASE_URL": "@supabase_postgres_url_non_pooling"
+      "NEXT_TELEMETRY_DISABLED": "1"
     }
   },
   "git": {
@@ -17,4 +16,4 @@
     }
   },
   "regions": ["iad1"]
-}
+} 
