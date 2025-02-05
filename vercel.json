@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "rm -rf node_modules/.prisma && export DATABASE_URL=\"$SUPABASE_POSTGRES_PRISMA_URL\" && export DIRECT_DATABASE_URL=\"$SUPABASE_POSTGRES_URL_NON_POOLING\" && prisma generate && prisma db push --accept-data-loss && next build",
+  "buildCommand": "rm -rf node_modules/.prisma && prisma generate && prisma db push --accept-data-loss && next build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
