@@ -1,12 +1,8 @@
 import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth/config"
-import OpenAI from "openai"
+import { openai } from "@/lib/openai"
 import * as LucideIcons from "lucide-react"
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
 
 // Get valid icon names from Lucide
 const validIconNames = Object.keys(LucideIcons).filter(
@@ -54,15 +50,11 @@ Name: ${categoryName}${description ? `\nDescription: ${description}` : ''}`
 
     const suggestedIcon = completion.choices[0].message.content?.trim()
 
-    // Validate that the suggested icon exists in Lucide
     if (!suggestedIcon || !validIconNames.includes(suggestedIcon)) {
-      return NextResponse.json(
-        { error: "Invalid icon suggestion" },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: "Invalid icon suggestion" }, { status: 500 })
     }
 
-    return NextResponse.json({ suggestedIcon })
+    return NextResponse.json({ icon: suggestedIcon })
   } catch (error) {
     console.error("Error suggesting icon:", error)
     return NextResponse.json(

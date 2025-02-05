@@ -1,17 +1,9 @@
 import { NextResponse } from "next/server"
 import { getCurrentUser } from "@/lib/auth/utils"
-import OpenAI from 'openai'
+import { openai } from "@/lib/openai"
 
 // Debug log for API key (remove in production)
 console.log("OpenAI API Key:", process.env.OPENAI_API_KEY?.slice(0, 10) + "...")
-
-if (!process.env.OPENAI_API_KEY) {
-  throw new Error("Missing OPENAI_API_KEY environment variable")
-}
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY.trim(),
-})
 
 export async function POST(req: Request) {
   try {
@@ -25,12 +17,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Content is required" }, { status: 400 })
     }
 
-    if (!openai.apiKey) {
-      throw new Error("OpenAI API key not configured")
-    }
-
     // Debug log before making the API call
-    console.log("Making OpenAI API call with key:", openai.apiKey?.slice(0, 10) + "...")
+    console.log("Making OpenAI API call with key:", process.env.OPENAI_API_KEY?.slice(0, 10) + "...")
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4-turbo-preview",
