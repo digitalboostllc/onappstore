@@ -14,7 +14,8 @@
       "SUPABASE_JWT_SECRET": "@supabase_supabase_jwt_secret",
       "SUPABASE_POSTGRES_URL": "@supabase_postgres_url",
       "SUPABASE_POSTGRES_PRISMA_URL": "@supabase_postgres_prisma_url",
-      "SUPABASE_POSTGRES_URL_NON_POOLING": "@supabase_postgres_url_non_pooling"
+      "SUPABASE_POSTGRES_URL_NON_POOLING": "@supabase_postgres_url_non_pooling",
+      "NEXTAUTH_SECRET": "qpglHgESc6Ogwn3ij1sjgw0omxPgbK1Ttola/ACHF2E="
     }
   },
   "git": {
