@@ -1,9 +1,25 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from '@prisma/client'
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient()
+const prismaClientSingleton = () => {
+  return new PrismaClient({
+    log: ['error'],
+    datasources: {
+      db: {
+        url: process.env.SUPABASE_POSTGRES_PRISMA_URL
+      },
+    }
+  })
+}
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma 
+export const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+
+// Ensure the Prisma Client is properly cleaned up
+process.on('beforeExit', async () => {
+  await prisma.$disconnect()
+}) 
