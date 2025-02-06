@@ -16,22 +16,27 @@ const prismaClientSingleton = () => {
     }
   })
 
-  // Clean up prepared statements after each query
+  let retryCount = 0
+  const MAX_RETRIES = 1
+
+  // Handle prepared statements more efficiently
   client.$use(async (params, next) => {
     try {
-      // Always clean up before executing a new query
-      await client.$executeRaw`DEALLOCATE ALL`
       const result = await next(params)
       return result
     } catch (error) {
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
         (error.code === 'P2010' || error.code === '26000') &&
-        error.message.toLowerCase().includes('prepared statement')
+        error.message.toLowerCase().includes('prepared statement') &&
+        retryCount < MAX_RETRIES
       ) {
-        // If we get a prepared statement error, try one more time
+        retryCount++
+        // Only deallocate if we encounter a prepared statement error
         await client.$executeRaw`DEALLOCATE ALL`
-        return next(params)
+        const result = await next(params)
+        retryCount = 0
+        return result
       }
       throw error
     }
@@ -40,26 +45,24 @@ const prismaClientSingleton = () => {
   return client
 }
 
-// Always create a new instance in production
-if (process.env.NODE_ENV === 'production') {
-  delete globalForPrisma.prisma
-}
-
-export const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
+// In production, create a new instance for each request
+const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
 
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
 }
 
-// Cleanup handlers
+// Cleanup handler
 const cleanup = async () => {
   if (prisma) {
     try {
+      // Only deallocate on shutdown
       await prisma.$executeRaw`DEALLOCATE ALL`
     } catch (error) {
       console.error('Error deallocating statements:', error)
+    } finally {
+      await prisma.$disconnect()
     }
-    await prisma.$disconnect()
   }
 }
 
