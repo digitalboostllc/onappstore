@@ -23,7 +23,7 @@ const prismaClientSingleton = () => {
   // Middleware for handling database operations
   client.$use(async (params, next) => {
     try {
-      // Always deallocate in production before any operation
+      // In production, deallocate statements before any operation
       if (process.env.NODE_ENV === 'production') {
         try {
           await client.$executeRawUnsafe('DEALLOCATE ALL')
@@ -37,11 +37,11 @@ const prismaClientSingleton = () => {
       // Handle prepared statement errors
       if (
         (error instanceof Prisma.PrismaClientKnownRequestError && 
-         (error.code === 'P2010' || error.code === 'P2028')) ||
+         ['P2010', 'P2028'].includes(error.code)) ||
         (error instanceof Error && 
-         (error.message.includes('prepared statement') || 
-          error.message.includes('already exists'))) &&
-        retryCount < MAX_RETRIES
+         (error.message.includes('prepared statement') ||
+          error.message.includes('42P05')) &&
+         retryCount < MAX_RETRIES)
       ) {
         retryCount++
         console.warn(`Retrying query after error (attempt ${retryCount}):`, error)
@@ -56,6 +56,7 @@ const prismaClientSingleton = () => {
           console.warn('Failed to cleanup:', cleanupError)
         }
         
+        // Reset the query
         return next(params)
       }
 
@@ -67,12 +68,12 @@ const prismaClientSingleton = () => {
   return client
 }
 
-// Always create a new instance in production to avoid state conflicts
+// Always create a new instance in production to avoid state persistence
 export const prisma = process.env.NODE_ENV === 'production'
   ? prismaClientSingleton()
   : globalForPrisma.prisma ?? prismaClientSingleton()
 
-// Only cache the instance in development
+// Cache instance in development
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
 }
@@ -95,7 +96,7 @@ process.on('beforeExit', cleanup)
 process.on('SIGINT', cleanup)
 process.on('SIGTERM', cleanup)
 
-// Production error handling without exiting
+// Production error handling
 if (process.env.NODE_ENV === 'production') {
   process.on('uncaughtException', async (error) => {
     console.error('Uncaught Exception:', error)
@@ -107,7 +108,7 @@ if (process.env.NODE_ENV === 'production') {
     await cleanup()
   })
 } else {
-  // Development error handling with exit
+  // Development error handling
   process.on('uncaughtException', async (error) => {
     console.error('Uncaught Exception:', error)
     await cleanup()
