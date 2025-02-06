@@ -5,11 +5,14 @@ const globalForPrisma = global as unknown as {
 }
 
 const prismaClientSingleton = () => {
+  const connectionString = process.env.SUPABASE_POSTGRES_PRISMA_URL
+  const url = connectionString ? `${connectionString}?pgbouncer=true&connection_limit=1` : undefined
+
   return new PrismaClient({
     log: ['error'],
     datasources: {
       db: {
-        url: process.env.SUPABASE_POSTGRES_PRISMA_URL + "?pgbouncer=true&connection_limit=1"
+        url
       },
     }
   })
