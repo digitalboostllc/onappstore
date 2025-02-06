@@ -6,38 +6,74 @@ const globalForPrisma = globalThis as unknown as {
 
 const prismaClientSingleton = () => {
   const client = new PrismaClient({
-    log: ['error'],
+    log: ['error', 'warn'],
     datasources: {
       db: {
-        url: process.env.NODE_ENV === 'production' 
-          ? process.env.SUPABASE_POSTGRES_URL_NON_POOLING // Use non-pooling in production
-          : process.env.SUPABASE_POSTGRES_PRISMA_URL
+        url: process.env.NODE_ENV === 'production'
+          ? process.env.DATABASE_URL // Use pooled connection in production
+          : process.env.DATABASE_URL
       }
+    },
+    // Add connection timeout and pool configuration
+    connectionTimeout: 20000,
+    pool: {
+      min: 0,
+      max: 1
     }
-  })
+  } as Prisma.PrismaClientOptions)
 
   let retryCount = 0
-  const MAX_RETRIES = 1
+  const MAX_RETRIES = 3
+  const RETRY_DELAY = 100 // 100ms delay between retries
 
-  // Handle prepared statements more efficiently
+  // Middleware for handling database operations
   client.$use(async (params, next) => {
     try {
+      // For write operations, always deallocate
+      if (
+        process.env.NODE_ENV === 'production' &&
+        ['create', 'update', 'delete', 'upsert'].includes(params.action)
+      ) {
+        try {
+          await client.$executeRawUnsafe('DEALLOCATE ALL')
+        } catch (e) {
+          // Ignore errors from DEALLOCATE ALL
+          console.warn('Failed to deallocate statements:', e)
+        }
+      }
+      
       const result = await next(params)
       return result
     } catch (error) {
+      // Handle prepared statement errors
       if (
-        error instanceof Prisma.PrismaClientKnownRequestError &&
-        (error.code === 'P2010' || error.code === '26000') &&
-        error.message.toLowerCase().includes('prepared statement') &&
-        retryCount < MAX_RETRIES
+        (error instanceof Prisma.PrismaClientKnownRequestError && 
+         (error.code === 'P2010' || error.code === 'P2028')) ||
+        (error instanceof Error && 
+         (error.message.includes('prepared statement') || 
+          error.message.includes('Connection pool timeout')) &&
+         retryCount < MAX_RETRIES)
       ) {
         retryCount++
-        // Only deallocate if we encounter a prepared statement error
-        await client.$executeRaw`DEALLOCATE ALL`
-        const result = await next(params)
-        retryCount = 0
-        return result
+        console.warn(`Retrying query after error (attempt ${retryCount}):`, error)
+        
+        try {
+          // Try to deallocate all prepared statements
+          await client.$executeRawUnsafe('DEALLOCATE ALL')
+          // Force a new connection
+          await client.$disconnect()
+          await client.$connect()
+        } catch (cleanupError) {
+          console.warn('Failed to cleanup:', cleanupError)
+        }
+        
+        // Add a small delay before retry
+        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * retryCount)) // Exponential backoff
+        return next(params)
       }
+
+      // Reset retry count after max retries or different error
+      retryCount = 0
       throw error
     }
   })
@@ -45,9 +81,12 @@ const prismaClientSingleton = () => {
   return client
 }
 
-// In production, create a new instance for each request
-export const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
+// For production (Vercel serverless), always create a new instance
+export const prisma = process.env.NODE_ENV === 'production' 
+  ? prismaClientSingleton()
+  : (globalForPrisma.prisma ?? prismaClientSingleton())
 
+// Only cache the instance in development
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
 }
@@ -56,10 +95,9 @@ if (process.env.NODE_ENV !== 'production') {
 const cleanup = async () => {
   if (prisma) {
     try {
-      // Only deallocate on shutdown
-      await prisma.$executeRaw`DEALLOCATE ALL`
+      await prisma.$executeRawUnsafe('DEALLOCATE ALL')
     } catch (error) {
-      console.error('Error deallocating statements:', error)
+      console.warn('Error during cleanup:', error)
     } finally {
       await prisma.$disconnect()
     }
@@ -70,17 +108,31 @@ const cleanup = async () => {
 process.on('beforeExit', cleanup)
 process.on('SIGINT', cleanup)
 process.on('SIGTERM', cleanup)
-process.on('uncaughtException', async (error) => {
-  console.error('Uncaught Exception:', error)
-  await cleanup()
-  process.exit(1)
-})
 
-process.on('unhandledRejection', async (error) => {
-  console.error('Unhandled Rejection:', error)
-  await cleanup()
-  process.exit(1)
-})
+// Handle errors without exiting in production
+if (process.env.NODE_ENV === 'production') {
+  process.on('uncaughtException', async (error) => {
+    console.error('Uncaught Exception:', error)
+    await cleanup()
+  })
 
-// Export both default and named export
+  process.on('unhandledRejection', async (error) => {
+    console.error('Unhandled Rejection:', error)
+    await cleanup()
+  })
+} else {
+  // In development, exit on serious errors
+  process.on('uncaughtException', async (error) => {
+    console.error('Uncaught Exception:', error)
+    await cleanup()
+    process.exit(1)
+  })
+
+  process.on('unhandledRejection', async (error) => {
+    console.error('Unhandled Rejection:', error)
+    await cleanup()
+    process.exit(1)
+  })
+}
+
 export { prisma as default } 
