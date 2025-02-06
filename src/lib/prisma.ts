@@ -9,7 +9,9 @@ const prismaClientSingleton = () => {
     log: ['error'],
     datasources: {
       db: {
-        url: process.env.SUPABASE_POSTGRES_PRISMA_URL
+        url: process.env.NODE_ENV === 'production' 
+          ? process.env.SUPABASE_POSTGRES_URL_NON_POOLING // Use non-pooling in production
+          : process.env.SUPABASE_POSTGRES_PRISMA_URL
       }
     }
   })
@@ -17,19 +19,17 @@ const prismaClientSingleton = () => {
   // Clean up prepared statements after each query
   client.$use(async (params, next) => {
     try {
+      // Always clean up before executing a new query
+      await client.$executeRaw`DEALLOCATE ALL`
       const result = await next(params)
-      // Only deallocate if it's a query operation
-      if (params.action === 'queryRaw' || params.action === 'executeRaw') {
-        await client.$executeRaw`DEALLOCATE ALL`
-      }
       return result
     } catch (error) {
-      // If the error is about a non-existent prepared statement, retry the operation
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
-        error.code === 'P2010' &&
-        error.message.includes('prepared statement')
+        (error.code === 'P2010' || error.code === '26000') &&
+        error.message.toLowerCase().includes('prepared statement')
       ) {
+        // If we get a prepared statement error, try one more time
         await client.$executeRaw`DEALLOCATE ALL`
         return next(params)
       }
@@ -40,21 +40,25 @@ const prismaClientSingleton = () => {
   return client
 }
 
-// In production, create a new instance each time to avoid prepared statement issues
+// Always create a new instance in production
 if (process.env.NODE_ENV === 'production') {
   delete globalForPrisma.prisma
 }
 
 export const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
 }
 
 // Cleanup handlers
 const cleanup = async () => {
   if (prisma) {
-    await prisma.$executeRaw`DEALLOCATE ALL`
+    try {
+      await prisma.$executeRaw`DEALLOCATE ALL`
+    } catch (error) {
+      console.error('Error deallocating statements:', error)
+    }
     await prisma.$disconnect()
   }
 }
