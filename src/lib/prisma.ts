@@ -7,7 +7,11 @@ const globalForPrisma = globalThis as unknown as {
 const prismaClientSingleton = () => {
   return new PrismaClient({
     log: ['error'],
-    datasourceUrl: process.env.DATABASE_URL,
+    datasources: {
+      db: {
+        url: process.env.SUPABASE_POSTGRES_PRISMA_URL + "?pgbouncer=true&connection_limit=1&pool_timeout=0&connect_timeout=300"
+      },
+    }
   })
 }
 
