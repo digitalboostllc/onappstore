@@ -46,7 +46,7 @@ const prismaClientSingleton = () => {
 }
 
 // In production, create a new instance for each request
-const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
+export const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
 
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
@@ -82,4 +82,5 @@ process.on('unhandledRejection', async (error) => {
   process.exit(1)
 })
 
-export default prisma 
+// Export both default and named export
+export { prisma as default } 
