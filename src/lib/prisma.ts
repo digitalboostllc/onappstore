@@ -10,17 +10,11 @@ const prismaClientSingleton = () => {
     datasources: {
       db: {
         url: process.env.NODE_ENV === 'production'
-          ? process.env.SUPABASE_POSTGRES_PRISMA_URL // Use pooled connection in production
-          : process.env.SUPABASE_POSTGRES_PRISMA_URL // Use same URL in development
+          ? process.env.SUPABASE_POSTGRES_PRISMA_URL
+          : process.env.SUPABASE_POSTGRES_PRISMA_URL
       }
-    },
-    // Add connection timeout and pool configuration
-    connectionTimeout: 20000,
-    pool: {
-      min: 0,
-      max: 1
     }
-  } as Prisma.PrismaClientOptions)
+  })
 
   let retryCount = 0
   const MAX_RETRIES = 3
@@ -29,7 +23,7 @@ const prismaClientSingleton = () => {
   // Middleware for handling database operations
   client.$use(async (params, next) => {
     try {
-      // For write operations, always deallocate
+      // For write operations in production, deallocate statements
       if (
         process.env.NODE_ENV === 'production' &&
         ['create', 'update', 'delete', 'upsert'].includes(params.action)
@@ -37,42 +31,35 @@ const prismaClientSingleton = () => {
         try {
           await client.$executeRawUnsafe('DEALLOCATE ALL')
         } catch (e) {
-          // Ignore errors from DEALLOCATE ALL
           console.warn('Failed to deallocate statements:', e)
         }
       }
       
-      const result = await next(params)
-      return result
+      return await next(params)
     } catch (error) {
       // Handle prepared statement errors
       if (
         (error instanceof Prisma.PrismaClientKnownRequestError && 
-         (error.code === 'P2010' || error.code === 'P2028')) ||
+         error.code === 'P2010') ||
         (error instanceof Error && 
-         (error.message.includes('prepared statement') || 
-          error.message.includes('Connection pool timeout')) &&
+         error.message.includes('prepared statement') &&
          retryCount < MAX_RETRIES)
       ) {
         retryCount++
         console.warn(`Retrying query after error (attempt ${retryCount}):`, error)
         
         try {
-          // Try to deallocate all prepared statements
           await client.$executeRawUnsafe('DEALLOCATE ALL')
-          // Force a new connection
           await client.$disconnect()
           await client.$connect()
         } catch (cleanupError) {
           console.warn('Failed to cleanup:', cleanupError)
         }
         
-        // Add a small delay before retry
-        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * retryCount)) // Exponential backoff
+        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * retryCount))
         return next(params)
       }
 
-      // Reset retry count after max retries or different error
       retryCount = 0
       throw error
     }
@@ -81,12 +68,12 @@ const prismaClientSingleton = () => {
   return client
 }
 
-// For production (Vercel serverless), always create a new instance
-export const prisma = process.env.NODE_ENV === 'production' 
+// In production, create a new instance for each request
+export const prisma = process.env.NODE_ENV === 'production'
   ? prismaClientSingleton()
-  : (globalForPrisma.prisma ?? prismaClientSingleton())
+  : globalForPrisma.prisma ?? prismaClientSingleton()
 
-// Only cache the instance in development
+// Cache instance in development
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
 }
@@ -104,12 +91,12 @@ const cleanup = async () => {
   }
 }
 
-// Handle cleanup on various process events
+// Handle cleanup on process events
 process.on('beforeExit', cleanup)
 process.on('SIGINT', cleanup)
 process.on('SIGTERM', cleanup)
 
-// Handle errors without exiting in production
+// Production error handling
 if (process.env.NODE_ENV === 'production') {
   process.on('uncaughtException', async (error) => {
     console.error('Uncaught Exception:', error)
@@ -121,7 +108,7 @@ if (process.env.NODE_ENV === 'production') {
     await cleanup()
   })
 } else {
-  // In development, exit on serious errors
+  // Development error handling
   process.on('uncaughtException', async (error) => {
     console.error('Uncaught Exception:', error)
     await cleanup()
