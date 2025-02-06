@@ -23,11 +23,8 @@ const prismaClientSingleton = () => {
   // Middleware for handling database operations
   client.$use(async (params, next) => {
     try {
-      // For write operations in production, deallocate statements
-      if (
-        process.env.NODE_ENV === 'production' &&
-        ['create', 'update', 'delete', 'upsert'].includes(params.action)
-      ) {
+      // Always deallocate in production before any operation
+      if (process.env.NODE_ENV === 'production') {
         try {
           await client.$executeRawUnsafe('DEALLOCATE ALL')
         } catch (e) {
@@ -40,23 +37,25 @@ const prismaClientSingleton = () => {
       // Handle prepared statement errors
       if (
         (error instanceof Prisma.PrismaClientKnownRequestError && 
-         error.code === 'P2010') ||
+         (error.code === 'P2010' || error.code === 'P2028')) ||
         (error instanceof Error && 
-         error.message.includes('prepared statement') &&
-         retryCount < MAX_RETRIES)
+         (error.message.includes('prepared statement') || 
+          error.message.includes('already exists'))) &&
+        retryCount < MAX_RETRIES
       ) {
         retryCount++
         console.warn(`Retrying query after error (attempt ${retryCount}):`, error)
         
         try {
+          // More aggressive cleanup
           await client.$executeRawUnsafe('DEALLOCATE ALL')
           await client.$disconnect()
+          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * retryCount))
           await client.$connect()
         } catch (cleanupError) {
           console.warn('Failed to cleanup:', cleanupError)
         }
         
-        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * retryCount))
         return next(params)
       }
 
@@ -68,12 +67,12 @@ const prismaClientSingleton = () => {
   return client
 }
 
-// In production, create a new instance for each request
+// Always create a new instance in production to avoid state conflicts
 export const prisma = process.env.NODE_ENV === 'production'
   ? prismaClientSingleton()
   : globalForPrisma.prisma ?? prismaClientSingleton()
 
-// Cache instance in development
+// Only cache the instance in development
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
 }
@@ -96,7 +95,7 @@ process.on('beforeExit', cleanup)
 process.on('SIGINT', cleanup)
 process.on('SIGTERM', cleanup)
 
-// Production error handling
+// Production error handling without exiting
 if (process.env.NODE_ENV === 'production') {
   process.on('uncaughtException', async (error) => {
     console.error('Uncaught Exception:', error)
@@ -108,7 +107,7 @@ if (process.env.NODE_ENV === 'production') {
     await cleanup()
   })
 } else {
-  // Development error handling
+  // Development error handling with exit
   process.on('uncaughtException', async (error) => {
     console.error('Uncaught Exception:', error)
     await cleanup()
