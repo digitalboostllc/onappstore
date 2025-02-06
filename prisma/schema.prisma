@@ -5,11 +5,10 @@ generator client {
 }
 
 datasource db {
-  provider     = "postgresql"
-  url          = env("SUPABASE_POSTGRES_PRISMA_URL")
-  directUrl    = env("SUPABASE_POSTGRES_URL_NON_POOLING")
-  schemas      = ["public"]
-  relationMode = "foreignKeys"
+  provider  = "postgresql"
+  url       = env("SUPABASE_POSTGRES_PRISMA_URL") + "?pgbouncer=true&connection_limit=1"
+  directUrl = env("SUPABASE_POSTGRES_URL_NON_POOLING")
+  schemas   = ["public"]
 }
 
 model User {

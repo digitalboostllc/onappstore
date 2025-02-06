@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 
-const globalForPrisma = globalThis as unknown as {
+const globalForPrisma = global as unknown as {
   prisma: PrismaClient | undefined
 }
 
@@ -9,7 +9,7 @@ const prismaClientSingleton = () => {
     log: ['error'],
     datasources: {
       db: {
-        url: process.env.SUPABASE_POSTGRES_PRISMA_URL + "?pgbouncer=true&connection_limit=1&pool_timeout=0&connect_timeout=300"
+        url: process.env.SUPABASE_POSTGRES_PRISMA_URL + "?pgbouncer=true&connection_limit=1"
       },
     }
   })
@@ -17,31 +17,71 @@ const prismaClientSingleton = () => {
 
 const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
 
+export default prisma
+
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
 }
 
-export { prisma }
-
+// Proper connection management for production
 if (process.env.NODE_ENV === 'production') {
-  prisma.$connect()
-    .then(() => {
-      console.log('Successfully connected to database')
-    })
-    .catch((error: Error) => {
-      console.error('Error connecting to database:', error)
-    })
+  let isConnected = false
 
+  const connectWithRetry = async (retries = 5) => {
+    try {
+      if (!isConnected) {
+        await prisma.$connect()
+        isConnected = true
+        console.log('Successfully connected to database')
+      }
+    } catch (error) {
+      console.error('Error connecting to database:', error)
+      if (retries > 0) {
+        console.log(`Retrying connection... (${retries} attempts left)`)
+        await new Promise(resolve => setTimeout(resolve, 2000))
+        await connectWithRetry(retries - 1)
+      }
+    }
+  }
+
+  // Initial connection
+  connectWithRetry()
+
+  // Proper cleanup and reconnection handling
   const cleanup = async () => {
     try {
-      await prisma.$disconnect()
+      if (isConnected) {
+        await prisma.$disconnect()
+        isConnected = false
+        console.log('Successfully disconnected from database')
+      }
     } catch (error) {
       console.error('Error during cleanup:', error)
     }
   }
 
-  // Handle cleanup
-  process.on('beforeExit', cleanup)
-  process.on('SIGINT', cleanup)
-  process.on('SIGTERM', cleanup)
+  // Handle various termination signals
+  const signals = ['SIGTERM', 'SIGINT', 'beforeExit'] as const
+  signals.forEach(signal => {
+    process.on(signal, async () => {
+      await cleanup()
+      if (signal !== 'beforeExit') {
+        process.exit(0)
+      }
+    })
+  })
+
+  // Handle uncaught errors
+  process.on('uncaughtException', async (error) => {
+    console.error('Uncaught exception:', error)
+    await cleanup()
+    process.exit(1)
+  })
+
+  // Handle unhandled promise rejections
+  process.on('unhandledRejection', async (error) => {
+    console.error('Unhandled rejection:', error)
+    await cleanup()
+    process.exit(1)
+  })
 } 
