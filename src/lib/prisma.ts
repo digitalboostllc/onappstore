@@ -14,18 +14,11 @@ const prismaClientSingleton = () => {
     }
   })
 
-  // Soft reset on each request to clean up prepared statements
+  // Clean up prepared statements and reset the connection after each query
   client.$use(async (params, next) => {
-    try {
-      const result = await next(params)
-      return result
-    } catch (error: any) {
-      if (error?.message?.includes('prepared statement')) {
-        await client.$disconnect()
-        await client.$connect()
-      }
-      throw error
-    }
+    const result = await next(params)
+    await client.$queryRaw`DEALLOCATE ALL`
+    return result
   })
 
   return client
