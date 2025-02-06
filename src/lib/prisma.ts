@@ -1,7 +1,11 @@
 import { PrismaClient } from '@prisma/client'
 
-const globalForPrisma = global as unknown as {
-  prisma: PrismaClient | undefined
+declare global {
+  namespace NodeJS {
+    interface Global {
+      prisma: PrismaClient | undefined
+    }
+  }
 }
 
 const prismaClientSingleton = () => {
@@ -18,12 +22,10 @@ const prismaClientSingleton = () => {
   })
 }
 
-const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
-
-export default prisma
+export const prisma = global.prisma ?? prismaClientSingleton()
 
 if (process.env.NODE_ENV !== 'production') {
-  globalForPrisma.prisma = prisma
+  global.prisma = prisma
 }
 
 // Proper connection management for production
