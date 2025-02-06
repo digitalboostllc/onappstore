@@ -18,6 +18,14 @@ const mainNavItems = [
     title: "Categories",
     href: "/categories",
   },
+  {
+    title: "Collections",
+    href: "/collections",
+  },
+  {
+    title: "Submit",
+    href: "/submit",
+  },
 ]
 
 export function MobileNav() {

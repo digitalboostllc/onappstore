@@ -87,10 +87,10 @@ export function UserNav({ user }: UserNavProps) {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>
-              <Link href="/dashboard">
+              <Link href="/dashboard/apps">
                 <Cloud className="mr-2 h-4 w-4" />
-                Dashboard
-                <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                My Apps
+                <DropdownMenuShortcut>⌘A</DropdownMenuShortcut>
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
