@@ -1,28 +1,20 @@
 import { PrismaClient } from '@prisma/client'
 
-let prisma: PrismaClient
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined
+}
 
-if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient({
+const prismaClientSingleton = () => {
+  return new PrismaClient({
     log: ['error'],
-    datasources: {
-      db: {
-        url: process.env.SUPABASE_POSTGRES_PRISMA_URL + "?pgbouncer=true&connection_limit=1&pool_timeout=0&connect_timeout=300"
-      },
-    }
+    datasourceUrl: process.env.DATABASE_URL,
   })
-} else {
-  if (!(global as any).prisma) {
-    (global as any).prisma = new PrismaClient({
-      log: ['error'],
-      datasources: {
-        db: {
-          url: process.env.SUPABASE_POSTGRES_PRISMA_URL + "?pgbouncer=true&connection_limit=1&pool_timeout=0&connect_timeout=300"
-        },
-      }
-    })
-  }
-  prisma = (global as any).prisma
+}
+
+const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
+
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma
 }
 
 export { prisma }
@@ -36,17 +28,16 @@ if (process.env.NODE_ENV === 'production') {
       console.error('Error connecting to database:', error)
     })
 
-  process.on('beforeExit', async () => {
-    await prisma.$disconnect()
-  })
+  const cleanup = async () => {
+    try {
+      await prisma.$disconnect()
+    } catch (error) {
+      console.error('Error during cleanup:', error)
+    }
+  }
 
-  process.on('SIGINT', async () => {
-    await prisma.$disconnect()
-    process.exit(0)
-  })
-
-  process.on('SIGTERM', async () => {
-    await prisma.$disconnect()
-    process.exit(0)
-  })
+  // Handle cleanup
+  process.on('beforeExit', cleanup)
+  process.on('SIGINT', cleanup)
+  process.on('SIGTERM', cleanup)
 } 
