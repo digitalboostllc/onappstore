@@ -10,8 +10,8 @@ const prismaClientSingleton = () => {
     datasources: {
       db: {
         url: process.env.NODE_ENV === 'production'
-          ? process.env.DATABASE_URL // Use pooled connection in production
-          : process.env.DATABASE_URL
+          ? process.env.SUPABASE_POSTGRES_PRISMA_URL // Use pooled connection in production
+          : process.env.SUPABASE_POSTGRES_PRISMA_URL // Use same URL in development
       }
     },
     // Add connection timeout and pool configuration
