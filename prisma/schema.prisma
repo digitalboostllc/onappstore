@@ -1,6 +1,7 @@
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["multiSchema"]
+  engineType      = "binary"
 }
 
 datasource db {
@@ -8,6 +9,7 @@ datasource db {
   url       = env("SUPABASE_POSTGRES_PRISMA_URL")
   directUrl = env("SUPABASE_POSTGRES_URL_NON_POOLING")
   schemas   = ["public"]
+  relationMode = "foreignKeys"
 }
 
 model User {
