@@ -68,14 +68,7 @@ const prismaClientSingleton = () => {
         url: databaseUrl
       }
     },
-    log: ['error', 'warn'],
-    // Optimize for serverless environment
-    __internal: {
-      engine: {
-        binaryTarget: ['native', 'rhel-openssl-1.0.x'].includes(process.env.VERCEL_REGION || '') ? 'rhel-openssl-1.0.x' : 'native',
-        cwd: '/tmp'
-      }
-    }
+    log: ['error', 'warn']
   })
 
   // Middleware for handling database operations
