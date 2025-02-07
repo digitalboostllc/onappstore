@@ -1,67 +1,67 @@
-[17:30:31.550] Running build in Washington, D.C., USA (East) – iad1
-[17:30:31.653] Cloning github.com/digitalboostllc/onappstore (Branch: main, Commit: b68cd07)
-[17:30:32.234] Cloning completed: 581.000ms
-[17:30:41.975] Restored build cache from previous deployment (8GHbPQpkyJGnNhHCcdDBq25efxgV)
-[17:30:42.121] Running "vercel build"
-[17:30:43.803] Vercel CLI 40.1.0
-[17:30:45.012] Running "install" command: `npm install`...
-[17:30:48.545] 
-[17:30:48.545] up to date, audited 1126 packages in 2s
-[17:30:48.546] 
-[17:30:48.546] 253 packages are looking for funding
-[17:30:48.546]   run `npm fund` for details
-[17:30:48.549] 
-[17:30:48.549] found 0 vulnerabilities
-[17:30:48.591] Detected Next.js version: 15.1.5
-[17:30:48.591] Running "prisma generate && prisma db push --accept-data-loss && next build"
-[17:30:48.971] Prisma schema loaded from prisma/schema.prisma
-[17:30:49.479] 
-[17:30:49.479] ✔ Generated Prisma Client (v6.3.1) to ./node_modules/@prisma/client in 253ms
-[17:30:49.480] 
-[17:30:49.480] Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
-[17:30:49.480] 
-[17:30:49.480] Tip: Curious about the SQL queries Prisma ORM generates? Optimize helps you enhance your visibility: https://pris.ly/tip-2-optimize
-[17:30:49.480] 
-[17:30:50.099] Prisma schema loaded from prisma/schema.prisma
-[17:30:50.107] Datasource "db": PostgreSQL database "postgres", schemas "public" at "aws-0-us-east-1.pooler.supabase.com:5432"
-[17:30:50.497] 
-[17:30:50.497] The database is already in sync with the Prisma schema.
-[17:30:50.497] 
-[17:30:50.498] Running generate... (Use --skip-generate to skip the generators)
-[17:30:50.738] [2K[1A[2K[GRunning generate... - Prisma Client
-[17:30:51.045] [2K[1A[2K[G✔ Generated Prisma Client (v6.3.1) to ./node_modules/@prisma/client in 306ms
-[17:30:51.046] 
-[17:30:52.824]    ▲ Next.js 15.1.5
-[17:30:52.824]    - Experiments (use with caution):
-[17:30:52.824]      · cpus
-[17:30:52.824] 
-[17:30:52.843]    Creating an optimized production build ...
-[17:31:21.770]  ✓ Compiled successfully
-[17:31:21.772]    Skipping linting
-[17:31:21.772]    Checking validity of types ...
-[17:31:38.888]    Collecting page data ...
-[17:31:39.509] (node:498) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
-[17:31:39.509] (Use `node --trace-deprecation ...` to show where the warning was created)
-[17:31:39.717] OpenAI API Key: sk-proj-0P...
-[17:31:45.922]    Generating static pages (0/56) ...
-[17:31:46.820]    Generating static pages (14/56) 
-[17:31:46.821]    Generating static pages (28/56) 
-[17:31:46.821] OpenAI API Key: sk-proj-0P...
-[17:31:46.821] (node:529) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
-[17:31:46.821] (Use `node --trace-deprecation ...` to show where the warning was created)
-[17:31:46.901] Error occurred prerendering page "/_not-found". Read more: https://nextjs.org/docs/messages/prerender-error
-[17:31:46.902] TypeError: Cannot destructure property 'data' of '(0 , z.useSession)(...)' as it is undefined.
-[17:31:46.902]     at E (/vercel/path0/.next/server/chunks/2550.js:1:8414)
-[17:31:46.902]     at nO (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:45959)
-[17:31:46.902]     at nI (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:47734)
-[17:31:46.902]     at nI (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:62515)
-[17:31:46.902]     at nL (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:65533)
-[17:31:46.902]     at nN (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:63164)
-[17:31:46.902]     at nB (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:68946)
-[17:31:46.902]     at nD (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:67647)
-[17:31:46.902]     at nL (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:65800)
-[17:31:46.902]     at nN (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:63164)
-[17:31:46.902] Export encountered an error on /_not-found/page: /_not-found, exiting the build.
-[17:31:46.921]  ⨯ Static worker exited with code: 1 and signal: null
-[17:31:46.955] Error: Command "prisma generate && prisma db push --accept-data-loss && next build" exited with 1
-[17:31:47.426] 
+[17:35:39.107] Running build in Washington, D.C., USA (East) – iad1
+[17:35:39.210] Cloning github.com/digitalboostllc/onappstore (Branch: main, Commit: aabf3c9)
+[17:35:39.627] Cloning completed: 417.000ms
+[17:35:48.472] Restored build cache from previous deployment (8GHbPQpkyJGnNhHCcdDBq25efxgV)
+[17:35:48.562] Running "vercel build"
+[17:35:51.095] Vercel CLI 40.1.0
+[17:35:52.499] Running "install" command: `npm install`...
+[17:35:54.879] 
+[17:35:54.880] up to date, audited 1126 packages in 2s
+[17:35:54.880] 
+[17:35:54.880] 253 packages are looking for funding
+[17:35:54.880]   run `npm fund` for details
+[17:35:54.881] 
+[17:35:54.881] found 0 vulnerabilities
+[17:35:54.920] Detected Next.js version: 15.1.5
+[17:35:54.920] Running "prisma generate && prisma db push --accept-data-loss && next build"
+[17:35:55.304] Prisma schema loaded from prisma/schema.prisma
+[17:35:55.807] 
+[17:35:55.808] ✔ Generated Prisma Client (v6.3.1) to ./node_modules/@prisma/client in 253ms
+[17:35:55.808] 
+[17:35:55.808] Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+[17:35:55.808] 
+[17:35:55.808] Tip: Want to react to database changes in your app as they happen? Discover how with Pulse: https://pris.ly/tip-1-pulse
+[17:35:55.808] 
+[17:35:56.396] Prisma schema loaded from prisma/schema.prisma
+[17:35:56.404] Datasource "db": PostgreSQL database "postgres", schemas "public" at "aws-0-us-east-1.pooler.supabase.com:5432"
+[17:35:56.628] 
+[17:35:56.628] The database is already in sync with the Prisma schema.
+[17:35:56.628] 
+[17:35:56.629] Running generate... (Use --skip-generate to skip the generators)
+[17:35:56.861] [2K[1A[2K[GRunning generate... - Prisma Client
+[17:35:57.115] [2K[1A[2K[G✔ Generated Prisma Client (v6.3.1) to ./node_modules/@prisma/client in 253ms
+[17:35:57.115] 
+[17:35:58.512]    ▲ Next.js 15.1.5
+[17:35:58.512]    - Experiments (use with caution):
+[17:35:58.512]      · cpus
+[17:35:58.512] 
+[17:35:58.533]    Creating an optimized production build ...
+[17:36:27.661]  ✓ Compiled successfully
+[17:36:27.663]    Skipping linting
+[17:36:27.663]    Checking validity of types ...
+[17:36:45.125]    Collecting page data ...
+[17:36:45.788] (node:510) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[17:36:45.788] (Use `node --trace-deprecation ...` to show where the warning was created)
+[17:36:46.003] OpenAI API Key: sk-proj-0P...
+[17:36:52.132]    Generating static pages (0/56) ...
+[17:36:53.334]    Generating static pages (14/56) 
+[17:36:53.334]    Generating static pages (28/56) 
+[17:36:53.335] (node:535) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[17:36:53.335] (Use `node --trace-deprecation ...` to show where the warning was created)
+[17:36:53.335] OpenAI API Key: sk-proj-0P...
+[17:36:53.384] Error occurred prerendering page "/dashboard/collections". Read more: https://nextjs.org/docs/messages/prerender-error
+[17:36:53.384] TypeError: Cannot destructure property 'data' of '(0 , z.useSession)(...)' as it is undefined.
+[17:36:53.384]     at E (/vercel/path0/.next/server/chunks/2550.js:1:8414)
+[17:36:53.385]     at nO (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:45959)
+[17:36:53.385]     at nI (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:47734)
+[17:36:53.385]     at nI (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:62515)
+[17:36:53.385]     at nL (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:65533)
+[17:36:53.385]     at nN (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:63164)
+[17:36:53.385]     at nB (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:68946)
+[17:36:53.385]     at nD (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:67647)
+[17:36:53.385]     at nL (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:65800)
+[17:36:53.385]     at nN (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:20:63164)
+[17:36:53.385] Export encountered an error on /(dashboard)/dashboard/collections/page: /dashboard/collections, exiting the build.
+[17:36:53.416]  ⨯ Static worker exited with code: 1 and signal: null
+[17:36:53.449] Error: Command "prisma generate && prisma db push --accept-data-loss && next build" exited with 1
+[17:36:53.834] 
