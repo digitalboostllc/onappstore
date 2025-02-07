@@ -4,6 +4,8 @@ import { UsersTable } from "@/components/admin/users-table"
 import { checkAdminAccess } from "@/lib/auth/utils"
 import { getCurrentUser } from "@/lib/auth/utils"
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: "Admin | Users",
   description: "Manage users and permissions",
@@ -21,22 +23,22 @@ interface PageProps {
 export default async function AdminUsersPage({
   searchParams,
 }: PageProps) {
-  // Ensure admin access first
-  await checkAdminAccess()
-
-  // Get current user
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    throw new Error("Not authenticated")
-  }
-
-  const params = await searchParams
-  const search = params?.search
-  const role = params?.role as "admin" | "user" | undefined
-  const status = params?.status as "active" | "banned" | undefined
-  const page = params?.page ? parseInt(params.page) : undefined
-
   try {
+    // Ensure admin access first
+    await checkAdminAccess()
+
+    // Get current user
+    const currentUser = await getCurrentUser()
+    if (!currentUser) {
+      throw new Error("Not authenticated")
+    }
+
+    const params = await searchParams
+    const search = params?.search
+    const role = params?.role as "admin" | "user" | undefined
+    const status = params?.status as "active" | "banned" | undefined
+    const page = params?.page ? parseInt(params.page) : undefined
+
     const data = await getUsers({
       search,
       role,
@@ -63,7 +65,7 @@ export default async function AdminUsersPage({
       </div>
     )
   } catch (error) {
-    console.error("Error loading users:", error)
+    console.error("[ADMIN_USERS]", error)
     return (
       <div className="flex flex-col gap-4 p-6">
         <div>
