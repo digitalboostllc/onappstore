@@ -10,50 +10,61 @@ const prismaClientSingleton = () => {
     datasources: {
       db: {
         url: process.env.NODE_ENV === 'production'
-          ? process.env.SUPABASE_POSTGRES_URL_NON_POOLING // Use direct connection in production
+          ? process.env.SUPABASE_POSTGRES_PRISMA_URL // Use pooled connection for better performance
           : process.env.SUPABASE_POSTGRES_PRISMA_URL
       }
     }
   })
 
   let retryCount = 0
-  const MAX_RETRIES = 2
-  const RETRY_DELAY = 50 // 50ms delay between retries
+  const MAX_RETRIES = 1 // Reduce max retries to avoid timeouts
+  const RETRY_DELAY = 20 // Reduce delay to 20ms
 
   // Middleware for handling database operations
   client.$use(async (params, next) => {
+    const startTime = Date.now()
+    const TIMEOUT = 8000 // 8 seconds timeout to stay under Vercel's limit
+
     try {
-      // In production, always deallocate before operations
-      if (process.env.NODE_ENV === 'production') {
-        try {
-          await client.$executeRawUnsafe('DEALLOCATE ALL')
-        } catch (e) {
-          // Ignore deallocate errors
-        }
+      // Wrap the operation in a timeout
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => {
+          reject(new Error('Database operation timeout'))
+        }, TIMEOUT)
+      })
+
+      const operationPromise = next(params)
+      const result = await Promise.race([operationPromise, timeoutPromise])
+      
+      // Log slow queries in production
+      const duration = Date.now() - startTime
+      if (duration > 1000) {
+        console.warn(`Slow query detected (${duration}ms):`, {
+          model: params.model,
+          action: params.action,
+          args: params.args,
+        })
       }
 
-      const result = await next(params)
       return result
     } catch (error) {
-      // Handle both connection and prepared statement errors
+      // Handle errors
       if (
         error instanceof Error && 
         retryCount < MAX_RETRIES &&
         (error.message.includes('prepared statement') ||
          error.message.includes('42P05') ||
-         error.message.includes('Connection terminated unexpectedly'))
+         error.message.includes('Connection terminated'))
       ) {
         retryCount++
         console.warn(`Database error, retrying (attempt ${retryCount}):`, error.message)
         
         try {
-          // Clean up and reconnect
-          await client.$executeRawUnsafe('DEALLOCATE ALL')
           await client.$disconnect()
-          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * retryCount))
+          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY))
           await client.$connect()
         } catch (cleanupError) {
-          console.warn('Failed to cleanup:', cleanupError)
+          console.warn('Failed to reconnect:', cleanupError)
         }
         
         return next(params)
@@ -67,7 +78,7 @@ const prismaClientSingleton = () => {
   return client
 }
 
-// In production, create new instances to avoid connection sharing
+// In production, create new instance but maintain connection
 export const prisma = process.env.NODE_ENV === 'production'
   ? prismaClientSingleton()
   : globalForPrisma.prisma ?? prismaClientSingleton()
@@ -79,13 +90,7 @@ if (process.env.NODE_ENV !== 'production') {
 // Cleanup handler
 const cleanup = async () => {
   if (prisma) {
-    try {
-      await prisma.$executeRawUnsafe('DEALLOCATE ALL')
-    } catch (error) {
-      console.warn('Error during cleanup:', error)
-    } finally {
-      await prisma.$disconnect()
-    }
+    await prisma.$disconnect()
   }
 }
 
