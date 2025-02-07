@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useQuery } from "@tanstack/react-query"
 import { TableCell } from "@/components/ui/table"
 import { Skeleton } from "@/components/ui/skeleton"
 
@@ -14,29 +14,21 @@ interface AppStats {
   ratings: number
 }
 
+async function fetchAppStats(appId: string): Promise<AppStats> {
+  const response = await fetch(`/api/developer/apps/stats?appId=${appId}`)
+  if (!response.ok) throw new Error('Failed to load stats')
+  return response.json()
+}
+
 export function AppStatsCell({ appId }: { appId: string }) {
-  const [stats, setStats] = useState<AppStats | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const { data: stats, isLoading, error } = useQuery({
+    queryKey: ['app-stats', appId],
+    queryFn: () => fetchAppStats(appId),
+    staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
+    retry: 1, // Only retry once on failure
+  })
 
-  useEffect(() => {
-    async function loadStats() {
-      try {
-        const response = await fetch(`/api/developer/apps/stats?appId=${appId}`)
-        if (!response.ok) throw new Error('Failed to load stats')
-        const data = await response.json()
-        setStats(data)
-      } catch (e) {
-        setError(e instanceof Error ? e.message : 'Failed to load stats')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadStats()
-  }, [appId])
-
-  if (loading) {
+  if (isLoading) {
     return (
       <>
         <TableCell><Skeleton className="h-4 w-16" /></TableCell>
