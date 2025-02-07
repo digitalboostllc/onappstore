@@ -132,4 +132,35 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Support both default and named exports
-export default prisma 
+export default prisma
+
+/**
+ * CHANGELOG
+ * ---------
+ * Latest Update (2024-02-07):
+ * - Switched to pooled connections in production (DATABASE_URL)
+ * - Added DEALLOCATE ALL before operations
+ * - Reduced MAX_RETRIES from 2 to 1
+ * - Reduced RETRY_DELAY from 50ms to 20ms
+ * - Added better cleanup during retries
+ * - Improved error logging
+ * - Lowered slow query threshold to 1000ms
+ * 
+ * Previous Updates:
+ * - Added support for both named and default exports
+ * - Implemented connection pooling
+ * - Added retry mechanism for failed queries
+ * - Added cleanup handlers for process events
+ * - Added error logging in production
+ * - Added slow query detection
+ * 
+ * Known Issues:
+ * - Prepared statement conflicts (42P05) still occurring occasionally
+ * - Connection termination issues in high-load scenarios
+ * 
+ * TODO:
+ * - Consider implementing connection pooling with pg-pool
+ * - Add metrics collection for query performance
+ * - Implement circuit breaker pattern for database operations
+ * - Add more granular error handling for specific error codes
+ */ 
