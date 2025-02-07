@@ -2,7 +2,7 @@
 
 ## Current Configuration
 - Using Prisma Client v6.3.1
-- Connection pooling in production
+- Supabase Postgres connection with pooling
 - Retry mechanism for failed queries
 - Prepared statement cleanup
 - Error logging and monitoring
@@ -10,15 +10,19 @@
 
 ## Latest Update (2024-02-07)
 ### Changes
+- Updated to use Supabase-specific environment variables
+- Using SUPABASE_POSTGRES_PRISMA_URL for production
+- Using SUPABASE_POSTGRES_URL_NON_POOLING for development
+- Added Supabase-specific error messages
+
+### Previous Changes
 - Added environment variable validation
 - Added better error messages for missing env vars
 - Centralized database URL configuration
 - Added explicit environment checks
-
-### Previous Changes
-- Switched to pooled connections in production using `DATABASE_URL`
-- Added `DEALLOCATE ALL` before operations to clean up prepared statements
-- Reduced `MAX_RETRIES` from 2 to 1 for faster failure detection
+- Switched to pooled connections in production
+- Added `DEALLOCATE ALL` before operations
+- Reduced `MAX_RETRIES` from 2 to 1
 - Reduced `RETRY_DELAY` from 50ms to 20ms
 - Added better cleanup during retries
 - Improved error logging format
@@ -78,8 +82,11 @@
 Required environment variables for proper operation:
 
 ```env
-DATABASE_URL=postgresql://user:password@host:6543/db?pgbouncer=true
-DIRECT_DATABASE_URL=postgresql://user:password@host:5432/db
+# Production (with connection pooling)
+SUPABASE_POSTGRES_PRISMA_URL=postgres://postgres.[ref]:[password]@aws-0-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&supa=base-pooler.x
+
+# Development (direct connection)
+SUPABASE_POSTGRES_URL_NON_POOLING=postgres://postgres.[ref]:[password]@aws-0-us-east-1.pooler.supabase.com:5432/postgres?sslmode=require
 ```
 
 ## Troubleshooting Guide

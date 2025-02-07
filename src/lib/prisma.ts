@@ -3,8 +3,8 @@ import { PrismaClient, Prisma } from "@prisma/client"
 // Validate environment variables
 const validateEnvVariables = () => {
   const requiredEnvVars = {
-    development: ['DIRECT_DATABASE_URL'],
-    production: ['DATABASE_URL']
+    development: ['SUPABASE_POSTGRES_URL_NON_POOLING'],
+    production: ['SUPABASE_POSTGRES_PRISMA_URL']
   }
 
   const environment = process.env.NODE_ENV || 'development'
@@ -13,7 +13,7 @@ const validateEnvVariables = () => {
   const missing = required.filter(env => !process.env[env])
   if (missing.length > 0) {
     throw new Error(
-      `Missing required environment variables for ${environment}: ${missing.join(', ')}\n` +
+      `Missing required Supabase environment variables for ${environment}: ${missing.join(', ')}\n` +
       `Please ensure these are set in your Vercel project settings.`
     )
   }
@@ -24,9 +24,11 @@ const getDatabaseUrl = () => {
   validateEnvVariables()
   
   if (process.env.NODE_ENV === 'production') {
-    return process.env.DATABASE_URL
+    // Use pooled connection in production
+    return process.env.SUPABASE_POSTGRES_PRISMA_URL
   }
-  return process.env.DIRECT_DATABASE_URL
+  // Use direct connection in development
+  return process.env.SUPABASE_POSTGRES_URL_NON_POOLING
 }
 
 const globalForPrisma = globalThis as unknown as {
