@@ -6,19 +6,19 @@ const globalForPrisma = globalThis as unknown as {
 
 const prismaClientSingleton = () => {
   const client = new PrismaClient({
-    log: ['error', 'warn'],
     datasources: {
       db: {
         url: process.env.NODE_ENV === 'production'
-          ? process.env.SUPABASE_POSTGRES_URL_NON_POOLING // Use direct connection in production
-          : process.env.SUPABASE_POSTGRES_PRISMA_URL
+          ? process.env.DATABASE_URL // Use pooled connection
+          : process.env.DIRECT_DATABASE_URL
       }
-    }
+    },
+    log: ['error', 'warn'],
   })
 
   let retryCount = 0
-  const MAX_RETRIES = 2
-  const RETRY_DELAY = 100
+  const MAX_RETRIES = 1 // Reduced from 2
+  const RETRY_DELAY = 20 // Reduced from 50ms
 
   // Middleware for handling database operations
   client.$use(async (params, next) => {
@@ -26,17 +26,16 @@ const prismaClientSingleton = () => {
 
     try {
       // For production, ensure clean connection state
-      if (process.env.NODE_ENV === 'production' && retryCount === 0) {
-        await client.$disconnect()
-        await client.$connect()
+      if (process.env.NODE_ENV === 'production') {
+        await client.$executeRaw`DEALLOCATE ALL` // Clean up any lingering prepared statements
       }
 
       const result = await next(params)
       
       // Log slow queries in production
       const duration = Date.now() - startTime
-      if (duration > 5000) {
-        console.warn(`Long-running query detected (${duration}ms):`, {
+      if (duration > 1000) { // Lowered threshold to 1s
+        console.warn(`Slow query detected (${duration}ms):`, {
           model: params.model,
           action: params.action,
           args: params.args,
@@ -53,17 +52,16 @@ const prismaClientSingleton = () => {
          error.message.includes('Connection terminated'))
       ) {
         retryCount++
-        console.warn(`Database error, retrying (attempt ${retryCount}):`, error.message)
+        console.warn(`Retrying database operation (attempt ${retryCount}/${MAX_RETRIES})`)
         
+        // Clean up and retry
         try {
-          // Force a new connection
-          await client.$disconnect()
-          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * retryCount))
-          await client.$connect()
-        } catch (reconnectError) {
-          console.warn('Failed to reconnect:', reconnectError)
+          await client.$executeRaw`DEALLOCATE ALL`
+        } catch (cleanupError) {
+          console.error('Error cleaning up prepared statements:', cleanupError)
         }
         
+        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY))
         return next(params)
       }
 
@@ -77,11 +75,9 @@ const prismaClientSingleton = () => {
         })
       }
 
-      retryCount = 0
       throw error
     } finally {
-      // Reset retry count after operation completes or fails
-      retryCount = 0
+      retryCount = 0 // Reset retry count after each operation
     }
   })
 
