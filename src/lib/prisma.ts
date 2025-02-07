@@ -24,11 +24,11 @@ const getDatabaseUrl = () => {
   validateEnvVariables()
   
   if (process.env.NODE_ENV === 'production') {
-    // Use pooled connection in production with specific pool settings
+    // Use pooled connection in production with serverless-optimized settings
     const url = process.env.SUPABASE_POSTGRES_PRISMA_URL
     if (!url) throw new Error('SUPABASE_POSTGRES_PRISMA_URL is not defined')
     return url + (url.includes('?') ? '&' : '?') + 
-      'connection_limit=5&pool_timeout=10'
+      'connection_limit=1&pool_timeout=0&connect_timeout=30'
   }
   // Use direct connection in development
   const devUrl = process.env.SUPABASE_POSTGRES_URL_NON_POOLING
@@ -47,10 +47,13 @@ async function cleanupPreparedStatements(client: PrismaClient) {
     await client.$executeRaw`DEALLOCATE ALL`
     
     // Then try to close all idle connections in the pool
-    await client.$executeRaw`SELECT pg_terminate_backend(pid) 
-      FROM pg_stat_activity 
-      WHERE application_name = 'prisma' 
-      AND state = 'idle'`
+    if (process.env.NODE_ENV === 'production') {
+      await client.$executeRaw`SELECT pg_terminate_backend(pid) 
+        FROM pg_stat_activity 
+        WHERE application_name = 'prisma' 
+        AND state = 'idle'
+        AND pid <> pg_backend_pid()`
+    }
   } catch (error) {
     console.warn('Failed to cleanup:', error)
   }
@@ -66,6 +69,13 @@ const prismaClientSingleton = () => {
       }
     },
     log: ['error', 'warn'],
+    // Optimize for serverless environment
+    __internal: {
+      engine: {
+        binaryTarget: ['native', 'rhel-openssl-1.0.x'].includes(process.env.VERCEL_REGION || '') ? 'rhel-openssl-1.0.x' : 'native',
+        cwd: '/tmp'
+      }
+    }
   })
 
   // Middleware for handling database operations

@@ -6,13 +6,16 @@
   "framework": "nextjs",
   "functions": {
     "app/api/admin/**": {
-      "maxDuration": 300
+      "maxDuration": 300,
+      "memory": 1024
     },
     "app/(dashboard)/dashboard/**": {
-      "maxDuration": 300
+      "maxDuration": 300,
+      "memory": 1024
     },
     "app/admin/**": {
-      "maxDuration": 300
+      "maxDuration": 300,
+      "memory": 1024
     }
   },
   "build": {
@@ -26,5 +29,8 @@
       "main": true
     }
   },
-  "regions": ["iad1"]
+  "regions": ["iad1"],
+  "crons": {
+    "cleanup": "0 */6 * * *"
+  }
 } 

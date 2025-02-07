@@ -2,7 +2,9 @@ import { NextResponse } from "next/server"
 import { getCurrentUser } from "@/lib/auth/utils"
 import { prisma } from "@/lib/db"
 
-const BATCH_SIZE = 50 // Process categories in smaller batches
+const BATCH_SIZE = 20 // Reduced batch size for serverless
+const MAX_RETRIES = 2
+const RETRY_DELAY = 100
 
 interface Category {
   name: string
@@ -11,17 +13,21 @@ interface Category {
   description?: string | null
 }
 
-// Helper function to safely execute Prisma queries
-async function executePrismaQuery<T>(operation: () => Promise<T>): Promise<T> {
+// Helper function to safely execute Prisma queries with retries
+async function executePrismaQuery<T>(operation: () => Promise<T>, retries = MAX_RETRIES): Promise<T> {
   try {
     // Clean up before operation
     await prisma.$executeRaw`DEALLOCATE ALL`
     return await operation()
   } catch (error) {
-    if (error instanceof Error && error.message.includes('42P05')) {
-      // If we get a prepared statement error, try one more time after cleanup
-      await prisma.$executeRaw`DEALLOCATE ALL`
-      return await operation()
+    if (retries > 0 && error instanceof Error) {
+      // Retry on prepared statement errors or connection issues
+      if (error.message.includes('42P05') || error.message.includes('Connection')) {
+        console.warn(`Retrying operation, ${retries} attempts remaining`)
+        await prisma.$executeRaw`DEALLOCATE ALL`
+        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY))
+        return executePrismaQuery(operation, retries - 1)
+      }
     }
     throw error
   }
@@ -30,8 +36,6 @@ async function executePrismaQuery<T>(operation: () => Promise<T>): Promise<T> {
 export async function GET() {
   try {
     const user = await getCurrentUser()
-    console.log("User is admin:", user?.isAdmin)
-
     if (!user?.isAdmin) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
@@ -39,16 +43,31 @@ export async function GET() {
     // Get total count first with safe execution
     const totalCount = await executePrismaQuery(() => prisma.category.count())
 
-    // Fetch categories in batches
+    // Fetch categories in smaller batches
     const categories = []
     for (let skip = 0; skip < totalCount; skip += BATCH_SIZE) {
       const batch = await executePrismaQuery(() => 
         prisma.category.findMany({
           take: BATCH_SIZE,
           skip,
-          include: {
-            parent: true,
-            children: true,
+          select: {
+            id: true,
+            name: true,
+            description: true,
+            macUpdateId: true,
+            parentId: true,
+            parent: {
+              select: {
+                id: true,
+                name: true
+              }
+            },
+            children: {
+              select: {
+                id: true,
+                name: true
+              }
+            }
           },
           orderBy: {
             name: 'asc',
@@ -57,8 +76,8 @@ export async function GET() {
       )
       categories.push(...batch)
 
-      // Add a small delay between batches to prevent overloading
-      await new Promise(resolve => setTimeout(resolve, 100))
+      // Add a small delay between batches
+      await new Promise(resolve => setTimeout(resolve, 50))
     }
 
     return NextResponse.json(categories)
@@ -72,7 +91,6 @@ export async function GET() {
       { status: 500 }
     )
   } finally {
-    // Ensure cleanup after operation
     try {
       await prisma.$executeRaw`DEALLOCATE ALL`
     } catch (cleanupError) {
@@ -84,8 +102,6 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const user = await getCurrentUser()
-    console.log("Token:", user)
-
     if (!user?.isAdmin) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
@@ -97,7 +113,7 @@ export async function POST(req: Request) {
     const categories = await fetchCategories(url)
     
     // Insert categories in smaller batches
-    const UPSERT_BATCH_SIZE = 10 // Smaller batch size for upserts
+    const UPSERT_BATCH_SIZE = 5 // Even smaller batch size for upserts
     for (let i = 0; i < categories.length; i += UPSERT_BATCH_SIZE) {
       const batch = categories.slice(i, i + UPSERT_BATCH_SIZE)
       await executePrismaQuery(async () => {
@@ -113,7 +129,7 @@ export async function POST(req: Request) {
       })
 
       // Add a small delay between batches
-      await new Promise(resolve => setTimeout(resolve, 100))
+      await new Promise(resolve => setTimeout(resolve, 50))
     }
 
     return NextResponse.json({ success: true })
@@ -127,7 +143,6 @@ export async function POST(req: Request) {
       { status: 500 }
     )
   } finally {
-    // Ensure cleanup after operation
     try {
       await prisma.$executeRaw`DEALLOCATE ALL`
     } catch (cleanupError) {
