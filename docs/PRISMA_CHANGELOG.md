@@ -6,9 +6,16 @@
 - Retry mechanism for failed queries
 - Prepared statement cleanup
 - Error logging and monitoring
+- Environment variable validation
 
 ## Latest Update (2024-02-07)
 ### Changes
+- Added environment variable validation
+- Added better error messages for missing env vars
+- Centralized database URL configuration
+- Added explicit environment checks
+
+### Previous Changes
 - Switched to pooled connections in production using `DATABASE_URL`
 - Added `DEALLOCATE ALL` before operations to clean up prepared statements
 - Reduced `MAX_RETRIES` from 2 to 1 for faster failure detection

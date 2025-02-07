@@ -1,16 +1,45 @@
 import { PrismaClient, Prisma } from "@prisma/client"
 
+// Validate environment variables
+const validateEnvVariables = () => {
+  const requiredEnvVars = {
+    development: ['DIRECT_DATABASE_URL'],
+    production: ['DATABASE_URL']
+  }
+
+  const environment = process.env.NODE_ENV || 'development'
+  const required = requiredEnvVars[environment as keyof typeof requiredEnvVars]
+
+  const missing = required.filter(env => !process.env[env])
+  if (missing.length > 0) {
+    throw new Error(
+      `Missing required environment variables for ${environment}: ${missing.join(', ')}\n` +
+      `Please ensure these are set in your Vercel project settings.`
+    )
+  }
+}
+
+// Get database URL based on environment
+const getDatabaseUrl = () => {
+  validateEnvVariables()
+  
+  if (process.env.NODE_ENV === 'production') {
+    return process.env.DATABASE_URL
+  }
+  return process.env.DIRECT_DATABASE_URL
+}
+
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
 const prismaClientSingleton = () => {
+  const databaseUrl = getDatabaseUrl()
+  
   const client = new PrismaClient({
     datasources: {
       db: {
-        url: process.env.NODE_ENV === 'production'
-          ? process.env.DATABASE_URL // Use pooled connection
-          : process.env.DIRECT_DATABASE_URL
+        url: databaseUrl
       }
     },
     log: ['error', 'warn'],
