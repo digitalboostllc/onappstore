@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import { getCurrentUser } from "@/lib/auth/utils"
 import { getAppStats } from "@/lib/services/developer-service"
 
-export const revalidate = 300 // Cache for 5 minutes
+export const dynamic = 'force-dynamic'
 
 export async function GET(request: Request) {
   try {
@@ -20,14 +20,7 @@ export async function GET(request: Request) {
 
     const stats = await getAppStats(appId)
     
-    // Return response with caching headers
-    return new NextResponse(JSON.stringify(stats), {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60',
-      },
-    })
+    return NextResponse.json(stats)
   } catch (error) {
     console.error("[APP_STATS]", error)
     return NextResponse.json(
