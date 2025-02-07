@@ -1,504 +1,59 @@
-[22:39:09.172] Running build in Washington, D.C., USA (East) – iad1
-[22:39:09.734] Cloning github.com/digitalboostllc/onappstore (Branch: main, Commit: 8b9c4b3)
-[22:39:10.155] Cloning completed: 421.000ms
-[22:39:24.809] Restored build cache from previous deployment (5vr9etEeBgoE9MCHFBkxG4HRGWTq)
-[22:39:24.913] Running "vercel build"
-[22:39:29.818] Vercel CLI 40.1.0
-[22:39:31.473] Running "install" command: `npm install`...
-[22:39:33.799] 
-[22:39:33.800] up to date, audited 1126 packages in 2s
-[22:39:33.800] 
-[22:39:33.800] 253 packages are looking for funding
-[22:39:33.800]   run `npm fund` for details
-[22:39:33.802] 
-[22:39:33.802] found 0 vulnerabilities
-[22:39:33.840] Detected Next.js version: 15.1.5
-[22:39:33.841] Running "prisma generate && prisma db push --accept-data-loss && next build"
-[22:39:34.250] Prisma schema loaded from prisma/schema.prisma
-[22:39:34.751] 
-[22:39:34.751] ✔ Generated Prisma Client (v6.3.1) to ./node_modules/@prisma/client in 254ms
-[22:39:34.751] 
-[22:39:34.752] Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
-[22:39:34.752] 
-[22:39:34.752] Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
-[22:39:34.752] 
-[22:39:35.400] Prisma schema loaded from prisma/schema.prisma
-[22:39:35.408] Datasource "db": PostgreSQL database "postgres", schemas "public" at "aws-0-us-east-1.pooler.supabase.com:5432"
-[22:39:39.022] 
-[22:39:39.022] The database is already in sync with the Prisma schema.
-[22:39:39.022] 
-[22:39:39.023] Running generate... (Use --skip-generate to skip the generators)
-[22:39:39.266] [2K[1A[2K[GRunning generate... - Prisma Client
-[22:39:39.665] [2K[1A[2K[G✔ Generated Prisma Client (v6.3.1) to ./node_modules/@prisma/client in 397ms
-[22:39:39.665] 
-[22:39:40.708]    ▲ Next.js 15.1.5
-[22:39:40.709]    - Experiments (use with caution):
-[22:39:40.709]      · cpus
-[22:39:40.709] 
-[22:39:40.727]    Creating an optimized production build ...
-[22:39:51.816]  ⚠ Compiled with warnings
-[22:39:51.816] 
-[22:39:51.816] ./src/app/(dashboard)/dashboard/page.tsx
-[22:39:51.816] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.816] 
-[22:39:51.816] Import trace for requested module:
-[22:39:51.817] ./src/app/(dashboard)/dashboard/page.tsx
-[22:39:51.817] 
-[22:39:51.817] ./src/app/(dashboard)/dashboard/page.tsx
-[22:39:51.817] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.817] 
-[22:39:51.817] Import trace for requested module:
-[22:39:51.817] ./src/app/(dashboard)/dashboard/page.tsx
-[22:39:51.817] 
-[22:39:51.817] ./src/app/(dashboard)/dashboard/page.tsx
-[22:39:51.817] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.817] 
-[22:39:51.817] Import trace for requested module:
-[22:39:51.817] ./src/app/(dashboard)/dashboard/page.tsx
-[22:39:51.817] 
-[22:39:51.817] ./src/app/api/admin/apps/route.ts
-[22:39:51.817] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.817] 
-[22:39:51.817] Import trace for requested module:
-[22:39:51.817] ./src/app/api/admin/apps/route.ts
-[22:39:51.817] 
-[22:39:51.817] ./src/app/api/admin/apps/route.ts
-[22:39:51.817] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.817] 
-[22:39:51.817] Import trace for requested module:
-[22:39:51.817] ./src/app/api/admin/apps/route.ts
-[22:39:51.817] 
-[22:39:51.817] ./src/app/api/admin/comments/route.ts
-[22:39:51.817] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.817] 
-[22:39:51.817] Import trace for requested module:
-[22:39:51.817] ./src/app/api/admin/comments/route.ts
-[22:39:51.817] 
-[22:39:51.818] ./src/app/api/admin/comments/route.ts
-[22:39:51.818] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.818] 
-[22:39:51.818] Import trace for requested module:
-[22:39:51.818] ./src/app/api/admin/comments/route.ts
-[22:39:51.818] 
-[22:39:51.818] ./src/app/api/admin/seo/meta-tags/route.ts
-[22:39:51.819] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.819] 
-[22:39:51.819] Import trace for requested module:
-[22:39:51.819] ./src/app/api/admin/seo/meta-tags/route.ts
-[22:39:51.819] 
-[22:39:51.819] ./src/app/api/admin/seo/meta-tags/route.ts
-[22:39:51.819] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.819] 
-[22:39:51.819] Import trace for requested module:
-[22:39:51.819] ./src/app/api/admin/seo/meta-tags/route.ts
-[22:39:51.819] 
-[22:39:51.819] ./src/app/api/admin/seo/meta-tags/route.ts
-[22:39:51.819] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.819] 
-[22:39:51.819] Import trace for requested module:
-[22:39:51.819] ./src/app/api/admin/seo/meta-tags/route.ts
-[22:39:51.819] 
-[22:39:51.819] ./src/app/api/admin/seo/meta-tags/route.ts
-[22:39:51.819] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.819] 
-[22:39:51.819] Import trace for requested module:
-[22:39:51.819] ./src/app/api/admin/seo/meta-tags/route.ts
-[22:39:51.819] 
-[22:39:51.819] ./src/app/api/apps/[id]/comments/route.ts
-[22:39:51.820] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.820] 
-[22:39:51.820] Import trace for requested module:
-[22:39:51.820] ./src/app/api/apps/[id]/comments/route.ts
-[22:39:51.820] 
-[22:39:51.820] ./src/app/api/apps/[id]/comments/route.ts
-[22:39:51.820] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.820] 
-[22:39:51.820] Import trace for requested module:
-[22:39:51.820] ./src/app/api/apps/[id]/comments/route.ts
-[22:39:51.820] 
-[22:39:51.820] ./src/app/api/filters/route.ts
-[22:39:51.820] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.820] 
-[22:39:51.820] Import trace for requested module:
-[22:39:51.820] ./src/app/api/filters/route.ts
-[22:39:51.820] 
-[22:39:51.820] ./src/app/api/user/change-password/route.ts
-[22:39:51.820] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.820] 
-[22:39:51.820] Import trace for requested module:
-[22:39:51.820] ./src/app/api/user/change-password/route.ts
-[22:39:51.820] 
-[22:39:51.820] ./src/app/api/user/change-password/route.ts
-[22:39:51.820] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.820] 
-[22:39:51.820] Import trace for requested module:
-[22:39:51.820] ./src/app/api/user/change-password/route.ts
-[22:39:51.820] 
-[22:39:51.820] ./src/app/apps/[id]/page.tsx
-[22:39:51.821] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.821] 
-[22:39:51.821] Import trace for requested module:
-[22:39:51.821] ./src/app/apps/[id]/page.tsx
-[22:39:51.821] 
-[22:39:51.821] ./src/lib/auth/auth.config.ts
-[22:39:51.821] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.821] 
-[22:39:51.821] Import trace for requested module:
-[22:39:51.821] ./src/lib/auth/auth.config.ts
-[22:39:51.821] ./src/lib/auth/session.ts
-[22:39:51.821] ./src/app/admin/activity/page.tsx
-[22:39:51.821] 
-[22:39:51.821] ./src/lib/meta.ts
-[22:39:51.821] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.821] 
-[22:39:51.821] Import trace for requested module:
-[22:39:51.821] ./src/lib/meta.ts
-[22:39:51.821] ./src/app/page.tsx
-[22:39:51.822] 
-[22:39:51.822] ./src/lib/meta.ts
-[22:39:51.822] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.822] 
-[22:39:51.822] Import trace for requested module:
-[22:39:51.822] ./src/lib/meta.ts
-[22:39:51.822] ./src/app/page.tsx
-[22:39:51.822] 
-[22:39:51.822] ./src/lib/services/analytics-service.ts
-[22:39:51.822] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.822] 
-[22:39:51.822] Import trace for requested module:
-[22:39:51.822] ./src/lib/services/analytics-service.ts
-[22:39:51.822] ./src/app/admin/page.tsx
-[22:39:51.822] 
-[22:39:51.822] ./src/lib/services/analytics-service.ts
-[22:39:51.822] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.822] 
-[22:39:51.822] Import trace for requested module:
-[22:39:51.822] ./src/lib/services/analytics-service.ts
-[22:39:51.822] ./src/app/admin/page.tsx
-[22:39:51.823] 
-[22:39:51.823] ./src/lib/services/analytics-service.ts
-[22:39:51.823] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.823] 
-[22:39:51.823] Import trace for requested module:
-[22:39:51.823] ./src/lib/services/analytics-service.ts
-[22:39:51.823] ./src/app/admin/page.tsx
-[22:39:51.823] 
-[22:39:51.823] ./src/lib/services/analytics-service.ts
-[22:39:51.823] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.823] 
-[22:39:51.823] Import trace for requested module:
-[22:39:51.823] ./src/lib/services/analytics-service.ts
-[22:39:51.823] ./src/app/admin/page.tsx
-[22:39:51.823] 
-[22:39:51.823] ./src/lib/services/analytics-service.ts
-[22:39:51.823] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.823] 
-[22:39:51.824] Import trace for requested module:
-[22:39:51.824] ./src/lib/services/analytics-service.ts
-[22:39:51.824] ./src/app/admin/page.tsx
-[22:39:51.824] 
-[22:39:51.824] ./src/lib/services/analytics-service.ts
-[22:39:51.824] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.824] 
-[22:39:51.824] Import trace for requested module:
-[22:39:51.824] ./src/lib/services/analytics-service.ts
-[22:39:51.824] ./src/app/admin/page.tsx
-[22:39:51.824] 
-[22:39:51.824] ./src/lib/services/analytics-service.ts
-[22:39:51.824] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.824] 
-[22:39:51.824] Import trace for requested module:
-[22:39:51.824] ./src/lib/services/analytics-service.ts
-[22:39:51.824] ./src/app/admin/page.tsx
-[22:39:51.824] 
-[22:39:51.824] ./src/lib/services/analytics-service.ts
-[22:39:51.824] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.825] 
-[22:39:51.825] Import trace for requested module:
-[22:39:51.825] ./src/lib/services/analytics-service.ts
-[22:39:51.825] ./src/app/admin/page.tsx
-[22:39:51.825] 
-[22:39:51.825] ./src/lib/services/analytics-service.ts
-[22:39:51.825] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.825] 
-[22:39:51.825] Import trace for requested module:
-[22:39:51.825] ./src/lib/services/analytics-service.ts
-[22:39:51.829] ./src/app/admin/page.tsx
-[22:39:51.829] 
-[22:39:51.829] ./src/lib/services/analytics-service.ts
-[22:39:51.829] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.829] 
-[22:39:51.829] Import trace for requested module:
-[22:39:51.829] ./src/lib/services/analytics-service.ts
-[22:39:51.830] ./src/app/admin/page.tsx
-[22:39:51.830] 
-[22:39:51.830] ./src/lib/services/analytics-service.ts
-[22:39:51.830] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.830] 
-[22:39:51.830] Import trace for requested module:
-[22:39:51.830] ./src/lib/services/analytics-service.ts
-[22:39:51.830] ./src/app/admin/page.tsx
-[22:39:51.830] 
-[22:39:51.831] ./src/lib/services/analytics-service.ts
-[22:39:51.831] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.831] 
-[22:39:51.831] Import trace for requested module:
-[22:39:51.831] ./src/lib/services/analytics-service.ts
-[22:39:51.831] ./src/app/admin/page.tsx
-[22:39:51.831] 
-[22:39:51.831] ./src/lib/services/analytics-service.ts
-[22:39:51.831] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.832] 
-[22:39:51.832] Import trace for requested module:
-[22:39:51.832] ./src/lib/services/analytics-service.ts
-[22:39:51.832] ./src/app/admin/page.tsx
-[22:39:51.832] 
-[22:39:51.832] ./src/lib/services/analytics-service.ts
-[22:39:51.832] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.832] 
-[22:39:51.832] Import trace for requested module:
-[22:39:51.833] ./src/lib/services/analytics-service.ts
-[22:39:51.833] ./src/app/admin/page.tsx
-[22:39:51.833] 
-[22:39:51.833] ./src/lib/services/app-service.ts
-[22:39:51.833] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.833] 
-[22:39:51.833] Import trace for requested module:
-[22:39:51.833] ./src/lib/services/app-service.ts
-[22:39:51.833] ./src/app/apps/page.tsx
-[22:39:51.834] 
-[22:39:51.834] ./src/lib/services/app-service.ts
-[22:39:51.834] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.834] 
-[22:39:51.834] Import trace for requested module:
-[22:39:51.834] ./src/lib/services/app-service.ts
-[22:39:51.834] ./src/app/apps/page.tsx
-[22:39:51.834] 
-[22:39:51.834] ./src/lib/services/app-service.ts
-[22:39:51.834] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.835] 
-[22:39:51.835] Import trace for requested module:
-[22:39:51.835] ./src/lib/services/app-service.ts
-[22:39:51.835] ./src/app/apps/page.tsx
-[22:39:51.835] 
-[22:39:51.835] ./src/lib/services/app-service.ts
-[22:39:51.835] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.835] 
-[22:39:51.835] Import trace for requested module:
-[22:39:51.835] ./src/lib/services/app-service.ts
-[22:39:51.835] ./src/app/apps/page.tsx
-[22:39:51.836] 
-[22:39:51.836] ./src/lib/services/app-service.ts
-[22:39:51.836] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.836] 
-[22:39:51.836] Import trace for requested module:
-[22:39:51.836] ./src/lib/services/app-service.ts
-[22:39:51.836] ./src/app/apps/page.tsx
-[22:39:51.836] 
-[22:39:51.836] ./src/lib/services/app-service.ts
-[22:39:51.836] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.837] 
-[22:39:51.837] Import trace for requested module:
-[22:39:51.837] ./src/lib/services/app-service.ts
-[22:39:51.837] ./src/app/apps/page.tsx
-[22:39:51.837] 
-[22:39:51.837] ./src/lib/services/app-service.ts
-[22:39:51.837] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.837] 
-[22:39:51.837] Import trace for requested module:
-[22:39:51.837] ./src/lib/services/app-service.ts
-[22:39:51.837] ./src/app/apps/page.tsx
-[22:39:51.837] 
-[22:39:51.838] ./src/lib/services/collection-service.ts
-[22:39:51.838] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.838] 
-[22:39:51.838] Import trace for requested module:
-[22:39:51.838] ./src/lib/services/collection-service.ts
-[22:39:51.838] ./src/app/api/collections/route.ts
-[22:39:51.838] 
-[22:39:51.838] ./src/lib/services/collection-service.ts
-[22:39:51.838] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.839] 
-[22:39:51.839] Import trace for requested module:
-[22:39:51.839] ./src/lib/services/collection-service.ts
-[22:39:51.839] ./src/app/api/collections/route.ts
-[22:39:51.839] 
-[22:39:51.839] ./src/lib/services/collection-service.ts
-[22:39:51.839] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.839] 
-[22:39:51.839] Import trace for requested module:
-[22:39:51.839] ./src/lib/services/collection-service.ts
-[22:39:51.839] ./src/app/api/collections/route.ts
-[22:39:51.840] 
-[22:39:51.840] ./src/lib/services/collection-service.ts
-[22:39:51.840] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.840] 
-[22:39:51.840] Import trace for requested module:
-[22:39:51.840] ./src/lib/services/collection-service.ts
-[22:39:51.840] ./src/app/api/collections/route.ts
-[22:39:51.840] 
-[22:39:51.840] ./src/lib/services/collection-service.ts
-[22:39:51.840] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.840] 
-[22:39:51.840] Import trace for requested module:
-[22:39:51.841] ./src/lib/services/collection-service.ts
-[22:39:51.841] ./src/app/api/collections/route.ts
-[22:39:51.841] 
-[22:39:51.841] ./src/lib/services/collection-service.ts
-[22:39:51.841] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.841] 
-[22:39:51.841] Import trace for requested module:
-[22:39:51.841] ./src/lib/services/collection-service.ts
-[22:39:51.841] ./src/app/api/collections/route.ts
-[22:39:51.841] 
-[22:39:51.841] ./src/lib/services/collection-service.ts
-[22:39:51.841] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.841] 
-[22:39:51.841] Import trace for requested module:
-[22:39:51.841] ./src/lib/services/collection-service.ts
-[22:39:51.841] ./src/app/api/collections/route.ts
-[22:39:51.841] 
-[22:39:51.841] ./src/lib/services/collection-service.ts
-[22:39:51.841] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.841] 
-[22:39:51.841] Import trace for requested module:
-[22:39:51.842] ./src/lib/services/collection-service.ts
-[22:39:51.842] ./src/app/api/collections/route.ts
-[22:39:51.842] 
-[22:39:51.842] ./src/lib/services/collection-service.ts
-[22:39:51.842] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.843] 
-[22:39:51.843] Import trace for requested module:
-[22:39:51.843] ./src/lib/services/collection-service.ts
-[22:39:51.843] ./src/app/api/collections/route.ts
-[22:39:51.843] 
-[22:39:51.843] ./src/lib/services/collection-service.ts
-[22:39:51.843] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.843] 
-[22:39:51.843] Import trace for requested module:
-[22:39:51.843] ./src/lib/services/collection-service.ts
-[22:39:51.843] ./src/app/api/collections/route.ts
-[22:39:51.843] 
-[22:39:51.843] ./src/lib/services/notification-service.ts
-[22:39:51.843] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.843] 
-[22:39:51.843] Import trace for requested module:
-[22:39:51.843] ./src/lib/services/notification-service.ts
-[22:39:51.843] ./src/app/api/notifications/route.ts
-[22:39:51.843] 
-[22:39:51.843] ./src/lib/services/notification-service.ts
-[22:39:51.843] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.843] 
-[22:39:51.843] Import trace for requested module:
-[22:39:51.843] ./src/lib/services/notification-service.ts
-[22:39:51.843] ./src/app/api/notifications/route.ts
-[22:39:51.843] 
-[22:39:51.843] ./src/lib/services/notification-service.ts
-[22:39:51.843] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.843] 
-[22:39:51.843] Import trace for requested module:
-[22:39:51.844] ./src/lib/services/notification-service.ts
-[22:39:51.844] ./src/app/api/notifications/route.ts
-[22:39:51.844] 
-[22:39:51.844] ./src/lib/services/notification-service.ts
-[22:39:51.844] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.844] 
-[22:39:51.844] Import trace for requested module:
-[22:39:51.844] ./src/lib/services/notification-service.ts
-[22:39:51.844] ./src/app/api/notifications/route.ts
-[22:39:51.844] 
-[22:39:51.844] ./src/lib/services/notification-service.ts
-[22:39:51.844] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.844] 
-[22:39:51.844] Import trace for requested module:
-[22:39:51.844] ./src/lib/services/notification-service.ts
-[22:39:51.844] ./src/app/api/notifications/route.ts
-[22:39:51.844] 
-[22:39:51.844] ./src/lib/services/notification-service.ts
-[22:39:51.844] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.844] 
-[22:39:51.844] Import trace for requested module:
-[22:39:51.844] ./src/lib/services/notification-service.ts
-[22:39:51.844] ./src/app/api/notifications/route.ts
-[22:39:51.844] 
-[22:39:51.844] ./src/lib/services/notification-service.ts
-[22:39:51.844] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.844] 
-[22:39:51.844] Import trace for requested module:
-[22:39:51.844] ./src/lib/services/notification-service.ts
-[22:39:51.844] ./src/app/api/notifications/route.ts
-[22:39:51.845] 
-[22:39:51.845] ./src/lib/services/sync-service.ts
-[22:39:51.845] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.845] 
-[22:39:51.845] Import trace for requested module:
-[22:39:51.845] ./src/lib/services/sync-service.ts
-[22:39:51.845] ./src/app/api/cron/sync/route.ts
-[22:39:51.845] 
-[22:39:51.845] ./src/lib/services/sync-service.ts
-[22:39:51.845] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.845] 
-[22:39:51.845] Import trace for requested module:
-[22:39:51.845] ./src/lib/services/sync-service.ts
-[22:39:51.845] ./src/app/api/cron/sync/route.ts
-[22:39:51.845] 
-[22:39:51.845] ./src/lib/services/sync-service.ts
-[22:39:51.845] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.845] 
-[22:39:51.845] Import trace for requested module:
-[22:39:51.845] ./src/lib/services/sync-service.ts
-[22:39:51.845] ./src/app/api/cron/sync/route.ts
-[22:39:51.845] 
-[22:39:51.845] ./src/lib/services/sync-service.ts
-[22:39:51.845] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.845] 
-[22:39:51.845] Import trace for requested module:
-[22:39:51.845] ./src/lib/services/sync-service.ts
-[22:39:51.845] ./src/app/api/cron/sync/route.ts
-[22:39:51.845] 
-[22:39:51.845] ./src/lib/services/sync-service.ts
-[22:39:51.845] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.846] 
-[22:39:51.846] Import trace for requested module:
-[22:39:51.846] ./src/lib/services/sync-service.ts
-[22:39:51.846] ./src/app/api/cron/sync/route.ts
-[22:39:51.846] 
-[22:39:51.846] ./src/lib/services/sync-service.ts
-[22:39:51.846] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.846] 
-[22:39:51.846] Import trace for requested module:
-[22:39:51.846] ./src/lib/services/sync-service.ts
-[22:39:51.846] ./src/app/api/cron/sync/route.ts
-[22:39:51.846] 
-[22:39:51.846] ./src/lib/services/sync-service.ts
-[22:39:51.846] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.846] 
-[22:39:51.846] Import trace for requested module:
-[22:39:51.846] ./src/lib/services/sync-service.ts
-[22:39:51.846] ./src/app/api/cron/sync/route.ts
-[22:39:51.846] 
-[22:39:51.846] ./src/lib/services/sync-service.ts
-[22:39:51.846] Attempted import error: 'prisma' is not exported from '@/lib/prisma' (imported as 'prisma').
-[22:39:51.846] 
-[22:39:51.846] Import trace for requested module:
-[22:39:51.846] ./src/lib/services/sync-service.ts
-[22:39:51.846] ./src/app/api/cron/sync/route.ts
-[22:39:51.846] 
-[22:39:58.366]  ✓ Compiled successfully
-[22:39:58.368]    Skipping linting
-[22:39:58.368]    Checking validity of types ...
-[22:40:14.518] Failed to compile.
-[22:40:14.518] 
-[22:40:14.518] ./src/app/(dashboard)/dashboard/page.tsx:3:10
-[22:40:14.518] Type error: Module '"@/lib/prisma"' has no exported member 'prisma'. Did you mean to use 'import prisma from "@/lib/prisma"' instead?
-[22:40:14.518] 
-[22:40:14.518] [0m [90m 1 |[39m [36mimport[39m { redirect } [36mfrom[39m [32m"next/navigation"[39m[0m
-[22:40:14.518] [0m [90m 2 |[39m [36mimport[39m { getCurrentUser } [36mfrom[39m [32m"@/lib/auth/utils"[39m[0m
-[22:40:14.518] [0m[31m[1m>[22m[39m[90m 3 |[39m [36mimport[39m { prisma } [36mfrom[39m [32m"@/lib/prisma"[39m[0m
-[22:40:14.518] [0m [90m   |[39m          [31m[1m^[22m[39m[0m
-[22:40:14.519] [0m [90m 4 |[39m [36mimport[39m { [33mCard[39m[33m,[39m [33mCardContent[39m[33m,[39m [33mCardDescription[39m[33m,[39m [33mCardHeader[39m[33m,[39m [33mCardTitle[39m } [36mfrom[39m [32m"@/components/ui/card"[39m[0m
-[22:40:14.519] [0m [90m 5 |[39m [36mimport[39m { [33mButton[39m } [36mfrom[39m [32m"@/components/ui/button"[39m[0m
-[22:40:14.519] [0m [90m 6 |[39m [36mimport[39m { [33mArrowRight[39m } [36mfrom[39m [32m"lucide-react"[39m[0m
-[22:40:14.569] Static worker exited with code: 1 and signal: null
-[22:40:14.583] Error: Command "prisma generate && prisma db push --accept-data-loss && next build" exited with 1
-[22:40:15.020] 
+[23:42:02.734] Running build in Washington, D.C., USA (East) – iad1
+[23:42:03.881] Cloning github.com/digitalboostllc/onappstore (Branch: main, Commit: 0fa1823)
+[23:42:04.975] Cloning completed: 1.090s
+[23:42:14.102] Restored build cache from previous deployment (F1MgMtVuxkau5XqhwwHQS1nUZHKJ)
+[23:42:14.189] Running "vercel build"
+[23:42:15.054] Vercel CLI 40.1.0
+[23:42:17.019] Running "install" command: `npm install`...
+[23:42:20.017] 
+[23:42:20.018] up to date, audited 1126 packages in 3s
+[23:42:20.021] 
+[23:42:20.021] 253 packages are looking for funding
+[23:42:20.021]   run `npm fund` for details
+[23:42:20.021] 
+[23:42:20.021] found 0 vulnerabilities
+[23:42:20.059] Detected Next.js version: 15.1.5
+[23:42:20.060] Running "prisma generate && prisma db push --accept-data-loss && next build"
+[23:42:20.443] Prisma schema loaded from prisma/schema.prisma
+[23:42:20.998] 
+[23:42:20.998] ✔ Generated Prisma Client (v6.3.1) to ./node_modules/@prisma/client in 260ms
+[23:42:20.998] 
+[23:42:20.998] Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+[23:42:20.998] 
+[23:42:20.998] Tip: Want to react to database changes in your app as they happen? Discover how with Pulse: https://pris.ly/tip-1-pulse
+[23:42:20.999] 
+[23:42:21.591] Prisma schema loaded from prisma/schema.prisma
+[23:42:21.599] Datasource "db": PostgreSQL database "postgres", schemas "public" at "aws-0-us-east-1.pooler.supabase.com:5432"
+[23:42:21.838] 
+[23:42:21.838] The database is already in sync with the Prisma schema.
+[23:42:21.838] 
+[23:42:21.839] Running generate... (Use --skip-generate to skip the generators)
+[23:42:22.090] [2K[1A[2K[GRunning generate... - Prisma Client
+[23:42:23.278] [2K[1A[2K[G✔ Generated Prisma Client (v6.3.1) to ./node_modules/@prisma/client in 1.18s
+[23:42:23.278] 
+[23:42:26.052]    ▲ Next.js 15.1.5
+[23:42:26.052]    - Experiments (use with caution):
+[23:42:26.052]      · cpus
+[23:42:26.052] 
+[23:42:26.071]    Creating an optimized production build ...
+[23:42:43.722]  ✓ Compiled successfully
+[23:42:43.725]    Skipping linting
+[23:42:43.725]    Checking validity of types ...
+[23:43:00.395]    Collecting page data ...
+[23:43:00.918] Error [PrismaClientConstructorValidationError]: Unknown property connectionTimeout provided to PrismaClient constructor.
+[23:43:00.918] Read more at https://pris.ly/d/client-constructor
+[23:43:00.918]     at <unknown> (.next/server/app/api/admin/apps/route.js:7:2219)
+[23:43:00.918]     at 84908 (.next/server/app/api/admin/apps/route.js:7:3079)
+[23:43:00.918]     at t (.next/server/webpack-runtime.js:1:143)
+[23:43:00.918]     at 52295 (.next/server/app/api/admin/apps/route.js:1:1489)
+[23:43:00.919]     at t (.next/server/webpack-runtime.js:1:143)
+[23:43:00.919]     at t (.next/server/app/api/admin/apps/route.js:7:3554)
+[23:43:00.919]     at <unknown> (.next/server/app/api/admin/apps/route.js:7:3601)
+[23:43:00.919]     at t.X (.next/server/webpack-runtime.js:1:1285)
+[23:43:00.919] 
+[23:43:00.920] > Build error occurred
+[23:43:00.922] [Error: Failed to collect page data for /api/admin/apps] {
+[23:43:00.923]   type: 'Error'
+[23:43:00.923] }
+[23:43:00.941] Error: Command "prisma generate && prisma db push --accept-data-loss && next build" exited with 1
+[23:43:01.310] 

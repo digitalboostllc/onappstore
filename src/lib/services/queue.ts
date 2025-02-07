@@ -17,14 +17,34 @@ export interface Job {
 }
 
 export async function createImportJob() {
-  return prisma.job.create({
-    data: {
-      type: "import",
-      status: "pending",
-      progress: 0,
-      total: 0,
-    },
-  })
+  try {
+    // Clean up any existing prepared statements first
+    await prisma.$executeRaw`DEALLOCATE ALL`
+    
+    return await prisma.job.create({
+      data: {
+        type: "import",
+        status: "pending",
+        progress: 0,
+        total: 0,
+      },
+    })
+  } catch (error) {
+    console.error("Failed to create import job:", error)
+    if (error instanceof Error && error.message.includes('42P05')) {
+      // If we still get a prepared statement error, try one more time after cleanup
+      await prisma.$executeRaw`DEALLOCATE ALL`
+      return await prisma.job.create({
+        data: {
+          type: "import",
+          status: "pending",
+          progress: 0,
+          total: 0,
+        },
+      })
+    }
+    throw error
+  }
 }
 
 export async function updateJobProgress(jobId: string, progress: number, total: number) {
