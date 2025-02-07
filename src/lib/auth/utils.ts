@@ -2,6 +2,8 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth/config"
 import { redirect } from "next/navigation"
 
+export const dynamic = 'force-dynamic'
+
 export async function getCurrentUser() {
   const session = await getServerSession(authOptions)
   return session?.user

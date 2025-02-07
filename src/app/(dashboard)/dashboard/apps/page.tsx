@@ -17,6 +17,8 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { AppStatsCell } from "@/components/apps/app-stats-cell"
 import Link from "next/link"
 
+export const dynamic = 'force-dynamic'
+
 export default async function DeveloperAppsPage() {
   try {
     const user = await getCurrentUser()
