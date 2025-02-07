@@ -34,7 +34,7 @@ export function UserStatsCell({ userId }: { userId: string }) {
     )
   }
 
-  if (error) {
+  if (error || !stats) {
     return (
       <>
         <TableCell>Error</TableCell>
@@ -46,9 +46,9 @@ export function UserStatsCell({ userId }: { userId: string }) {
 
   return (
     <>
-      <TableCell>{stats.appsCount}</TableCell>
-      <TableCell>{stats.activitiesCount}</TableCell>
-      <TableCell>{stats.collectionsCount}</TableCell>
+      <TableCell>{stats?.appsCount ?? 0}</TableCell>
+      <TableCell>{stats?.activitiesCount ?? 0}</TableCell>
+      <TableCell>{stats?.collectionsCount ?? 0}</TableCell>
     </>
   )
 } 
