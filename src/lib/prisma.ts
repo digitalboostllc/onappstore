@@ -23,24 +23,37 @@ const prismaClientSingleton = () => {
   // Middleware for handling database operations
   client.$use(async (params, next) => {
     try {
-      return await next(params)
+      // In production, always deallocate before operations
+      if (process.env.NODE_ENV === 'production') {
+        try {
+          await client.$executeRawUnsafe('DEALLOCATE ALL')
+        } catch (e) {
+          // Ignore deallocate errors
+        }
+      }
+
+      const result = await next(params)
+      return result
     } catch (error) {
-      // Only retry on specific database errors
+      // Handle both connection and prepared statement errors
       if (
         error instanceof Error && 
         retryCount < MAX_RETRIES &&
-        (error.message.includes('Connection pool timeout') ||
+        (error.message.includes('prepared statement') ||
+         error.message.includes('42P05') ||
          error.message.includes('Connection terminated unexpectedly'))
       ) {
         retryCount++
-        console.warn(`Database connection error, retrying (attempt ${retryCount})`)
+        console.warn(`Database error, retrying (attempt ${retryCount}):`, error.message)
         
         try {
+          // Clean up and reconnect
+          await client.$executeRawUnsafe('DEALLOCATE ALL')
           await client.$disconnect()
-          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY))
+          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * retryCount))
           await client.$connect()
-        } catch (reconnectError) {
-          console.warn('Failed to reconnect:', reconnectError)
+        } catch (cleanupError) {
+          console.warn('Failed to cleanup:', cleanupError)
         }
         
         return next(params)
@@ -66,7 +79,13 @@ if (process.env.NODE_ENV !== 'production') {
 // Cleanup handler
 const cleanup = async () => {
   if (prisma) {
-    await prisma.$disconnect()
+    try {
+      await prisma.$executeRawUnsafe('DEALLOCATE ALL')
+    } catch (error) {
+      console.warn('Error during cleanup:', error)
+    } finally {
+      await prisma.$disconnect()
+    }
   }
 }
 
