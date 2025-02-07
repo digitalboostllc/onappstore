@@ -10,36 +10,27 @@ const prismaClientSingleton = () => {
     datasources: {
       db: {
         url: process.env.NODE_ENV === 'production'
-          ? process.env.SUPABASE_POSTGRES_PRISMA_URL // Use pooled connection for better performance
+          ? process.env.SUPABASE_POSTGRES_PRISMA_URL
           : process.env.SUPABASE_POSTGRES_PRISMA_URL
       }
     }
   })
 
   let retryCount = 0
-  const MAX_RETRIES = 1 // Reduce max retries to avoid timeouts
-  const RETRY_DELAY = 20 // Reduce delay to 20ms
+  const MAX_RETRIES = 3
+  const RETRY_DELAY = 100 // Increased delay for better stability
 
   // Middleware for handling database operations
   client.$use(async (params, next) => {
     const startTime = Date.now()
-    const TIMEOUT = 8000 // 8 seconds timeout to stay under Vercel's limit
 
     try {
-      // Wrap the operation in a timeout
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => {
-          reject(new Error('Database operation timeout'))
-        }, TIMEOUT)
-      })
-
-      const operationPromise = next(params)
-      const result = await Promise.race([operationPromise, timeoutPromise])
+      const result = await next(params)
       
       // Log slow queries in production
       const duration = Date.now() - startTime
-      if (duration > 1000) {
-        console.warn(`Slow query detected (${duration}ms):`, {
+      if (duration > 5000) { // Log queries taking more than 5 seconds
+        console.warn(`Long-running query detected (${duration}ms):`, {
           model: params.model,
           action: params.action,
           args: params.args,
@@ -48,7 +39,7 @@ const prismaClientSingleton = () => {
 
       return result
     } catch (error) {
-      // Handle errors
+      // Handle connection and statement errors
       if (
         error instanceof Error && 
         retryCount < MAX_RETRIES &&
@@ -61,13 +52,23 @@ const prismaClientSingleton = () => {
         
         try {
           await client.$disconnect()
-          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY))
+          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * retryCount)) // Exponential backoff
           await client.$connect()
         } catch (cleanupError) {
           console.warn('Failed to reconnect:', cleanupError)
         }
         
         return next(params)
+      }
+
+      // Log all database errors in production
+      if (process.env.NODE_ENV === 'production') {
+        console.error('Database error:', {
+          message: error instanceof Error ? error.message : 'Unknown error',
+          model: params.model,
+          action: params.action,
+          duration: Date.now() - startTime,
+        })
       }
 
       retryCount = 0

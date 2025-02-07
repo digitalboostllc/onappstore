@@ -4,6 +4,17 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
+  "functions": {
+    "app/api/admin/**": {
+      "maxDuration": 300
+    },
+    "app/(dashboard)/dashboard/**": {
+      "maxDuration": 300
+    },
+    "app/admin/**": {
+      "maxDuration": 300
+    }
+  },
   "build": {
     "env": {
       "NODE_VERSION": "20",
