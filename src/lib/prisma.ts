@@ -89,7 +89,7 @@ const prismaClientSingleton = () => {
 }
 
 // In production, always create a new instance
-const prisma = process.env.NODE_ENV === 'production'
+export const prisma = process.env.NODE_ENV === 'production'
   ? prismaClientSingleton()
   : globalForPrisma.prisma ?? prismaClientSingleton()
 
@@ -135,4 +135,5 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-export { prisma as default } 
+// Support both default and named exports
+export default prisma 
