@@ -3,9 +3,6 @@ import { getCurrentUser } from "@/lib/auth/utils"
 import { getUserStats } from "@/lib/services/admin-service"
 
 export const dynamic = 'force-dynamic'
-export const runtime = 'edge'
-
-export const revalidate = 300 // Cache for 5 minutes
 
 export async function GET(request: Request) {
   try {
@@ -23,10 +20,8 @@ export async function GET(request: Request) {
 
     const stats = await getUserStats(userId)
     
-    return new NextResponse(JSON.stringify(stats), {
-      status: 200,
+    return NextResponse.json(stats, {
       headers: {
-        'Content-Type': 'application/json',
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60',
       },
     })

@@ -1,59 +1,151 @@
-[23:42:02.734] Running build in Washington, D.C., USA (East) – iad1
-[23:42:03.881] Cloning github.com/digitalboostllc/onappstore (Branch: main, Commit: 0fa1823)
-[23:42:04.975] Cloning completed: 1.090s
-[23:42:14.102] Restored build cache from previous deployment (F1MgMtVuxkau5XqhwwHQS1nUZHKJ)
-[23:42:14.189] Running "vercel build"
-[23:42:15.054] Vercel CLI 40.1.0
-[23:42:17.019] Running "install" command: `npm install`...
-[23:42:20.017] 
-[23:42:20.018] up to date, audited 1126 packages in 3s
-[23:42:20.021] 
-[23:42:20.021] 253 packages are looking for funding
-[23:42:20.021]   run `npm fund` for details
-[23:42:20.021] 
-[23:42:20.021] found 0 vulnerabilities
-[23:42:20.059] Detected Next.js version: 15.1.5
-[23:42:20.060] Running "prisma generate && prisma db push --accept-data-loss && next build"
-[23:42:20.443] Prisma schema loaded from prisma/schema.prisma
-[23:42:20.998] 
-[23:42:20.998] ✔ Generated Prisma Client (v6.3.1) to ./node_modules/@prisma/client in 260ms
-[23:42:20.998] 
-[23:42:20.998] Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
-[23:42:20.998] 
-[23:42:20.998] Tip: Want to react to database changes in your app as they happen? Discover how with Pulse: https://pris.ly/tip-1-pulse
-[23:42:20.999] 
-[23:42:21.591] Prisma schema loaded from prisma/schema.prisma
-[23:42:21.599] Datasource "db": PostgreSQL database "postgres", schemas "public" at "aws-0-us-east-1.pooler.supabase.com:5432"
-[23:42:21.838] 
-[23:42:21.838] The database is already in sync with the Prisma schema.
-[23:42:21.838] 
-[23:42:21.839] Running generate... (Use --skip-generate to skip the generators)
-[23:42:22.090] [2K[1A[2K[GRunning generate... - Prisma Client
-[23:42:23.278] [2K[1A[2K[G✔ Generated Prisma Client (v6.3.1) to ./node_modules/@prisma/client in 1.18s
-[23:42:23.278] 
-[23:42:26.052]    ▲ Next.js 15.1.5
-[23:42:26.052]    - Experiments (use with caution):
-[23:42:26.052]      · cpus
-[23:42:26.052] 
-[23:42:26.071]    Creating an optimized production build ...
-[23:42:43.722]  ✓ Compiled successfully
-[23:42:43.725]    Skipping linting
-[23:42:43.725]    Checking validity of types ...
-[23:43:00.395]    Collecting page data ...
-[23:43:00.918] Error [PrismaClientConstructorValidationError]: Unknown property connectionTimeout provided to PrismaClient constructor.
-[23:43:00.918] Read more at https://pris.ly/d/client-constructor
-[23:43:00.918]     at <unknown> (.next/server/app/api/admin/apps/route.js:7:2219)
-[23:43:00.918]     at 84908 (.next/server/app/api/admin/apps/route.js:7:3079)
-[23:43:00.918]     at t (.next/server/webpack-runtime.js:1:143)
-[23:43:00.918]     at 52295 (.next/server/app/api/admin/apps/route.js:1:1489)
-[23:43:00.919]     at t (.next/server/webpack-runtime.js:1:143)
-[23:43:00.919]     at t (.next/server/app/api/admin/apps/route.js:7:3554)
-[23:43:00.919]     at <unknown> (.next/server/app/api/admin/apps/route.js:7:3601)
-[23:43:00.919]     at t.X (.next/server/webpack-runtime.js:1:1285)
-[23:43:00.919] 
-[23:43:00.920] > Build error occurred
-[23:43:00.922] [Error: Failed to collect page data for /api/admin/apps] {
-[23:43:00.923]   type: 'Error'
-[23:43:00.923] }
-[23:43:00.941] Error: Command "prisma generate && prisma db push --accept-data-loss && next build" exited with 1
-[23:43:01.310] 
+[16:31:20.789] Running build in Washington, D.C., USA (East) – iad1
+[16:31:20.893] Cloning github.com/digitalboostllc/onappstore (Branch: main, Commit: 0eccf97)
+[16:31:21.319] Cloning completed: 428.000ms
+[16:31:32.266] Restored build cache from previous deployment (8GHbPQpkyJGnNhHCcdDBq25efxgV)
+[16:31:32.343] Running "vercel build"
+[16:31:34.755] Vercel CLI 40.1.0
+[16:31:36.619] Running "install" command: `npm install`...
+[16:31:39.179] 
+[16:31:39.179] up to date, audited 1126 packages in 2s
+[16:31:39.179] 
+[16:31:39.180] 253 packages are looking for funding
+[16:31:39.180]   run `npm fund` for details
+[16:31:39.181] 
+[16:31:39.181] found 0 vulnerabilities
+[16:31:40.963] Detected Next.js version: 15.1.5
+[16:31:40.963] Running "prisma generate && prisma db push --accept-data-loss && next build"
+[16:31:41.896] Prisma schema loaded from prisma/schema.prisma
+[16:31:42.540] 
+[16:31:42.540] ✔ Generated Prisma Client (v6.3.1) to ./node_modules/@prisma/client in 249ms
+[16:31:42.540] 
+[16:31:42.540] Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+[16:31:42.540] 
+[16:31:42.541] Tip: Want real-time updates to your database without manual polling? Discover how with Pulse: https://pris.ly/tip-0-pulse
+[16:31:42.541] 
+[16:31:43.156] Prisma schema loaded from prisma/schema.prisma
+[16:31:43.163] Datasource "db": PostgreSQL database "postgres", schemas "public" at "aws-0-us-east-1.pooler.supabase.com:5432"
+[16:31:43.446] 
+[16:31:43.446] The database is already in sync with the Prisma schema.
+[16:31:43.446] 
+[16:31:43.447] Running generate... (Use --skip-generate to skip the generators)
+[16:31:43.659] [2K[1A[2K[GRunning generate... - Prisma Client
+[16:31:43.918] [2K[1A[2K[G✔ Generated Prisma Client (v6.3.1) to ./node_modules/@prisma/client in 257ms
+[16:31:43.918] 
+[16:31:44.764]    ▲ Next.js 15.1.5
+[16:31:44.765]    - Experiments (use with caution):
+[16:31:44.765]      · cpus
+[16:31:44.765] 
+[16:31:44.784]    Creating an optimized production build ...
+[16:32:09.974] Failed to compile.
+[16:32:09.974] 
+[16:32:09.975] ./node_modules/next-auth/core/init.js:8:1
+[16:32:09.975] Module not found: Can't resolve 'crypto'
+[16:32:09.975]    6 | });
+[16:32:09.975]    7 | exports.init = init;
+[16:32:09.975] >  8 | var _crypto = require("crypto");
+[16:32:09.975]      | ^
+[16:32:09.975]    9 | var _logger = _interopRequireDefault(require("../utils/logger"));
+[16:32:09.975]   10 | var _errors = require("./errors");
+[16:32:09.975]   11 | var _providers = _interopRequireDefault(require("./lib/providers"));
+[16:32:09.975] 
+[16:32:09.975] https://nextjs.org/docs/messages/module-not-found
+[16:32:09.975] 
+[16:32:09.975] Import trace for requested module:
+[16:32:09.975] ./node_modules/next-auth/core/index.js
+[16:32:09.976] ./node_modules/next-auth/next/index.js
+[16:32:09.976] ./node_modules/next-auth/index.js
+[16:32:09.976] ./src/lib/auth/utils.ts
+[16:32:09.976] ./src/app/api/admin/users/activity/route.ts
+[16:32:09.976] ./node_modules/next/dist/build/webpack/loaders/next-edge-app-route-loader/index.js?absolutePagePath=private-next-app-dir%2Fapi%2Fadmin%2Fusers%2Factivity%2Froute.ts&page=%2Fapi%2Fadmin%2Fusers%2Factivity%2Froute&appDirLoader=bmV4dC1hcHAtbG9hZGVyP25hbWU9YXBwJTJGYXBpJTJGYWRtaW4lMkZ1c2VycyUyRmFjdGl2aXR5JTJGcm91dGUmcGFnZT0lMkZhcGklMkZhZG1pbiUyRnVzZXJzJTJGYWN0aXZpdHklMkZyb3V0ZSZwYWdlUGF0aD1wcml2YXRlLW5leHQtYXBwLWRpciUyRmFwaSUyRmFkbWluJTJGdXNlcnMlMkZhY3Rpdml0eSUyRnJvdXRlLnRzJmFwcERpcj0lMkZ2ZXJjZWwlMkZwYXRoMCUyRnNyYyUyRmFwcCZhcHBQYXRocz0lMkZhcGklMkZhZG1pbiUyRnVzZXJzJTJGYWN0aXZpdHklMkZyb3V0ZSZwYWdlRXh0ZW5zaW9ucz10c3gmcGFnZUV4dGVuc2lvbnM9dHMmcGFnZUV4dGVuc2lvbnM9anN4JnBhZ2VFeHRlbnNpb25zPWpzJmJhc2VQYXRoPSZhc3NldFByZWZpeD0mbmV4dENvbmZpZ091dHB1dD0mcHJlZmVycmVkUmVnaW9uPSZtaWRkbGV3YXJlQ29uZmlnPWUzMCUzRCE%3D&nextConfig=eyJlbnYiOnt9LCJ3ZWJwYWNrIjpudWxsLCJlc2xpbnQiOnsiaWdub3JlRHVyaW5nQnVpbGRzIjp0cnVlfSwidHlwZXNjcmlwdCI6eyJpZ25vcmVCdWlsZEVycm9ycyI6ZmFsc2UsInRzY29uZmlnUGF0aCI6InRzY29uZmlnLmpzb24ifSwiZGlzdERpciI6Ii5uZXh0IiwiY2xlYW5EaXN0RGlyIjp0cnVlLCJhc3NldFByZWZpeCI6IiIsImNhY2hlTWF4TWVtb3J5U2l6ZSI6NTI0Mjg4MDAsImNvbmZpZ09yaWdpbiI6Im5leHQuY29uZmlnLmpzIiwidXNlRmlsZVN5c3RlbVB1YmxpY1JvdXRlcyI6dHJ1ZSwiZ2VuZXJhdGVFdGFncyI6dHJ1ZSwicGFnZUV4dGVuc2lvbnMiOlsidHN4IiwidHMiLCJqc3giLCJqcyJdLCJwb3dlcmVkQnlIZWFkZXIiOnRydWUsImNvbXByZXNzIjp0cnVlLCJpbWFnZXMiOnsiZGV2aWNlU2l6ZXMiOls2NDAsNzUwLDgyOCwxMDgwLDEyMDAsMTkyMCwyMDQ4LDM4NDBdLCJpbWFnZVNpemVzIjpbMTYsMzIsNDgsNjQsOTYsMTI4LDI1NiwzODRdLCJwYXRoIjoiL19uZXh0L2ltYWdlIiwibG9hZGVyIjoiZGVmYXVsdCIsImxvYWRlckZpbGUiOiIiLCJkb21haW5zIjpbImF2YXRhcnMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwiaS5pbWd1ci5jb20iLCJzdGF0aWMubWFjdXBkYXRlLmNvbSIsInNjcmVlbnNob3RzLm1hY3VwZGF0ZS5jb20iXSwiZGlzYWJsZVN0YXRpY0ltYWdlcyI6ZmFsc2UsIm1pbmltdW1DYWNoZVRUTCI6NjAsImZvcm1hdHMiOlsiaW1hZ2Uvd2VicCJdLCJkYW5nZXJvdXNseUFsbG93U1ZHIjpmYWxzZSwiY29udGVudFNlY3VyaXR5UG9saWN5Ijoic2NyaXB0LXNyYyAnbm9uZSc7IGZyYW1lLXNyYyAnbm9uZSc7IHNhbmRib3g7IiwiY29udGVudERpc3Bvc2l0aW9uVHlwZSI6ImF0dGFjaG1lbnQiLCJyZW1vdGVQYXR0ZXJucyI6W10sInVub3B0aW1pemVkIjpmYWxzZX0sImRldkluZGljYXRvcnMiOnsiYXBwSXNyU3RhdHVzIjp0cnVlLCJidWlsZEFjdGl2aXR5Ijp0cnVlLCJidWlsZEFjdGl2aXR5UG9zaXRpb24iOiJib3R0b20tcmlnaHQifSwib25EZW1hbmRFbnRyaWVzIjp7Im1heEluYWN0aXZlQWdlIjo2MDAwMCwicGFnZXNCdWZmZXJMZW5ndGgiOjV9LCJhbXAiOnsiY2Fub25pY2FsQmFzZSI6IiJ9LCJiYXNlUGF0aCI6IiIsInNhc3NPcHRpb25zIjp7fSwidHJhaWxpbmdTbGFzaCI6ZmFsc2UsImkxOG4iOm51bGwsInByb2R1Y3Rpb25Ccm93c2VyU291cmNlTWFwcyI6ZmFsc2UsImV4Y2x1ZGVEZWZhdWx0TW9tZW50TG9jYWxlcyI6dHJ1ZSwic2VydmVyUnVudGltZUNvbmZpZyI6e30sInB1YmxpY1J1bnRpbWVDb25maWciOnt9LCJyZWFjdFByb2R1Y3Rpb25Qcm9maWxpbmciOmZhbHNlLCJyZWFjdFN0cmljdE1vZGUiOm51bGwsInJlYWN0TWF4SGVhZGVyc0xlbmd0aCI6NjAwMCwiaHR0cEFnZW50T3B0aW9ucyI6eyJrZWVwQWxpdmUiOnRydWV9LCJsb2dnaW5nIjp7fSwiZXhwaXJlVGltZSI6MzE1MzYwMDAsInN0YXRpY1BhZ2VHZW5lcmF0aW9uVGltZW91dCI6NjAsIm1vZHVsYXJpemVJbXBvcnRzIjp7IkBtdWkvaWNvbnMtbWF0ZXJpYWwiOnsidHJhbnNmb3JtIjoiQG11aS9pY29ucy1tYXRlcmlhbC97e21lbWJlcn19In0sImxvZGFzaCI6eyJ0cmFuc2Zvcm0iOiJsb2Rhc2gve3ttZW1iZXJ9fSJ9fSwib3V0cHV0RmlsZVRyYWNpbmdSb290IjoiL3ZlcmNlbC9wYXRoMCIsImV4cGVyaW1lbnRhbCI6eyJjYWNoZUxpZmUiOnsiZGVmYXVsdCI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo5MDAsImV4cGlyZSI6NDI5NDk2NzI5NH0sInNlY29uZHMiOnsic3RhbGUiOjAsInJldmFsaWRhdGUiOjEsImV4cGlyZSI6NjB9LCJtaW51dGVzIjp7InN0YWxlIjozMDAsInJldmFsaWRhdGUiOjYwLCJleHBpcmUiOjM2MDB9LCJob3VycyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjozNjAwLCJleHBpcmUiOjg2NDAwfSwiZGF5cyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo4NjQwMCwiZXhwaXJlIjo2MDQ4MDB9LCJ3ZWVrcyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo2MDQ4MDAsImV4cGlyZSI6MjU5MjAwMH0sIm1heCI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjoyNTkyMDAwLCJleHBpcmUiOjQyOTQ5NjcyOTR9fSwiY2FjaGVIYW5kbGVycyI6e30sImNzc0NodW5raW5nIjp0cnVlLCJtdWx0aVpvbmVEcmFmdE1vZGUiOmZhbHNlLCJhcHBOYXZGYWlsSGFuZGxpbmciOmZhbHNlLCJwcmVyZW5kZXJFYXJseUV4aXQiOnRydWUsInNlcnZlck1pbmlmaWNhdGlvbiI6dHJ1ZSwic2VydmVyU291cmNlTWFwcyI6ZmFsc2UsImxpbmtOb1RvdWNoU3RhcnQiOmZhbHNlLCJjYXNlU2Vuc2l0aXZlUm91dGVzIjpmYWxzZSwiY2xpZW50U2VnbWVudENhY2hlIjpmYWxzZSwicHJlbG9hZEVudHJpZXNPblN0YXJ0Ijp0cnVlLCJjbGllbnRSb3V0ZXJGaWx0ZXIiOnRydWUsImNsaWVudFJvdXRlckZpbHRlclJlZGlyZWN0cyI6ZmFsc2UsImZldGNoQ2FjaGVLZXlQcmVmaXgiOiIiLCJtaWRkbGV3YXJlUHJlZmV0Y2giO
+[16:32:09.976] 
+[16:32:09.976] ./node_modules/next-auth/core/lib/csrf-token.js:7:1
+[16:32:09.976] Module not found: Can't resolve 'crypto'
+[16:32:09.976]    5 | });
+[16:32:09.976]    6 | exports.createCSRFToken = createCSRFToken;
+[16:32:09.976] >  7 | var _crypto = require("crypto");
+[16:32:09.976]      | ^
+[16:32:09.976]    8 | function createCSRFToken({
+[16:32:09.976]    9 |   options,
+[16:32:09.976]   10 |   cookieValue,
+[16:32:09.976] 
+[16:32:09.976] https://nextjs.org/docs/messages/module-not-found
+[16:32:09.976] 
+[16:32:09.976] Import trace for requested module:
+[16:32:09.976] ./node_modules/next-auth/core/init.js
+[16:32:09.976] ./node_modules/next-auth/core/index.js
+[16:32:09.976] ./node_modules/next-auth/next/index.js
+[16:32:09.976] ./node_modules/next-auth/index.js
+[16:32:09.976] ./src/lib/auth/utils.ts
+[16:32:09.976] ./src/app/api/admin/users/activity/route.ts
+[16:32:09.978] ./node_modules/next/dist/build/webpack/loaders/next-edge-app-route-loader/index.js?absolutePagePath=private-next-app-dir%2Fapi%2Fadmin%2Fusers%2Factivity%2Froute.ts&page=%2Fapi%2Fadmin%2Fusers%2Factivity%2Froute&appDirLoader=bmV4dC1hcHAtbG9hZGVyP25hbWU9YXBwJTJGYXBpJTJGYWRtaW4lMkZ1c2VycyUyRmFjdGl2aXR5JTJGcm91dGUmcGFnZT0lMkZhcGklMkZhZG1pbiUyRnVzZXJzJTJGYWN0aXZpdHklMkZyb3V0ZSZwYWdlUGF0aD1wcml2YXRlLW5leHQtYXBwLWRpciUyRmFwaSUyRmFkbWluJTJGdXNlcnMlMkZhY3Rpdml0eSUyRnJvdXRlLnRzJmFwcERpcj0lMkZ2ZXJjZWwlMkZwYXRoMCUyRnNyYyUyRmFwcCZhcHBQYXRocz0lMkZhcGklMkZhZG1pbiUyRnVzZXJzJTJGYWN0aXZpdHklMkZyb3V0ZSZwYWdlRXh0ZW5zaW9ucz10c3gmcGFnZUV4dGVuc2lvbnM9dHMmcGFnZUV4dGVuc2lvbnM9anN4JnBhZ2VFeHRlbnNpb25zPWpzJmJhc2VQYXRoPSZhc3NldFByZWZpeD0mbmV4dENvbmZpZ091dHB1dD0mcHJlZmVycmVkUmVnaW9uPSZtaWRkbGV3YXJlQ29uZmlnPWUzMCUzRCE%3D&nextConfig=eyJlbnYiOnt9LCJ3ZWJwYWNrIjpudWxsLCJlc2xpbnQiOnsiaWdub3JlRHVyaW5nQnVpbGRzIjp0cnVlfSwidHlwZXNjcmlwdCI6eyJpZ25vcmVCdWlsZEVycm9ycyI6ZmFsc2UsInRzY29uZmlnUGF0aCI6InRzY29uZmlnLmpzb24ifSwiZGlzdERpciI6Ii5uZXh0IiwiY2xlYW5EaXN0RGlyIjp0cnVlLCJhc3NldFByZWZpeCI6IiIsImNhY2hlTWF4TWVtb3J5U2l6ZSI6NTI0Mjg4MDAsImNvbmZpZ09yaWdpbiI6Im5leHQuY29uZmlnLmpzIiwidXNlRmlsZVN5c3RlbVB1YmxpY1JvdXRlcyI6dHJ1ZSwiZ2VuZXJhdGVFdGFncyI6dHJ1ZSwicGFnZUV4dGVuc2lvbnMiOlsidHN4IiwidHMiLCJqc3giLCJqcyJdLCJwb3dlcmVkQnlIZWFkZXIiOnRydWUsImNvbXByZXNzIjp0cnVlLCJpbWFnZXMiOnsiZGV2aWNlU2l6ZXMiOls2NDAsNzUwLDgyOCwxMDgwLDEyMDAsMTkyMCwyMDQ4LDM4NDBdLCJpbWFnZVNpemVzIjpbMTYsMzIsNDgsNjQsOTYsMTI4LDI1NiwzODRdLCJwYXRoIjoiL19uZXh0L2ltYWdlIiwibG9hZGVyIjoiZGVmYXVsdCIsImxvYWRlckZpbGUiOiIiLCJkb21haW5zIjpbImF2YXRhcnMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwiaS5pbWd1ci5jb20iLCJzdGF0aWMubWFjdXBkYXRlLmNvbSIsInNjcmVlbnNob3RzLm1hY3VwZGF0ZS5jb20iXSwiZGlzYWJsZVN0YXRpY0ltYWdlcyI6ZmFsc2UsIm1pbmltdW1DYWNoZVRUTCI6NjAsImZvcm1hdHMiOlsiaW1hZ2Uvd2VicCJdLCJkYW5nZXJvdXNseUFsbG93U1ZHIjpmYWxzZSwiY29udGVudFNlY3VyaXR5UG9saWN5Ijoic2NyaXB0LXNyYyAnbm9uZSc7IGZyYW1lLXNyYyAnbm9uZSc7IHNhbmRib3g7IiwiY29udGVudERpc3Bvc2l0aW9uVHlwZSI6ImF0dGFjaG1lbnQiLCJyZW1vdGVQYXR0ZXJucyI6W10sInVub3B0aW1pemVkIjpmYWxzZX0sImRldkluZGljYXRvcnMiOnsiYXBwSXNyU3RhdHVzIjp0cnVlLCJidWlsZEFjdGl2aXR5Ijp0cnVlLCJidWlsZEFjdGl2aXR5UG9zaXRpb24iOiJib3R0b20tcmlnaHQifSwib25EZW1hbmRFbnRyaWVzIjp7Im1heEluYWN0aXZlQWdlIjo2MDAwMCwicGFnZXNCdWZmZXJMZW5ndGgiOjV9LCJhbXAiOnsiY2Fub25pY2FsQmFzZSI6IiJ9LCJiYXNlUGF0aCI6IiIsInNhc3NPcHRpb25zIjp7fSwidHJhaWxpbmdTbGFzaCI6ZmFsc2UsImkxOG4iOm51bGwsInByb2R1Y3Rpb25Ccm93c2VyU291cmNlTWFwcyI6ZmFsc2UsImV4Y2x1ZGVEZWZhdWx0TW9tZW50TG9jYWxlcyI6dHJ1ZSwic2VydmVyUnVudGltZUNvbmZpZyI6e30sInB1YmxpY1J1bnRpbWVDb25maWciOnt9LCJyZWFjdFByb2R1Y3Rpb25Qcm9maWxpbmciOmZhbHNlLCJyZWFjdFN0cmljdE1vZGUiOm51bGwsInJlYWN0TWF4SGVhZGVyc0xlbmd0aCI6NjAwMCwiaHR0cEFnZW50T3B0aW9ucyI6eyJrZWVwQWxpdmUiOnRydWV9LCJsb2dnaW5nIjp7fSwiZXhwaXJlVGltZSI6MzE1MzYwMDAsInN0YXRpY1BhZ2VHZW5lcmF0aW9uVGltZW91dCI6NjAsIm1vZHVsYXJpemVJbXBvcnRzIjp7IkBtdWkvaWNvbnMtbWF0ZXJpYWwiOnsidHJhbnNmb3JtIjoiQG11aS9pY29ucy1tYXRlcmlhbC97e21lbWJlcn19In0sImxvZGFzaCI6eyJ0cmFuc2Zvcm0iOiJsb2Rhc2gve3ttZW1iZXJ9fSJ9fSwib3V0cHV0RmlsZVRyYWNpbmdSb290IjoiL3ZlcmNlbC9wYXRoMCIsImV4cGVyaW1lbnRhbCI6eyJjYWNoZUxpZmUiOnsiZGVmYXVsdCI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo5MDAsImV4cGlyZSI6NDI5NDk2NzI5NH0sInNlY29uZHMiOnsic3RhbGUiOjAsInJldmFsaWRhdGUiOjEsImV4cGlyZSI6NjB9LCJtaW51dGVzIjp7InN0YWxlIjozMDAsInJldmFsaWRhdGUiOjYwLCJleHBpcmUiOjM2MDB9LCJob3VycyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjozNjAwLCJleHBpcmUiOjg2NDAwfSwiZGF5cyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo4NjQwMCwiZXhwaXJlIjo2MDQ4MDB9LCJ3ZWVrcyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo2MDQ4MDAsImV4cGlyZSI6MjU5MjAwMH0sIm1heCI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjoyNTkyMDAwLCJleHBpcmUiOjQyOTQ5NjcyOTR9fSwiY2FjaGVIYW5kbGVycyI6e30sImNzc0NodW5raW5nIjp0cnVlLCJtdWx0aVpvbmVEcmFmdE1vZGUiOmZhbHNlLCJhcHBOYXZGYWlsSGFuZGxpbmciOmZhbHNlLCJwcmVyZW5kZXJFYXJseUV4aXQiOnRydWUsInNlcnZlck1pbmlmaWNhdGlvbiI6dHJ1ZSwic2VydmVyU291cmNlTWFwcyI6ZmFsc2UsImxpbmtOb1RvdWNoU3RhcnQiOmZhbHNlLCJjYXNlU2Vuc2l0aXZlUm91dGVzIjpmYWxzZSwiY2xpZW50U2VnbWVudENhY2hlIjpmYWxzZSwicHJlbG9hZEVudHJpZXNPblN0YXJ0Ijp0cnVlLCJjbGllbnRSb3V0ZXJGaWx0ZXIiOnRydWUsImNsaWVudFJvdXRlckZpbHRlclJlZGlyZWN0cyI6ZmFsc2UsImZldGNoQ2FjaGVLZXlQcmVmaXgiOiIiLCJtaWRkbGV3YXJlUHJlZmV0Y2giO
+[16:32:09.980] 
+[16:32:09.980] ./node_modules/next-auth/core/lib/email/signin.js:7:1
+[16:32:09.980] Module not found: Can't resolve 'crypto'
+[16:32:09.980]    5 | });
+[16:32:09.980]    6 | exports.default = email;
+[16:32:09.980] >  7 | var _crypto = require("crypto");
+[16:32:09.980]      | ^
+[16:32:09.980]    8 | var _utils = require("../utils");
+[16:32:09.981]    9 | async function email(identifier, options) {
+[16:32:09.981]   10 |   var _await$provider$gener, _provider$generateVer, _provider$maxAge, _adapter$createVerifi;
+[16:32:09.981] 
+[16:32:09.981] https://nextjs.org/docs/messages/module-not-found
+[16:32:09.981] 
+[16:32:09.981] Import trace for requested module:
+[16:32:09.981] ./node_modules/next-auth/core/routes/signin.js
+[16:32:09.981] ./node_modules/next-auth/core/routes/index.js
+[16:32:09.981] ./node_modules/next-auth/core/index.js
+[16:32:09.981] ./node_modules/next-auth/next/index.js
+[16:32:09.981] ./node_modules/next-auth/index.js
+[16:32:09.981] ./src/lib/auth/utils.ts
+[16:32:09.981] ./src/app/api/admin/users/activity/route.ts
+[16:32:09.981] ./node_modules/next/dist/build/webpack/loaders/next-edge-app-route-loader/index.js?absolutePagePath=private-next-app-dir%2Fapi%2Fadmin%2Fusers%2Factivity%2Froute.ts&page=%2Fapi%2Fadmin%2Fusers%2Factivity%2Froute&appDirLoader=bmV4dC1hcHAtbG9hZGVyP25hbWU9YXBwJTJGYXBpJTJGYWRtaW4lMkZ1c2VycyUyRmFjdGl2aXR5JTJGcm91dGUmcGFnZT0lMkZhcGklMkZhZG1pbiUyRnVzZXJzJTJGYWN0aXZpdHklMkZyb3V0ZSZwYWdlUGF0aD1wcml2YXRlLW5leHQtYXBwLWRpciUyRmFwaSUyRmFkbWluJTJGdXNlcnMlMkZhY3Rpdml0eSUyRnJvdXRlLnRzJmFwcERpcj0lMkZ2ZXJjZWwlMkZwYXRoMCUyRnNyYyUyRmFwcCZhcHBQYXRocz0lMkZhcGklMkZhZG1pbiUyRnVzZXJzJTJGYWN0aXZpdHklMkZyb3V0ZSZwYWdlRXh0ZW5zaW9ucz10c3gmcGFnZUV4dGVuc2lvbnM9dHMmcGFnZUV4dGVuc2lvbnM9anN4JnBhZ2VFeHRlbnNpb25zPWpzJmJhc2VQYXRoPSZhc3NldFByZWZpeD0mbmV4dENvbmZpZ091dHB1dD0mcHJlZmVycmVkUmVnaW9uPSZtaWRkbGV3YXJlQ29uZmlnPWUzMCUzRCE%3D&nextConfig=eyJlbnYiOnt9LCJ3ZWJwYWNrIjpudWxsLCJlc2xpbnQiOnsiaWdub3JlRHVyaW5nQnVpbGRzIjp0cnVlfSwidHlwZXNjcmlwdCI6eyJpZ25vcmVCdWlsZEVycm9ycyI6ZmFsc2UsInRzY29uZmlnUGF0aCI6InRzY29uZmlnLmpzb24ifSwiZGlzdERpciI6Ii5uZXh0IiwiY2xlYW5EaXN0RGlyIjp0cnVlLCJhc3NldFByZWZpeCI6IiIsImNhY2hlTWF4TWVtb3J5U2l6ZSI6NTI0Mjg4MDAsImNvbmZpZ09yaWdpbiI6Im5leHQuY29uZmlnLmpzIiwidXNlRmlsZVN5c3RlbVB1YmxpY1JvdXRlcyI6dHJ1ZSwiZ2VuZXJhdGVFdGFncyI6dHJ1ZSwicGFnZUV4dGVuc2lvbnMiOlsidHN4IiwidHMiLCJqc3giLCJqcyJdLCJwb3dlcmVkQnlIZWFkZXIiOnRydWUsImNvbXByZXNzIjp0cnVlLCJpbWFnZXMiOnsiZGV2aWNlU2l6ZXMiOls2NDAsNzUwLDgyOCwxMDgwLDEyMDAsMTkyMCwyMDQ4LDM4NDBdLCJpbWFnZVNpemVzIjpbMTYsMzIsNDgsNjQsOTYsMTI4LDI1NiwzODRdLCJwYXRoIjoiL19uZXh0L2ltYWdlIiwibG9hZGVyIjoiZGVmYXVsdCIsImxvYWRlckZpbGUiOiIiLCJkb21haW5zIjpbImF2YXRhcnMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwiaS5pbWd1ci5jb20iLCJzdGF0aWMubWFjdXBkYXRlLmNvbSIsInNjcmVlbnNob3RzLm1hY3VwZGF0ZS5jb20iXSwiZGlzYWJsZVN0YXRpY0ltYWdlcyI6ZmFsc2UsIm1pbmltdW1DYWNoZVRUTCI6NjAsImZvcm1hdHMiOlsiaW1hZ2Uvd2VicCJdLCJkYW5nZXJvdXNseUFsbG93U1ZHIjpmYWxzZSwiY29udGVudFNlY3VyaXR5UG9saWN5Ijoic2NyaXB0LXNyYyAnbm9uZSc7IGZyYW1lLXNyYyAnbm9uZSc7IHNhbmRib3g7IiwiY29udGVudERpc3Bvc2l0aW9uVHlwZSI6ImF0dGFjaG1lbnQiLCJyZW1vdGVQYXR0ZXJucyI6W10sInVub3B0aW1pemVkIjpmYWxzZX0sImRldkluZGljYXRvcnMiOnsiYXBwSXNyU3RhdHVzIjp0cnVlLCJidWlsZEFjdGl2aXR5Ijp0cnVlLCJidWlsZEFjdGl2aXR5UG9zaXRpb24iOiJib3R0b20tcmlnaHQifSwib25EZW1hbmRFbnRyaWVzIjp7Im1heEluYWN0aXZlQWdlIjo2MDAwMCwicGFnZXNCdWZmZXJMZW5ndGgiOjV9LCJhbXAiOnsiY2Fub25pY2FsQmFzZSI6IiJ9LCJiYXNlUGF0aCI6IiIsInNhc3NPcHRpb25zIjp7fSwidHJhaWxpbmdTbGFzaCI6ZmFsc2UsImkxOG4iOm51bGwsInByb2R1Y3Rpb25Ccm93c2VyU291cmNlTWFwcyI6ZmFsc2UsImV4Y2x1ZGVEZWZhdWx0TW9tZW50TG9jYWxlcyI6dHJ1ZSwic2VydmVyUnVudGltZUNvbmZpZyI6e30sInB1YmxpY1J1bnRpbWVDb25maWciOnt9LCJyZWFjdFByb2R1Y3Rpb25Qcm9maWxpbmciOmZhbHNlLCJyZWFjdFN0cmljdE1vZGUiOm51bGwsInJlYWN0TWF4SGVhZGVyc0xlbmd0aCI6NjAwMCwiaHR0cEFnZW50T3B0aW9ucyI6eyJrZWVwQWxpdmUiOnRydWV9LCJsb2dnaW5nIjp7fSwiZXhwaXJlVGltZSI6MzE1MzYwMDAsInN0YXRpY1BhZ2VHZW5lcmF0aW9uVGltZW91dCI6NjAsIm1vZHVsYXJpemVJbXBvcnRzIjp7IkBtdWkvaWNvbnMtbWF0ZXJpYWwiOnsidHJhbnNmb3JtIjoiQG11aS9pY29ucy1tYXRlcmlhbC97e21lbWJlcn19In0sImxvZGFzaCI6eyJ0cmFuc2Zvcm0iOiJsb2Rhc2gve3ttZW1iZXJ9fSJ9fSwib3V0cHV0RmlsZVRyYWNpbmdSb290IjoiL3ZlcmNlbC9wYXRoMCIsImV4cGVyaW1lbnRhbCI6eyJjYWNoZUxpZmUiOnsiZGVmYXVsdCI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo5MDAsImV4cGlyZSI6NDI5NDk2NzI5NH0sInNlY29uZHMiOnsic3RhbGUiOjAsInJldmFsaWRhdGUiOjEsImV4cGlyZSI6NjB9LCJtaW51dGVzIjp7InN0YWxlIjozMDAsInJldmFsaWRhdGUiOjYwLCJleHBpcmUiOjM2MDB9LCJob3VycyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjozNjAwLCJleHBpcmUiOjg2NDAwfSwiZGF5cyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo4NjQwMCwiZXhwaXJlIjo2MDQ4MDB9LCJ3ZWVrcyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo2MDQ4MDAsImV4cGlyZSI6MjU5MjAwMH0sIm1heCI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjoyNTkyMDAwLCJleHBpcmUiOjQyOTQ5NjcyOTR9fSwiY2FjaGVIYW5kbGVycyI6e30sImNzc0NodW5raW5nIjp0cnVlLCJtdWx0aVpvbmVEcmFmdE1vZGUiOmZhbHNlLCJhcHBOYXZGYWlsSGFuZGxpbmciOmZhbHNlLCJwcmVyZW5kZXJFYXJseUV4aXQiOnRydWUsInNlcnZlck1pbmlmaWNhdGlvbiI6dHJ1ZSwic2VydmVyU291cmNlTWFwcyI6ZmFsc2UsImxpbmtOb1RvdWNoU3RhcnQiOmZhbHNlLCJjYXNlU2Vuc2l0aXZlUm91dGVzIjpmYWxzZSwiY2xpZW50U2VnbWVudENhY2hlIjpmYWxzZSwicHJlbG9hZEVudHJpZXNPblN0YXJ0Ijp0cnVlLCJjbGllbnRSb3V0ZXJGaWx0ZXIiOnRydWUsImNsaWVudFJvdXRlckZpbHRlclJlZGlyZWN0cyI6ZmFsc2UsImZldGNoQ2FjaGVLZXlQcmVmaXgiOiIiLCJtaWRkbGV3YXJlUHJlZmV0Y2giO
+[16:32:09.981] 
+[16:32:09.981] ./node_modules/next-auth/core/lib/utils.js:9:1
+[16:32:09.981] Module not found: Can't resolve 'crypto'
+[16:32:09.981]    7 | exports.fromDate = fromDate;
+[16:32:09.981]    8 | exports.hashToken = hashToken;
+[16:32:09.981] >  9 | var _crypto = require("crypto");
+[16:32:09.981]      | ^
+[16:32:09.981]   10 | function fromDate(time, date = Date.now()) {
+[16:32:09.981]   11 |   return new Date(date + time * 1000);
+[16:32:09.981]   12 | }
+[16:32:09.981] 
+[16:32:09.981] https://nextjs.org/docs/messages/module-not-found
+[16:32:09.981] 
+[16:32:09.981] Import trace for requested module:
+[16:32:09.981] ./node_modules/next-auth/core/init.js
+[16:32:09.981] ./node_modules/next-auth/core/index.js
+[16:32:09.981] ./node_modules/next-auth/next/index.js
+[16:32:09.981] ./node_modules/next-auth/index.js
+[16:32:09.981] ./src/lib/auth/utils.ts
+[16:32:09.981] ./src/app/api/admin/users/activity/route.ts
+[16:32:09.982] ./node_modules/next/dist/build/webpack/loaders/next-edge-app-route-loader/index.js?absolutePagePath=private-next-app-dir%2Fapi%2Fadmin%2Fusers%2Factivity%2Froute.ts&page=%2Fapi%2Fadmin%2Fusers%2Factivity%2Froute&appDirLoader=bmV4dC1hcHAtbG9hZGVyP25hbWU9YXBwJTJGYXBpJTJGYWRtaW4lMkZ1c2VycyUyRmFjdGl2aXR5JTJGcm91dGUmcGFnZT0lMkZhcGklMkZhZG1pbiUyRnVzZXJzJTJGYWN0aXZpdHklMkZyb3V0ZSZwYWdlUGF0aD1wcml2YXRlLW5leHQtYXBwLWRpciUyRmFwaSUyRmFkbWluJTJGdXNlcnMlMkZhY3Rpdml0eSUyRnJvdXRlLnRzJmFwcERpcj0lMkZ2ZXJjZWwlMkZwYXRoMCUyRnNyYyUyRmFwcCZhcHBQYXRocz0lMkZhcGklMkZhZG1pbiUyRnVzZXJzJTJGYWN0aXZpdHklMkZyb3V0ZSZwYWdlRXh0ZW5zaW9ucz10c3gmcGFnZUV4dGVuc2lvbnM9dHMmcGFnZUV4dGVuc2lvbnM9anN4JnBhZ2VFeHRlbnNpb25zPWpzJmJhc2VQYXRoPSZhc3NldFByZWZpeD0mbmV4dENvbmZpZ091dHB1dD0mcHJlZmVycmVkUmVnaW9uPSZtaWRkbGV3YXJlQ29uZmlnPWUzMCUzRCE%3D&nextConfig=eyJlbnYiOnt9LCJ3ZWJwYWNrIjpudWxsLCJlc2xpbnQiOnsiaWdub3JlRHVyaW5nQnVpbGRzIjp0cnVlfSwidHlwZXNjcmlwdCI6eyJpZ25vcmVCdWlsZEVycm9ycyI6ZmFsc2UsInRzY29uZmlnUGF0aCI6InRzY29uZmlnLmpzb24ifSwiZGlzdERpciI6Ii5uZXh0IiwiY2xlYW5EaXN0RGlyIjp0cnVlLCJhc3NldFByZWZpeCI6IiIsImNhY2hlTWF4TWVtb3J5U2l6ZSI6NTI0Mjg4MDAsImNvbmZpZ09yaWdpbiI6Im5leHQuY29uZmlnLmpzIiwidXNlRmlsZVN5c3RlbVB1YmxpY1JvdXRlcyI6dHJ1ZSwiZ2VuZXJhdGVFdGFncyI6dHJ1ZSwicGFnZUV4dGVuc2lvbnMiOlsidHN4IiwidHMiLCJqc3giLCJqcyJdLCJwb3dlcmVkQnlIZWFkZXIiOnRydWUsImNvbXByZXNzIjp0cnVlLCJpbWFnZXMiOnsiZGV2aWNlU2l6ZXMiOls2NDAsNzUwLDgyOCwxMDgwLDEyMDAsMTkyMCwyMDQ4LDM4NDBdLCJpbWFnZVNpemVzIjpbMTYsMzIsNDgsNjQsOTYsMTI4LDI1NiwzODRdLCJwYXRoIjoiL19uZXh0L2ltYWdlIiwibG9hZGVyIjoiZGVmYXVsdCIsImxvYWRlckZpbGUiOiIiLCJkb21haW5zIjpbImF2YXRhcnMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwiaS5pbWd1ci5jb20iLCJzdGF0aWMubWFjdXBkYXRlLmNvbSIsInNjcmVlbnNob3RzLm1hY3VwZGF0ZS5jb20iXSwiZGlzYWJsZVN0YXRpY0ltYWdlcyI6ZmFsc2UsIm1pbmltdW1DYWNoZVRUTCI6NjAsImZvcm1hdHMiOlsiaW1hZ2Uvd2VicCJdLCJkYW5nZXJvdXNseUFsbG93U1ZHIjpmYWxzZSwiY29udGVudFNlY3VyaXR5UG9saWN5Ijoic2NyaXB0LXNyYyAnbm9uZSc7IGZyYW1lLXNyYyAnbm9uZSc7IHNhbmRib3g7IiwiY29udGVudERpc3Bvc2l0aW9uVHlwZSI6ImF0dGFjaG1lbnQiLCJyZW1vdGVQYXR0ZXJucyI6W10sInVub3B0aW1pemVkIjpmYWxzZX0sImRldkluZGljYXRvcnMiOnsiYXBwSXNyU3RhdHVzIjp0cnVlLCJidWlsZEFjdGl2aXR5Ijp0cnVlLCJidWlsZEFjdGl2aXR5UG9zaXRpb24iOiJib3R0b20tcmlnaHQifSwib25EZW1hbmRFbnRyaWVzIjp7Im1heEluYWN0aXZlQWdlIjo2MDAwMCwicGFnZXNCdWZmZXJMZW5ndGgiOjV9LCJhbXAiOnsiY2Fub25pY2FsQmFzZSI6IiJ9LCJiYXNlUGF0aCI6IiIsInNhc3NPcHRpb25zIjp7fSwidHJhaWxpbmdTbGFzaCI6ZmFsc2UsImkxOG4iOm51bGwsInByb2R1Y3Rpb25Ccm93c2VyU291cmNlTWFwcyI6ZmFsc2UsImV4Y2x1ZGVEZWZhdWx0TW9tZW50TG9jYWxlcyI6dHJ1ZSwic2VydmVyUnVudGltZUNvbmZpZyI6e30sInB1YmxpY1J1bnRpbWVDb25maWciOnt9LCJyZWFjdFByb2R1Y3Rpb25Qcm9maWxpbmciOmZhbHNlLCJyZWFjdFN0cmljdE1vZGUiOm51bGwsInJlYWN0TWF4SGVhZGVyc0xlbmd0aCI6NjAwMCwiaHR0cEFnZW50T3B0aW9ucyI6eyJrZWVwQWxpdmUiOnRydWV9LCJsb2dnaW5nIjp7fSwiZXhwaXJlVGltZSI6MzE1MzYwMDAsInN0YXRpY1BhZ2VHZW5lcmF0aW9uVGltZW91dCI6NjAsIm1vZHVsYXJpemVJbXBvcnRzIjp7IkBtdWkvaWNvbnMtbWF0ZXJpYWwiOnsidHJhbnNmb3JtIjoiQG11aS9pY29ucy1tYXRlcmlhbC97e21lbWJlcn19In0sImxvZGFzaCI6eyJ0cmFuc2Zvcm0iOiJsb2Rhc2gve3ttZW1iZXJ9fSJ9fSwib3V0cHV0RmlsZVRyYWNpbmdSb290IjoiL3ZlcmNlbC9wYXRoMCIsImV4cGVyaW1lbnRhbCI6eyJjYWNoZUxpZmUiOnsiZGVmYXVsdCI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo5MDAsImV4cGlyZSI6NDI5NDk2NzI5NH0sInNlY29uZHMiOnsic3RhbGUiOjAsInJldmFsaWRhdGUiOjEsImV4cGlyZSI6NjB9LCJtaW51dGVzIjp7InN0YWxlIjozMDAsInJldmFsaWRhdGUiOjYwLCJleHBpcmUiOjM2MDB9LCJob3VycyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjozNjAwLCJleHBpcmUiOjg2NDAwfSwiZGF5cyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo4NjQwMCwiZXhwaXJlIjo2MDQ4MDB9LCJ3ZWVrcyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo2MDQ4MDAsImV4cGlyZSI6MjU5MjAwMH0sIm1heCI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjoyNTkyMDAwLCJleHBpcmUiOjQyOTQ5NjcyOTR9fSwiY2FjaGVIYW5kbGVycyI6e30sImNzc0NodW5raW5nIjp0cnVlLCJtdWx0aVpvbmVEcmFmdE1vZGUiOmZhbHNlLCJhcHBOYXZGYWlsSGFuZGxpbmciOmZhbHNlLCJwcmVyZW5kZXJFYXJseUV4aXQiOnRydWUsInNlcnZlck1pbmlmaWNhdGlvbiI6dHJ1ZSwic2VydmVyU291cmNlTWFwcyI6ZmFsc2UsImxpbmtOb1RvdWNoU3RhcnQiOmZhbHNlLCJjYXNlU2Vuc2l0aXZlUm91dGVzIjpmYWxzZSwiY2xpZW50U2VnbWVudENhY2hlIjpmYWxzZSwicHJlbG9hZEVudHJpZXNPblN0YXJ0Ijp0cnVlLCJjbGllbnRSb3V0ZXJGaWx0ZXIiOnRydWUsImNsaWVudFJvdXRlckZpbHRlclJlZGlyZWN0cyI6ZmFsc2UsImZldGNoQ2FjaGVLZXlQcmVmaXgiOiIiLCJtaWRkbGV3YXJlUHJlZmV0Y2giO
+[16:32:09.982] 
+[16:32:09.982] ./node_modules/oauth/lib/oauth.js:1:1
+[16:32:09.982] Module not found: Can't resolve 'crypto'
+[16:32:09.982] > 1 | var crypto= require('crypto'),
+[16:32:09.982]     | ^
+[16:32:09.982]   2 |     sha1= require('./sha1'),
+[16:32:09.982]   3 |     http= require('http'),
+[16:32:09.982]   4 |     https= require('https'),
+[16:32:09.982] 
+[16:32:09.982] https://nextjs.org/docs/messages/module-not-found
+[16:32:09.982] 
+[16:32:09.982] Import trace for requested module:
+[16:32:09.982] ./node_modules/oauth/index.js
+[16:32:09.982] ./node_modules/next-auth/core/lib/oauth/client-legacy.js
+[16:32:09.982] ./node_modules/next-auth/core/lib/oauth/callback.js
+[16:32:09.982] ./node_modules/next-auth/core/routes/callback.js
+[16:32:09.982] ./node_modules/next-auth/core/routes/index.js
+[16:32:09.982] ./node_modules/next-auth/core/index.js
+[16:32:09.982] ./node_modules/next-auth/next/index.js
+[16:32:09.983] ./node_modules/next-auth/index.js
+[16:32:09.983] ./src/lib/auth/utils.ts
+[16:32:09.983] ./src/app/api/admin/users/activity/route.ts
+[16:32:09.983] ./node_modules/next/dist/build/webpack/loaders/next-edge-app-route-loader/index.js?absolutePagePath=private-next-app-dir%2Fapi%2Fadmin%2Fusers%2Factivity%2Froute.ts&page=%2Fapi%2Fadmin%2Fusers%2Factivity%2Froute&appDirLoader=bmV4dC1hcHAtbG9hZGVyP25hbWU9YXBwJTJGYXBpJTJGYWRtaW4lMkZ1c2VycyUyRmFjdGl2aXR5JTJGcm91dGUmcGFnZT0lMkZhcGklMkZhZG1pbiUyRnVzZXJzJTJGYWN0aXZpdHklMkZyb3V0ZSZwYWdlUGF0aD1wcml2YXRlLW5leHQtYXBwLWRpciUyRmFwaSUyRmFkbWluJTJGdXNlcnMlMkZhY3Rpdml0eSUyRnJvdXRlLnRzJmFwcERpcj0lMkZ2ZXJjZWwlMkZwYXRoMCUyRnNyYyUyRmFwcCZhcHBQYXRocz0lMkZhcGklMkZhZG1pbiUyRnVzZXJzJTJGYWN0aXZpdHklMkZyb3V0ZSZwYWdlRXh0ZW5zaW9ucz10c3gmcGFnZUV4dGVuc2lvbnM9dHMmcGFnZUV4dGVuc2lvbnM9anN4JnBhZ2VFeHRlbnNpb25zPWpzJmJhc2VQYXRoPSZhc3NldFByZWZpeD0mbmV4dENvbmZpZ091dHB1dD0mcHJlZmVycmVkUmVnaW9uPSZtaWRkbGV3YXJlQ29uZmlnPWUzMCUzRCE%3D&nextConfig=eyJlbnYiOnt9LCJ3ZWJwYWNrIjpudWxsLCJlc2xpbnQiOnsiaWdub3JlRHVyaW5nQnVpbGRzIjp0cnVlfSwidHlwZXNjcmlwdCI6eyJpZ25vcmVCdWlsZEVycm9ycyI6ZmFsc2UsInRzY29uZmlnUGF0aCI6InRzY29uZmlnLmpzb24ifSwiZGlzdERpciI6Ii5uZXh0IiwiY2xlYW5EaXN0RGlyIjp0cnVlLCJhc3NldFByZWZpeCI6IiIsImNhY2hlTWF4TWVtb3J5U2l6ZSI6NTI0Mjg4MDAsImNvbmZpZ09yaWdpbiI6Im5leHQuY29uZmlnLmpzIiwidXNlRmlsZVN5c3RlbVB1YmxpY1JvdXRlcyI6dHJ1ZSwiZ2VuZXJhdGVFdGFncyI6dHJ1ZSwicGFnZUV4dGVuc2lvbnMiOlsidHN4IiwidHMiLCJqc3giLCJqcyJdLCJwb3dlcmVkQnlIZWFkZXIiOnRydWUsImNvbXByZXNzIjp0cnVlLCJpbWFnZXMiOnsiZGV2aWNlU2l6ZXMiOls2NDAsNzUwLDgyOCwxMDgwLDEyMDAsMTkyMCwyMDQ4LDM4NDBdLCJpbWFnZVNpemVzIjpbMTYsMzIsNDgsNjQsOTYsMTI4LDI1NiwzODRdLCJwYXRoIjoiL19uZXh0L2ltYWdlIiwibG9hZGVyIjoiZGVmYXVsdCIsImxvYWRlckZpbGUiOiIiLCJkb21haW5zIjpbImF2YXRhcnMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwiaS5pbWd1ci5jb20iLCJzdGF0aWMubWFjdXBkYXRlLmNvbSIsInNjcmVlbnNob3RzLm1hY3VwZGF0ZS5jb20iXSwiZGlzYWJsZVN0YXRpY0ltYWdlcyI6ZmFsc2UsIm1pbmltdW1DYWNoZVRUTCI6NjAsImZvcm1hdHMiOlsiaW1hZ2Uvd2VicCJdLCJkYW5nZXJvdXNseUFsbG93U1ZHIjpmYWxzZSwiY29udGVudFNlY3VyaXR5UG9saWN5Ijoic2NyaXB0LXNyYyAnbm9uZSc7IGZyYW1lLXNyYyAnbm9uZSc7IHNhbmRib3g7IiwiY29udGVudERpc3Bvc2l0aW9uVHlwZSI6ImF0dGFjaG1lbnQiLCJyZW1vdGVQYXR0ZXJucyI6W10sInVub3B0aW1pemVkIjpmYWxzZX0sImRldkluZGljYXRvcnMiOnsiYXBwSXNyU3RhdHVzIjp0cnVlLCJidWlsZEFjdGl2aXR5Ijp0cnVlLCJidWlsZEFjdGl2aXR5UG9zaXRpb24iOiJib3R0b20tcmlnaHQifSwib25EZW1hbmRFbnRyaWVzIjp7Im1heEluYWN0aXZlQWdlIjo2MDAwMCwicGFnZXNCdWZmZXJMZW5ndGgiOjV9LCJhbXAiOnsiY2Fub25pY2FsQmFzZSI6IiJ9LCJiYXNlUGF0aCI6IiIsInNhc3NPcHRpb25zIjp7fSwidHJhaWxpbmdTbGFzaCI6ZmFsc2UsImkxOG4iOm51bGwsInByb2R1Y3Rpb25Ccm93c2VyU291cmNlTWFwcyI6ZmFsc2UsImV4Y2x1ZGVEZWZhdWx0TW9tZW50TG9jYWxlcyI6dHJ1ZSwic2VydmVyUnVudGltZUNvbmZpZyI6e30sInB1YmxpY1J1bnRpbWVDb25maWciOnt9LCJyZWFjdFByb2R1Y3Rpb25Qcm9maWxpbmciOmZhbHNlLCJyZWFjdFN0cmljdE1vZGUiOm51bGwsInJlYWN0TWF4SGVhZGVyc0xlbmd0aCI6NjAwMCwiaHR0cEFnZW50T3B0aW9ucyI6eyJrZWVwQWxpdmUiOnRydWV9LCJsb2dnaW5nIjp7fSwiZXhwaXJlVGltZSI6MzE1MzYwMDAsInN0YXRpY1BhZ2VHZW5lcmF0aW9uVGltZW91dCI6NjAsIm1vZHVsYXJpemVJbXBvcnRzIjp7IkBtdWkvaWNvbnMtbWF0ZXJpYWwiOnsidHJhbnNmb3JtIjoiQG11aS9pY29ucy1tYXRlcmlhbC97e21lbWJlcn19In0sImxvZGFzaCI6eyJ0cmFuc2Zvcm0iOiJsb2Rhc2gve3ttZW1iZXJ9fSJ9fSwib3V0cHV0RmlsZVRyYWNpbmdSb290IjoiL3ZlcmNlbC9wYXRoMCIsImV4cGVyaW1lbnRhbCI6eyJjYWNoZUxpZmUiOnsiZGVmYXVsdCI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo5MDAsImV4cGlyZSI6NDI5NDk2NzI5NH0sInNlY29uZHMiOnsic3RhbGUiOjAsInJldmFsaWRhdGUiOjEsImV4cGlyZSI6NjB9LCJtaW51dGVzIjp7InN0YWxlIjozMDAsInJldmFsaWRhdGUiOjYwLCJleHBpcmUiOjM2MDB9LCJob3VycyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjozNjAwLCJleHBpcmUiOjg2NDAwfSwiZGF5cyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo4NjQwMCwiZXhwaXJlIjo2MDQ4MDB9LCJ3ZWVrcyI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjo2MDQ4MDAsImV4cGlyZSI6MjU5MjAwMH0sIm1heCI6eyJzdGFsZSI6MzAwLCJyZXZhbGlkYXRlIjoyNTkyMDAwLCJleHBpcmUiOjQyOTQ5NjcyOTR9fSwiY2FjaGVIYW5kbGVycyI6e30sImNzc0NodW5raW5nIjp0cnVlLCJtdWx0aVpvbmVEcmFmdE1vZGUiOmZhbHNlLCJhcHBOYXZGYWlsSGFuZGxpbmciOmZhbHNlLCJwcmVyZW5kZXJFYXJseUV4aXQiOnRydWUsInNlcnZlck1pbmlmaWNhdGlvbiI6dHJ1ZSwic2VydmVyU291cmNlTWFwcyI6ZmFsc2UsImxpbmtOb1RvdWNoU3RhcnQiOmZhbHNlLCJjYXNlU2Vuc2l0aXZlUm91dGVzIjpmYWxzZSwiY2xpZW50U2VnbWVudENhY2hlIjpmYWxzZSwicHJlbG9hZEVudHJpZXNPblN0YXJ0Ijp0cnVlLCJjbGllbnRSb3V0ZXJGaWx0ZXIiOnRydWUsImNsaWVudFJvdXRlckZpbHRlclJlZGlyZWN0cyI6ZmFsc2UsImZldGNoQ2FjaGVLZXlQcmVmaXgiOiIiLCJtaWRkbGV3YXJlUHJlZmV0Y2giO
+[16:32:09.983] 
+[16:32:09.987] 
+[16:32:09.987] > Build failed because of webpack errors
+[16:32:10.003] Error: Command "prisma generate && prisma db push --accept-data-loss && next build" exited with 1
+[16:32:10.422] 
