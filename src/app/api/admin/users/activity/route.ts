@@ -2,6 +2,9 @@ import { NextResponse } from "next/server"
 import { getCurrentUser } from "@/lib/auth/utils"
 import { getUserActivity } from "@/lib/services/admin-service"
 
+export const dynamic = 'force-dynamic'
+export const runtime = 'edge'
+
 export const revalidate = 60 // Cache for 1 minute (activity logs change more frequently)
 
 export async function GET(request: Request) {
