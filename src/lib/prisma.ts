@@ -24,11 +24,16 @@ const getDatabaseUrl = () => {
   validateEnvVariables()
   
   if (process.env.NODE_ENV === 'production') {
-    // Use pooled connection in production
-    return process.env.SUPABASE_POSTGRES_PRISMA_URL
+    // Use pooled connection in production with specific pool settings
+    const url = process.env.SUPABASE_POSTGRES_PRISMA_URL
+    if (!url) throw new Error('SUPABASE_POSTGRES_PRISMA_URL is not defined')
+    return url + (url.includes('?') ? '&' : '?') + 
+      'connection_limit=5&pool_timeout=10'
   }
   // Use direct connection in development
-  return process.env.SUPABASE_POSTGRES_URL_NON_POOLING
+  const devUrl = process.env.SUPABASE_POSTGRES_URL_NON_POOLING
+  if (!devUrl) throw new Error('SUPABASE_POSTGRES_URL_NON_POOLING is not defined')
+  return devUrl
 }
 
 const globalForPrisma = globalThis as unknown as {
@@ -38,9 +43,16 @@ const globalForPrisma = globalThis as unknown as {
 // Function to clean up prepared statements
 async function cleanupPreparedStatements(client: PrismaClient) {
   try {
+    // First try to deallocate all
     await client.$executeRaw`DEALLOCATE ALL`
+    
+    // Then try to close all idle connections in the pool
+    await client.$executeRaw`SELECT pg_terminate_backend(pid) 
+      FROM pg_stat_activity 
+      WHERE application_name = 'prisma' 
+      AND state = 'idle'`
   } catch (error) {
-    console.warn('Failed to cleanup prepared statements:', error)
+    console.warn('Failed to cleanup:', error)
   }
 }
 
@@ -93,11 +105,16 @@ const prismaClientSingleton = () => {
         // Clean up and retry for prepared statement errors
         if (error.message.includes('42P05')) {
           await cleanupPreparedStatements(client)
+          // Add a small delay before retry
+          await new Promise(resolve => setTimeout(resolve, 100))
           return next(params)
         }
       }
 
       throw error
+    } finally {
+      // Always try to cleanup after operation
+      await cleanupPreparedStatements(client)
     }
   })
 
