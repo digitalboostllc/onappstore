@@ -130,30 +130,8 @@ export async function POST(req: Request) {
     const { limit, importAll } = body
     console.log("Import parameters:", { limit, importAll })
 
-    // Clean up any existing prepared statements before creating job
-    try {
-      await prisma.$executeRaw`DEALLOCATE ALL`
-    } catch (cleanupError) {
-      console.warn("Failed to cleanup prepared statements:", cleanupError)
-      // Continue with job creation even if cleanup fails
-    }
-
-    // Create a new import job with retry logic
-    let job
-    try {
-      job = await createImportJob()
-    } catch (jobError) {
-      console.error("Failed to create import job:", jobError)
-      if (jobError instanceof Error && jobError.message.includes('42P05')) {
-        // One more attempt after a brief delay
-        await new Promise(resolve => setTimeout(resolve, 100))
-        await prisma.$executeRaw`DEALLOCATE ALL`
-        job = await createImportJob()
-      } else {
-        throw jobError
-      }
-    }
-    
+    // Create a new import job
+    const job = await createImportJob()
     console.log("Created import job:", job.id)
 
     // Start processing the job in the background
@@ -165,7 +143,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("[IMPORT_ERROR]", error)
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed to start import" },
+      { error: "Failed to start import" },
       { status: 500 }
     )
   }

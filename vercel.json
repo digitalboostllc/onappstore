@@ -4,20 +4,6 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "functions": {
-    "app/api/admin/**": {
-      "maxDuration": 300,
-      "memory": 1024
-    },
-    "app/(dashboard)/dashboard/**": {
-      "maxDuration": 300,
-      "memory": 1024
-    },
-    "app/admin/**": {
-      "maxDuration": 300,
-      "memory": 1024
-    }
-  },
   "build": {
     "env": {
       "NODE_VERSION": "20",
@@ -29,11 +15,5 @@
       "main": true
     }
   },
-  "regions": ["iad1"],
-  "crons": [
-    {
-      "path": "/api/cron/cleanup",
-      "schedule": "0 */6 * * *"
-    }
-  ]
+  "regions": ["iad1"]
 } 

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
 import { getCurrentUser } from "@/lib/auth/utils"
-import { prisma } from "@/lib/db"
+import { getDeveloperWithBasicApps, createDeveloper } from "@/lib/services/developer-service"
 import { formatDate } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -13,6 +13,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
+import { Skeleton } from "@/components/ui/skeleton"
+import { AppStatsCell } from "@/components/apps/app-stats-cell"
 import Link from "next/link"
 
 export default async function DeveloperAppsPage() {
@@ -22,40 +24,11 @@ export default async function DeveloperAppsPage() {
     redirect("/login")
   }
 
-  const developer = await prisma.developer.findUnique({
-    where: { userId: user.id },
-    include: {
-      apps: {
-        orderBy: { updatedAt: "desc" },
-        include: {
-          versions: {
-            orderBy: { createdAt: "desc" },
-            take: 1,
-            include: {
-              _count: {
-                select: {
-                  downloads: true,
-                },
-              },
-            },
-          },
-          _count: {
-            select: {
-              ratings: true,
-            },
-          },
-        },
-      },
-    },
-  })
+  const developer = await getDeveloperWithBasicApps(user.id)
 
   if (!developer) {
     // Create developer profile if it doesn't exist
-    await prisma.developer.create({
-      data: {
-        userId: user.id,
-      },
-    })
+    await createDeveloper(user.id)
     // Refresh the page to load the new developer profile
     redirect("/dashboard/apps")
   }
@@ -87,41 +60,32 @@ export default async function DeveloperAppsPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {developer.apps.map((app) => {
-                const latestVersion = app.versions[0]
-                return (
-                  <TableRow key={app.id}>
-                    <TableCell className="font-medium">{app.name}</TableCell>
-                    <TableCell>
-                      <Badge variant={app.published ? "default" : "secondary"}>
-                        {app.published ? "Published" : "Draft"}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      {latestVersion ? `v${latestVersion.version}` : "No version"}
-                    </TableCell>
-                    <TableCell>
-                      {latestVersion?._count.downloads ?? 0}
-                    </TableCell>
-                    <TableCell>{app._count.ratings}</TableCell>
-                    <TableCell>{formatDate(app.updatedAt.getTime())}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm" asChild>
-                          <Link href={`/apps/${app.id}/edit`}>
-                            Edit
-                          </Link>
-                        </Button>
-                        <Button variant="outline" size="sm" asChild>
-                          <Link href={`/apps/${app.id}`}>
-                            View
-                          </Link>
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
+              {developer.apps.map((app) => (
+                <TableRow key={app.id}>
+                  <TableCell className="font-medium">{app.name}</TableCell>
+                  <TableCell>
+                    <Badge variant={app.published ? "default" : "secondary"}>
+                      {app.published ? "Published" : "Draft"}
+                    </Badge>
+                  </TableCell>
+                  <AppStatsCell appId={app.id} />
+                  <TableCell>{formatDate(app.updatedAt.getTime())}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <Button variant="outline" size="sm" asChild>
+                        <Link href={`/apps/${app.id}/edit`}>
+                          Edit
+                        </Link>
+                      </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <Link href={`/apps/${app.id}`}>
+                          View
+                        </Link>
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
               {developer.apps.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center text-muted-foreground">
