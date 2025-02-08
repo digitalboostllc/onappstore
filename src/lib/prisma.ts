@@ -10,8 +10,8 @@ const prismaClientSingleton = () => {
     datasources: {
       db: {
         url: process.env.NODE_ENV === 'production'
-          ? process.env.DATABASE_URL // Use pooled connection for better performance
-          : process.env.DIRECT_DATABASE_URL
+          ? process.env.SUPABASE_POSTGRES_PRISMA_URL // Use pooled connection for better performance
+          : process.env.SUPABASE_POSTGRES_URL_NON_POOLING
       }
     }
   })
