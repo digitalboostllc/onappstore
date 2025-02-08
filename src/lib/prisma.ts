@@ -10,15 +10,11 @@ const prismaClientSingleton = () => {
     datasources: {
       db: {
         url: process.env.NODE_ENV === 'production'
-          ? process.env.SUPABASE_POSTGRES_PRISMA_URL // Use pooled connection for better performance
-          : process.env.SUPABASE_POSTGRES_PRISMA_URL
+          ? process.env.DATABASE_URL // Use pooled connection for better performance
+          : process.env.DIRECT_DATABASE_URL
       }
     }
   })
-
-  let retryCount = 0
-  const MAX_RETRIES = 1 // Reduce max retries to avoid timeouts
-  const RETRY_DELAY = 20 // Reduce delay to 20ms
 
   // Middleware for handling database operations
   client.$use(async (params, next) => {
@@ -49,28 +45,18 @@ const prismaClientSingleton = () => {
       return result
     } catch (error) {
       // Handle errors
-      if (
-        error instanceof Error && 
-        retryCount < MAX_RETRIES &&
-        (error.message.includes('prepared statement') ||
-         error.message.includes('42P05') ||
-         error.message.includes('Connection terminated'))
-      ) {
-        retryCount++
-        console.warn(`Database error, retrying (attempt ${retryCount}):`, error.message)
+      if (error instanceof Error) {
+        console.error('Database operation error:', error.message)
         
+        // Always disconnect on error to clear prepared statements
         try {
           await client.$disconnect()
-          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY))
-          await client.$connect()
-        } catch (cleanupError) {
-          console.warn('Failed to reconnect:', cleanupError)
+        } catch (disconnectError) {
+          console.warn('Failed to disconnect:', disconnectError)
         }
         
-        return next(params)
+        throw error
       }
-
-      retryCount = 0
       throw error
     }
   })
@@ -79,9 +65,7 @@ const prismaClientSingleton = () => {
 }
 
 // In production, create new instance but maintain connection
-export const prisma = process.env.NODE_ENV === 'production'
-  ? prismaClientSingleton()
-  : globalForPrisma.prisma ?? prismaClientSingleton()
+export const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
 
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
@@ -100,28 +84,20 @@ process.on('SIGINT', cleanup)
 process.on('SIGTERM', cleanup)
 
 // Error handling
-if (process.env.NODE_ENV === 'production') {
-  process.on('uncaughtException', async (error) => {
-    console.error('Uncaught Exception:', error)
-    await cleanup()
-  })
-
-  process.on('unhandledRejection', async (error) => {
-    console.error('Unhandled Rejection:', error)
-    await cleanup()
-  })
-} else {
-  process.on('uncaughtException', async (error) => {
-    console.error('Uncaught Exception:', error)
-    await cleanup()
+process.on('uncaughtException', async (error) => {
+  console.error('Uncaught Exception:', error)
+  await cleanup()
+  if (process.env.NODE_ENV !== 'production') {
     process.exit(1)
-  })
+  }
+})
 
-  process.on('unhandledRejection', async (error) => {
-    console.error('Unhandled Rejection:', error)
-    await cleanup()
+process.on('unhandledRejection', async (error) => {
+  console.error('Unhandled Rejection:', error)
+  await cleanup()
+  if (process.env.NODE_ENV !== 'production') {
     process.exit(1)
-  })
-}
+  }
+})
 
 export { prisma as default } 
