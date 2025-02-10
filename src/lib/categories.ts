@@ -1,4 +1,5 @@
-import { prisma } from "@/lib/db"
+import { prisma } from "@/lib/prisma"
+import { cache } from "react"
 
 export interface CategoryWithStats {
   id: string
@@ -10,14 +11,54 @@ export interface CategoryWithStats {
   subcategories: CategoryWithStats[]
 }
 
-export async function getCategories(): Promise<CategoryWithStats[]> {
+// Cache categories for 5 minutes
+const CACHE_TIME = 5 * 60 * 1000 // 5 minutes
+
+// In-memory cache for categories
+let categoriesCache: {
+  data: CategoryWithStats[] | null
+  timestamp: number
+} = {
+  data: null,
+  timestamp: 0
+}
+
+// Helper to check if cache is valid
+function isCacheValid() {
+  return (
+    categoriesCache.data &&
+    Date.now() - categoriesCache.timestamp < CACHE_TIME
+  )
+}
+
+export const getCategories = cache(async (): Promise<CategoryWithStats[]> => {
   try {
-    // Get all categories with their relationships and app counts
+    // Check in-memory cache first
+    if (isCacheValid()) {
+      return categoriesCache.data!
+    }
+
+    // Get all categories with optimized query
     const categories = await prisma.category.findMany({
-      include: {
-        parent: true,
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        iconName: true,
+        parentId: true,
+        _count: {
+          select: {
+            apps: true,
+            subApps: true
+          }
+        },
         children: {
-          include: {
+          select: {
+            id: true,
+            name: true,
+            description: true,
+            iconName: true,
+            parentId: true,
             _count: {
               select: {
                 apps: true,
@@ -25,18 +66,12 @@ export async function getCategories(): Promise<CategoryWithStats[]> {
               }
             }
           }
-        },
-        _count: {
-          select: {
-            apps: true,
-            subApps: true
-          }
         }
       }
     })
 
-    // Transform the data to include app counts
-    return categories.map(cat => ({
+    // Transform the data
+    const transformed = categories.map(cat => ({
       id: cat.id,
       name: cat.name,
       description: cat.description,
@@ -53,11 +88,107 @@ export async function getCategories(): Promise<CategoryWithStats[]> {
         subcategories: []
       }))
     }))
+
+    // Update cache
+    categoriesCache = {
+      data: transformed,
+      timestamp: Date.now()
+    }
+
+    return transformed
   } catch (error) {
     console.error("Error fetching categories:", error)
     return []
   }
-}
+})
+
+// Cache individual category lookups
+const categoryCache = new Map<string, {
+  data: CategoryWithStats | null
+  timestamp: number
+}>()
+
+export const getCategoryById = cache(async (id: string): Promise<CategoryWithStats | null> => {
+  try {
+    // Check cache first
+    const cached = categoryCache.get(id)
+    if (cached && Date.now() - cached.timestamp < CACHE_TIME) {
+      return cached.data
+    }
+
+    const category = await prisma.category.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        iconName: true,
+        parentId: true,
+        _count: {
+          select: {
+            apps: true,
+            subApps: true
+          }
+        },
+        children: {
+          select: {
+            id: true,
+            name: true,
+            description: true,
+            iconName: true,
+            parentId: true,
+            _count: {
+              select: {
+                apps: true,
+                subApps: true
+              }
+            }
+          }
+        }
+      }
+    })
+
+    if (!category) {
+      categoryCache.set(id, { data: null, timestamp: Date.now() })
+      return null
+    }
+
+    const transformed = {
+      id: category.id,
+      name: category.name,
+      description: category.description,
+      icon: category.iconName,
+      parentId: category.parentId,
+      appCount: category._count.apps + category._count.subApps,
+      subcategories: category.children.map(child => ({
+        id: child.id,
+        name: child.name,
+        description: child.description,
+        icon: child.iconName,
+        parentId: child.parentId,
+        appCount: child._count.apps + child._count.subApps,
+        subcategories: []
+      }))
+    }
+
+    // Update cache
+    categoryCache.set(id, {
+      data: transformed,
+      timestamp: Date.now()
+    })
+
+    return transformed
+  } catch (error) {
+    console.error("Error fetching category:", error)
+    return null
+  }
+})
+
+// Optimized version with caching
+export const getCategoriesWithStats = cache(async (): Promise<CategoryWithStats[]> => {
+  // Reuse the cached categories if available
+  return getCategories()
+})
 
 export async function createCategory(data: {
   name: string
@@ -121,99 +252,4 @@ export async function deleteCategory(id: string) {
       where: { id }
     })
   ])
-}
-
-export async function getCategoryById(id: string): Promise<CategoryWithStats | null> {
-  try {
-    const category = await prisma.category.findUnique({
-      where: { id },
-      include: {
-        parent: true,
-        children: {
-          include: {
-            _count: {
-              select: {
-                apps: true,
-                subApps: true
-              }
-            }
-          }
-        },
-        _count: {
-          select: {
-            apps: true,
-            subApps: true
-          }
-        }
-      }
-    })
-
-    if (!category) return null
-
-    return {
-      id: category.id,
-      name: category.name,
-      description: category.description,
-      icon: category.iconName,
-      parentId: category.parentId,
-      appCount: category._count.apps + category._count.subApps,
-      subcategories: category.children.map(child => ({
-        id: child.id,
-        name: child.name,
-        description: child.description,
-        icon: child.iconName,
-        parentId: child.parentId,
-        appCount: child._count.apps + child._count.subApps,
-        subcategories: []
-      }))
-    }
-  } catch (error) {
-    console.error("Error fetching category:", error)
-    return null
-  }
-}
-
-export async function getCategoriesWithStats(): Promise<CategoryWithStats[]> {
-  const categories = await prisma.category.findMany({
-    include: {
-      _count: {
-        select: {
-          apps: true,
-          subApps: true
-        }
-      }
-    }
-  })
-
-  // Transform into CategoryWithStats and build tree structure
-  const categoryMap = new Map<string, CategoryWithStats>()
-  const rootCategories: CategoryWithStats[] = []
-
-  // First pass: Create CategoryWithStats objects
-  for (const category of categories) {
-    categoryMap.set(category.id, {
-      id: category.id,
-      name: category.name,
-      description: category.description,
-      icon: category.iconName,
-      parentId: category.parentId,
-      appCount: category._count.apps + category._count.subApps,
-      subcategories: []
-    })
-  }
-
-  // Second pass: Build tree structure
-  for (const category of categories) {
-    const categoryWithStats = categoryMap.get(category.id)
-    if (categoryWithStats && category.parentId) {
-      const parent = categoryMap.get(category.parentId)
-      if (parent) {
-        parent.subcategories.push(categoryWithStats)
-      }
-    } else if (categoryWithStats) {
-      rootCategories.push(categoryWithStats)
-    }
-  }
-
-  return rootCategories
 } 

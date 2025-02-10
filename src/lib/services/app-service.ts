@@ -3,6 +3,164 @@ import { prisma } from "@/lib/prisma"
 import { getCurrentUser } from "@/lib/session"
 import { Sql } from "@prisma/client/runtime/library"
 import { Prisma } from "@prisma/client"
+import { cache } from "react"
+
+// Cache duration
+const CACHE_TIME = 5 * 60 * 1000 // 5 minutes
+
+// Cache for popular apps
+let popularAppsCache: {
+  data: AppWithDetails[] | null
+  timestamp: number
+} = {
+  data: null,
+  timestamp: 0
+}
+
+// Cache for app details
+const appDetailsCache = new Map<string, {
+  data: AppWithDetails | null
+  timestamp: number
+}>()
+
+// Cache for similar apps
+const similarAppsCache = new Map<string, {
+  data: AppWithDetails[] | null
+  timestamp: number
+}>()
+
+// Helper to check if cache is valid
+function isCacheValid(timestamp: number) {
+  return Date.now() - timestamp < CACHE_TIME
+}
+
+// Optimized select for app details
+const appSelect = {
+  id: true,
+  name: true,
+  description: true,
+  shortDescription: true,
+  fullContent: true,
+  icon: true,
+  website: true,
+  categoryId: true,
+  subcategoryId: true,
+  tags: true,
+  published: true,
+  developerId: true,
+  createdAt: true,
+  updatedAt: true,
+  screenshots: true,
+  bundleIds: true,
+  downloadCount: true,
+  downloadUrl: true,
+  isBeta: true,
+  isSupported: true,
+  lastScanDate: true,
+  license: true,
+  price: true,
+  purchaseUrl: true,
+  releaseDate: true,
+  vendor: true,
+  fileSize: true,
+  version: true,
+  requirements: true,
+  otherRequirements: true,
+  developer: {
+    select: {
+      id: true,
+      userId: true,
+      companyName: true,
+      verified: true,
+      user: {
+        select: {
+          name: true,
+          email: true,
+        },
+      },
+    },
+  },
+  category: true,
+  subcategory: true,
+  versions: {
+    orderBy: {
+      createdAt: 'desc'
+    },
+    take: 1,
+    select: {
+      id: true,
+      version: true,
+      changelog: true,
+      createdAt: true,
+      fileUrl: true,
+      fileSize: true,
+      sha256Hash: true,
+      minOsVersion: true,
+      _count: {
+        select: {
+          downloads: true
+        }
+      }
+    }
+  },
+  _count: {
+    select: {
+      downloads: true,
+      favorites: true,
+      ratings: true,
+      comments: true,
+    },
+  },
+  ratings: {
+    select: {
+      id: true,
+      rating: true,
+      createdAt: true,
+      userId: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+        },
+      },
+    },
+  },
+  comments: {
+    where: {
+      parentId: null,
+    },
+    select: {
+      id: true,
+      comment: true,
+      createdAt: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+        },
+      },
+      replies: {
+        select: {
+          id: true,
+          comment: true,
+          createdAt: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  },
+} as const
 
 export type GetAppsParams = {
   search?: string
@@ -187,10 +345,68 @@ type AppWithDetails = Omit<PrismaApp, 'fileSize'> & {
 
 export type { AppWithDetails }
 
-export async function getApps(
+// Helper function to transform app data
+function transformAppData(app: any): AppWithDetails {
+  return {
+    ...app,
+    fileSize: app.fileSize ? Number(app.fileSize.toString()) : null,
+    averageRating: app.ratings.length
+      ? app.ratings.reduce((acc: number, curr: any) => acc + curr.rating, 0) / app.ratings.length
+      : 0,
+    release_notes: app.versions?.[0]?.changelog || null,
+    versions: app.versions.map((version: any) => ({
+      id: version.id,
+      version: version.version,
+      changelog: version.changelog,
+      createdAt: version.createdAt,
+      fileUrl: version.fileUrl,
+      fileSize: version.fileSize,
+      sha256Hash: version.sha256Hash,
+      minOsVersion: version.minOsVersion,
+      _count: {
+        downloads: version._count.downloads,
+      },
+    })),
+    ratings: app.ratings.map((rating: any) => ({
+      id: rating.id,
+      rating: rating.rating,
+      createdAt: rating.createdAt,
+      userId: rating.userId,
+      user: {
+        id: rating.user.id,
+        name: rating.user.name,
+        image: rating.user.image,
+      },
+    })),
+    comments: app.comments.map((comment: any) => ({
+      id: comment.id,
+      comment: comment.comment,
+      createdAt: comment.createdAt,
+      parentId: comment.parentId,
+      user: {
+        id: comment.user.id,
+        name: comment.user.name,
+        image: comment.user.image,
+      },
+      replies: comment.replies?.map((reply: any) => ({
+        id: reply.id,
+        comment: reply.comment,
+        createdAt: reply.createdAt,
+        parentId: reply.parentId,
+        user: {
+          id: reply.user.id,
+          name: reply.user.name,
+          image: reply.user.image,
+        }
+      }))
+    }))
+  }
+}
+
+export const getApps = cache(async (
   params: GetAppsParams = {},
   cacheOptions?: CacheOptions
-): Promise<GetAppsResult> {
+): Promise<GetAppsResult> => {
   const {
     search,
     categories,
@@ -210,6 +426,20 @@ export async function getApps(
     limit = 10,
     published,
   } = params
+
+  // Check cache for popular apps
+  if (sort === "popular" && !search && !categories && !category && !tags && published !== false) {
+    if (popularAppsCache.data && isCacheValid(popularAppsCache.timestamp)) {
+      const start = (page - 1) * limit
+      const end = start + limit
+      return {
+        apps: popularAppsCache.data.slice(start, end),
+        total: popularAppsCache.data.length,
+        pages: Math.ceil(popularAppsCache.data.length / limit),
+        currentPage: page,
+      }
+    }
+  }
 
   const where: any = {}
   let orderBy: any = { createdAt: "desc" }
@@ -335,299 +565,67 @@ export async function getApps(
   const [apps, total] = await Promise.all([
     prisma.app.findMany({
       where,
+      select: appSelect,
       orderBy,
       skip,
       take: limit,
-      include: {
-        developer: {
-          include: {
-            user: {
-              select: {
-                name: true,
-                email: true,
-              },
-            },
-          },
-        },
-        category: true,
-        subcategory: true,
-        versions: {
-          orderBy: {
-            createdAt: 'desc'
-          },
-          take: 1,
-          include: {
-            _count: {
-              select: {
-                downloads: true
-              }
-            }
-          }
-        },
-        _count: {
-          select: {
-            downloads: true,
-            favorites: true,
-            ratings: true,
-            comments: true,
-          },
-        },
-        ratings: {
-          include: {
-            user: {
-              select: {
-                id: true,
-                name: true,
-                image: true,
-              },
-            },
-          },
-        },
-        comments: {
-          where: {
-            parentId: null,
-          },
-          include: {
-            user: {
-              select: {
-                id: true,
-                name: true,
-                image: true,
-              },
-            },
-            replies: {
-              include: {
-                user: {
-                  select: {
-                    id: true,
-                    name: true,
-                    image: true,
-                  },
-                },
-              },
-            },
-          },
-          orderBy: {
-            createdAt: "desc",
-          },
-        },
-      },
     }),
     prisma.app.count({ where }),
   ])
 
-  const pages = Math.ceil(total / limit)
+  const transformedApps = apps.map(transformAppData)
+
+  // Cache popular apps
+  if (sort === "popular" && !search && !categories && !category && !tags && published !== false) {
+    popularAppsCache = {
+      data: transformedApps,
+      timestamp: Date.now(),
+    }
+  }
 
   return {
-    apps: apps.map((app): AppWithDetails => ({
-      ...app,
-      fileSize: app.fileSize ? Number(app.fileSize.toString()) : null,
-      averageRating: app.ratings.length
-        ? app.ratings.reduce((acc, curr) => acc + curr.rating, 0) / app.ratings.length
-        : 0,
-      release_notes: app.versions?.[0]?.changelog || null,
-      versions: app.versions.map((version) => ({
-        id: version.id,
-        version: version.version,
-        changelog: version.changelog,
-        createdAt: version.createdAt,
-        fileUrl: version.fileUrl,
-        fileSize: version.fileSize,
-        sha256Hash: version.sha256Hash,
-        minOsVersion: version.minOsVersion,
-        _count: {
-          downloads: version._count.downloads,
-        },
-      })),
-      ratings: app.ratings.map((rating) => ({
-        id: rating.id,
-        rating: rating.rating,
-        createdAt: rating.createdAt,
-        userId: rating.user.id,
-        user: {
-          id: rating.user.id,
-          name: rating.user.name,
-          image: rating.user.image,
-        },
-      })),
-      comments: app.comments.map((comment) => ({
-        id: comment.id,
-        comment: comment.comment,
-        createdAt: comment.createdAt,
-        parentId: comment.parentId,
-        user: {
-          id: comment.user.id,
-          name: comment.user.name,
-          image: comment.user.image,
-        },
-        replies: comment.replies?.map((reply) => ({
-          id: reply.id,
-          comment: reply.comment,
-          createdAt: reply.createdAt,
-          parentId: reply.parentId,
-          user: {
-            id: reply.user.id,
-            name: reply.user.name,
-            image: reply.user.image,
-          }
-        }))
-      }))
-    })),
+    apps: transformedApps,
     total,
-    pages,
+    pages: Math.ceil(total / limit),
     currentPage: page,
   }
-}
+})
 
-export async function getApp(id: string): Promise<AppWithDetails | null> {
+export const getApp = cache(async (id: string): Promise<AppWithDetails | null> => {
+  // Check cache first
+  const cached = appDetailsCache.get(id)
+  if (cached && isCacheValid(cached.timestamp)) {
+    return cached.data
+  }
+
   const app = await prisma.app.findUnique({
     where: { id },
-    include: {
-      developer: {
-        include: {
-          user: {
-            select: {
-              name: true,
-              email: true,
-            },
-          },
-        },
-      },
-      category: true,
-      subcategory: true,
-      versions: {
-        orderBy: {
-          createdAt: 'desc'
-        },
-        take: 1,
-        include: {
-          _count: {
-            select: {
-              downloads: true
-            }
-          }
-        }
-      },
-      _count: {
-        select: {
-          downloads: true,
-          favorites: true,
-          ratings: true,
-          comments: true,
-        },
-      },
-      ratings: {
-        include: {
-          user: {
-            select: {
-              id: true,
-              name: true,
-              image: true,
-            },
-          },
-        },
-      },
-      comments: {
-        where: {
-          parentId: null,
-        },
-        include: {
-          user: {
-            select: {
-              id: true,
-              name: true,
-              image: true,
-            },
-          },
-          replies: {
-            include: {
-              user: {
-                select: {
-                  id: true,
-                  name: true,
-                  image: true,
-                },
-              },
-            },
-          },
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-      },
-    },
+    select: appSelect,
   })
 
   if (!app) {
+    appDetailsCache.set(id, { data: null, timestamp: Date.now() })
     return null
   }
 
-  // Calculate average rating
-  const avgRating = await prisma.$queryRaw<[{ averageRating: number }]>(
-    Prisma.sql`
-      SELECT ROUND(CAST(AVG(rating) AS NUMERIC), 2)::float as "averageRating"
-      FROM "Rating"
-      WHERE "appId" = ${id}
-    `
-  )
+  const transformed = transformAppData(app)
 
-  const appDetails: AppWithDetails = {
-    ...app,
-    fileSize: app.fileSize ? Number(app.fileSize.toString()) : null,
-    averageRating: avgRating[0]?.averageRating || 0,
-    release_notes: app.versions?.[0]?.changelog || null,
-    versions: app.versions.map((version) => ({
-      id: version.id,
-      version: version.version,
-      changelog: version.changelog,
-      createdAt: version.createdAt,
-      fileUrl: version.fileUrl,
-      fileSize: version.fileSize,
-      sha256Hash: version.sha256Hash,
-      minOsVersion: version.minOsVersion,
-      _count: {
-        downloads: version._count.downloads,
-      },
-    })),
-    ratings: app.ratings.map((rating) => ({
-      id: rating.id,
-      rating: rating.rating,
-      createdAt: rating.createdAt,
-      userId: rating.user.id,
-      user: {
-        id: rating.user.id,
-        name: rating.user.name,
-        image: rating.user.image,
-      },
-    })),
-    comments: app.comments.map((comment) => ({
-      id: comment.id,
-      comment: comment.comment,
-      createdAt: comment.createdAt,
-      parentId: comment.parentId,
-      user: {
-        id: comment.user.id,
-        name: comment.user.name,
-        image: comment.user.image,
-      },
-      replies: comment.replies?.map((reply) => ({
-        id: reply.id,
-        comment: reply.comment,
-        createdAt: reply.createdAt,
-        parentId: reply.parentId,
-        user: {
-          id: reply.user.id,
-          name: reply.user.name,
-          image: reply.user.image,
-        }
-      }))
-    }))
+  // Update cache
+  appDetailsCache.set(id, {
+    data: transformed,
+    timestamp: Date.now(),
+  })
+
+  return transformed
+})
+
+export const getSimilarApps = cache(async (id: string, limit = 4) => {
+  // Check cache first
+  const cached = similarAppsCache.get(id)
+  if (cached && isCacheValid(cached.timestamp)) {
+    return cached.data
   }
 
-  return appDetails
-}
-
-export async function getSimilarApps(id: string, limit = 4) {
   const app = await prisma.app.findUnique({
     where: { id },
     select: {
@@ -642,78 +640,27 @@ export async function getSimilarApps(id: string, limit = 4) {
   const similarApps = await prisma.app.findMany({
     where: {
       published: true,
-      NOT: {
-        id,
-      },
+      NOT: { id },
       OR: [
-        {
-          categoryId: app.categoryId,
-        },
-        {
-          subcategoryId: app.subcategoryId,
-        },
-        {
-          tags: {
-            hasSome: app.tags,
-          },
-        },
+        { categoryId: app.categoryId },
+        { subcategoryId: app.subcategoryId },
+        { tags: { hasSome: app.tags } },
       ],
     },
     take: limit,
-    include: {
-      developer: {
-        include: {
-          user: {
-            select: {
-              name: true,
-              email: true,
-            },
-          },
-        },
-      },
-      category: true,
-      subcategory: true,
-      ratings: {
-        include: {
-          user: {
-            select: {
-              id: true,
-              name: true,
-              image: true,
-            },
-          },
-        },
-      },
-      comments: {
-        include: {
-          user: {
-            select: {
-              id: true,
-              name: true,
-              image: true,
-            },
-          },
-        },
-      },
-      _count: {
-        select: {
-          ratings: true,
-          downloads: true,
-          favorites: true,
-          comments: true,
-        },
-      },
-    },
+    select: appSelect,
   })
 
-  return similarApps.map(app => ({
-    ...app,
-    averageRating: app.ratings.length > 0
-      ? app.ratings.reduce((acc, curr) => acc + curr.rating, 0) / app.ratings.length
-      : 0,
-    fileSize: app.fileSize ? Number(app.fileSize) : null,
-  }))
-}
+  const transformed = similarApps.map(transformAppData)
+
+  // Update cache
+  similarAppsCache.set(id, {
+    data: transformed,
+    timestamp: Date.now(),
+  })
+
+  return transformed
+})
 
 export async function getPopularTags(limit = 10): Promise<{ tag: string; count: number }[]> {
   const apps = await prisma.app.findMany({
