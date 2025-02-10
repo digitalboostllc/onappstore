@@ -19,10 +19,6 @@ const mainNavItems = [
     href: "/categories",
   },
   {
-    title: "Collections",
-    href: "/collections",
-  },
-  {
     title: "Submit",
     href: "/submit",
   },
