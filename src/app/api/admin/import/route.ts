@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { getCurrentUser } from "@/lib/auth/utils"
-import { prisma } from "@/lib/db"
+import { prisma } from "@/lib/prisma"
 import { logActivity } from "@/lib/services/activity-logger"
 import * as cheerio from "cheerio"
 import { downloadImage, buildUrl } from "@/lib/utils/download"

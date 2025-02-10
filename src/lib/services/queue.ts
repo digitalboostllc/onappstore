@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/db"
+import { prisma } from "@/lib/prisma"
 import { scrapeMacUpdate } from "@/lib/services/scraper"
 import type { AppData } from "@/lib/services/scraper"
 import { processRequirements } from "./scraper"
@@ -186,89 +186,29 @@ export async function processImportJob(jobId: string, limit?: number, importAll:
               return null
             }
 
-            // Find category by macUpdateId
-            let categoryInfo: { categoryId: string | null, subcategoryId: string | null } | null = null
-            if (app.category?.macUpdateId || app.category?.subcategoryMacUpdateId) {
-              // Try to find by subcategory ID first if it exists
-              if (app.category.subcategoryMacUpdateId) {
-                const subcategory = await prisma.category.findUnique({
-                  where: { macUpdateId: app.category.subcategoryMacUpdateId.toString() },
-                  include: { parent: true }
-                })
-
-                if (subcategory && subcategory.parent) {
-                  categoryInfo = {
-                    categoryId: subcategory.parent.id,
-                    subcategoryId: subcategory.id
-                  }
-                  console.log(`Found by subcategory: ${subcategory.name} (${subcategory.id}) under ${subcategory.parent.name} (${subcategory.parent.id})`)
-                }
-              }
-
-              // If no subcategory found, try by main category ID
-              if (!categoryInfo && app.category.macUpdateId) {
-                const category = await prisma.category.findUnique({
-                  where: { macUpdateId: app.category.macUpdateId.toString() },
-                  include: { parent: true }
-                })
-                
-                if (category) {
-                  categoryInfo = {
-                    categoryId: category.parent?.id || category.id,
-                    subcategoryId: category.parent ? category.id : null
-                  }
-                  console.log(`Found by main category: ${category.name} (${category.id})`)
-                } else {
-                  const error = `Category not found for macUpdateId: ${app.category.macUpdateId}. Please run Sync Categories first.`
-                  errors.push({ name: app.name, error, details: { categoryData: app.category } })
-                  console.log(error)
-                  return null
-                }
-              }
-            } else {
-              const error = `Missing macUpdateId in category`
-              errors.push({ name: app.name, error, details: { categoryData: app.category } })
-              console.log(`Skipping app: ${error}`)
+            // Skip if no category ID
+            if (!app.category?.macUpdateId) {
+              const error = "Missing category ID"
+              errors.push({ name: app.name || "Unknown", error })
+              console.error(`Skipping app: ${error}`)
               return null
             }
 
-            if (!categoryInfo) {
-              const error = `Category not synced yet. Please run Sync Categories first.`
-              errors.push({ name: app.name, error, details: { categoryData: app.category } })
-              console.log(`Skipping app "${app.name}": ${error}`)
-              return null
-            }
-
-            // Create new app with existing category
-            if (!categoryInfo.categoryId) {
-              const error = `Invalid category ID`
-              errors.push({ name: app.name, error, details: { categoryInfo } })
-              console.log(`Skipping app "${app.name}": ${error}`)
-              return null
-            }
-
-            const requirementsObj = typeof app.requirements === 'object' && app.requirements !== null
-              ? app.requirements
-              : { minimum_os: typeof app.requirements === 'string' ? app.requirements : undefined }
-
-            const processedReqs = processRequirements({
-              ...requirementsObj,
-              other_list: app.otherRequirements ? app.otherRequirements.split('\n') : undefined
-            })
+            // Create app with all data
             const createdApp = await prisma.app.create({
               data: {
                 name: app.name,
                 description: app.description,
                 fullContent: app.fullContent,
-                categoryId: categoryInfo.categoryId,
-                subcategoryId: categoryInfo.subcategoryId || undefined,
+                categoryId: app.category.macUpdateId,
+                subcategoryId: app.category.subcategoryMacUpdateId || undefined,
                 website: app.website,
                 icon: app.icon,
                 published: false,
                 developerId: adminDev.id,
                 screenshots: (app.screenshots || []).filter(Boolean).filter(url => !url.includes('static.macupdate.com/submission')),
-                requirements: processedReqs.requirements,
-                otherRequirements: processedReqs.otherRequirements,
+                requirements: app.requirements,
+                otherRequirements: app.otherRequirements,
                 bundleIds: app.bundleIds?.filter(id => id !== null) || [],
                 shortDescription: app.shortDescription,
                 downloadCount: app.downloadCount,
@@ -287,74 +227,65 @@ export async function processImportJob(jobId: string, limit?: number, importAll:
                   create: {
                     version: app.version,
                     changelog: app.release_notes || null,
-                    minOsVersion: processedReqs.requirements || "macOS 10.0",
+                    minOsVersion: app.requirements || "macOS 10.0",
                     fileUrl: app.downloadUrl || "",
                     fileSize: app.fileSize ? BigInt(app.fileSize) : BigInt(0),
                     sha256Hash: "",
                   }
                 } : undefined,
-                version: app.version || null,
-                originalCategory: app.category.parentName 
-                  ? `${app.category.parentName} › ${app.category.name}`
-                  : app.category.name,
               },
             })
-            console.log(`Created app: ${app.name} with category ${app.category.name}${categoryInfo.subcategoryId ? ' (has subcategory)' : ''}`)
+
+            successCount++
             return createdApp
           } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error)
-            errors.push({ 
-              name: app?.name || "Unknown", 
-              error: errorMessage,
-              details: { 
-                categoryData: app?.category,
-                version: app?.version,
-                requirements: app?.requirements
-              }
-            })
-            console.error(`Failed to import app: ${app?.name}`, error)
+            errorCount++
+            const errorMessage = error instanceof Error ? error.message : "Unknown error"
+            errors.push({ name: app.name || "Unknown", error: errorMessage })
+            console.error(`Failed to import app: ${app.name}`, error)
             return null
           }
         })
       )
 
-      // Update counts
-      const batchResults = await Promise.all(results)
-      successCount += batchResults.filter(Boolean).length
-      errorCount = errors.length
-
-      // Log progress with error details
-      console.log(`Progress: ${successCount + errorCount}/${apps.length} (${successCount} successes, ${errorCount} failures)`)
-      if (errors.length > 0) {
-        console.log("\nFailure Details:")
-        errors.forEach(({ name, error, details }) => {
-          console.log(`\nApp: ${name}`)
-          console.log(`Error: ${error}`)
-          if (details) {
-            console.log("Details:", JSON.stringify(details, null, 2))
-          }
-        })
-      }
-
       // Update job progress
-      await updateJobProgress(jobId, successCount + errorCount, apps.length)
+      await prisma.job.update({
+        where: { id: jobId },
+        data: {
+          progress: i + batch.length,
+          total: apps.length,
+          updatedAt: new Date(),
+        },
+      })
     }
 
-    // Complete job with summary
-    const summary = `Imported ${successCount} apps successfully, ${errorCount} failed. ${errors.length > 0 ? '\nErrors:\n' + errors.slice(0, 10).map(e => e.error).join('\n') : ''}`
-    console.log("Import job completed:", summary)
+    // Create summary
+    const summary = `Import completed. Processed ${apps.length} apps. Success: ${successCount}, Errors: ${errorCount}`
+    console.log(summary)
+    if (errors.length > 0) {
+      console.log("Errors:", errors)
+    }
+
+    // Update job status
     await prisma.job.update({
       where: { id: jobId },
       data: {
         status: "completed",
-        error: errorCount > 0 ? summary : undefined,
+        error: errorCount > 0 ? JSON.stringify(errors) : undefined,
         updatedAt: new Date(),
       },
     })
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error occurred"
     console.error("Import job failed:", errorMessage)
-    await failJob(jobId, errorMessage)
+    await prisma.job.update({
+      where: { id: jobId },
+      data: {
+        status: "failed",
+        error: errorMessage,
+        updatedAt: new Date(),
+      },
+    })
   }
 }
 
