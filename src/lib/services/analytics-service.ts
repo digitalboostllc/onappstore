@@ -1,6 +1,21 @@
 import { Prisma } from "@prisma/client"
 import { prisma } from "@/lib/prisma"
 import { subDays, startOfDay, endOfDay } from "date-fns"
+import { cache } from "react"
+
+// Cache duration for analytics (2 minutes)
+const CACHE_TIME = 2 * 60 * 1000
+
+// Cache for dashboard stats
+const statsCache = new Map<number, {
+  data: DashboardStats | null
+  timestamp: number
+}>()
+
+// Helper to check if cache is valid
+function isCacheValid(timestamp: number) {
+  return Date.now() - timestamp < CACHE_TIME
+}
 
 export interface DashboardStats {
   total: {
@@ -29,7 +44,13 @@ export interface DashboardStats {
   }[]
 }
 
-export async function getDashboardStats(days: number = 30): Promise<DashboardStats> {
+export const getDashboardStats = cache(async (days: number = 30): Promise<DashboardStats> => {
+  // Check cache first
+  const cached = statsCache.get(days)
+  if (cached && isCacheValid(cached.timestamp)) {
+    return cached.data!
+  }
+
   const startDate = startOfDay(subDays(new Date(), days))
   const endDate = endOfDay(new Date())
 
@@ -39,48 +60,52 @@ export async function getDashboardStats(days: number = 30): Promise<DashboardSta
     categoryDistribution,
     dailyStats
   ] = await Promise.all([
-    // Total counts
-    prisma.$queryRaw`
+    // Total counts - optimized to single query
+    prisma.$queryRaw<[{ users: number; apps: number; downloads: number; ratings: number; comments: number }]>`
       SELECT
         (SELECT COUNT(*) FROM "User")::integer as users,
-        (SELECT COUNT(*) FROM "App")::integer as apps,
+        (SELECT COUNT(*) FROM "App" WHERE "published" = true)::integer as apps,
         (SELECT COUNT(*) FROM "Download")::integer as downloads,
         (SELECT COUNT(*) FROM "Rating")::integer as ratings,
         (SELECT COUNT(*) FROM "Comment")::integer as comments
     `,
 
-    // New counts in date range
-    prisma.$queryRaw`
+    // New counts in date range - optimized to single query
+    prisma.$queryRaw<[{ users: number; apps: number; downloads: number; ratings: number; comments: number }]>`
       SELECT
         (SELECT COUNT(*) FROM "User" WHERE "createdAt" >= ${startDate}::timestamp AND "createdAt" <= ${endDate}::timestamp)::integer as users,
-        (SELECT COUNT(*) FROM "App" WHERE "createdAt" >= ${startDate}::timestamp AND "createdAt" <= ${endDate}::timestamp)::integer as apps,
+        (SELECT COUNT(*) FROM "App" WHERE "published" = true AND "createdAt" >= ${startDate}::timestamp AND "createdAt" <= ${endDate}::timestamp)::integer as apps,
         (SELECT COUNT(*) FROM "Download" WHERE "createdAt" >= ${startDate}::timestamp AND "createdAt" <= ${endDate}::timestamp)::integer as downloads,
         (SELECT COUNT(*) FROM "Rating" WHERE "createdAt" >= ${startDate}::timestamp AND "createdAt" <= ${endDate}::timestamp)::integer as ratings,
         (SELECT COUNT(*) FROM "Comment" WHERE "createdAt" >= ${startDate}::timestamp AND "createdAt" <= ${endDate}::timestamp)::integer as comments
     `,
 
-    // Category distribution
-    prisma.$queryRaw<Array<{ category: string, count: number }>>`
-      SELECT 
-        COALESCE(c.name, 'Uncategorized') as category,
-        COUNT(a.id)::integer as count
-      FROM "App" a
-      LEFT JOIN "Category" c ON c.id = a."categoryId"
-      WHERE a."categoryId" IS NOT NULL
-      GROUP BY c.name
+    // Category distribution - optimized with materialized CTE
+    prisma.$queryRaw<Array<{ category: string; count: number }>>`
+      WITH MATERIALIZED category_stats AS (
+        SELECT 
+          c.name as category,
+          COUNT(a.id)::integer as count
+        FROM "App" a
+        LEFT JOIN "Category" c ON c.id = a."categoryId"
+        WHERE a."categoryId" IS NOT NULL
+          AND a."published" = true
+        GROUP BY c.name
+      )
+      SELECT * FROM category_stats
       ORDER BY count DESC
     `,
 
-    // Daily stats using PostgreSQL syntax
-    prisma.$queryRaw`
-      WITH dates AS (
+    // Daily stats - optimized with materialized CTEs
+    prisma.$queryRaw<Array<{ date: string; downloads: number; ratings: number; comments: number }>>`
+      WITH MATERIALIZED dates AS (
         SELECT generate_series(
           date_trunc('day', ${startDate}::timestamp),
           date_trunc('day', ${endDate}::timestamp),
           '1 day'::interval
         )::date as date
       ),
-      daily_downloads AS (
+      MATERIALIZED daily_downloads AS (
         SELECT 
           date_trunc('day', "createdAt")::date as date,
           COUNT(*)::integer as downloads
@@ -88,7 +113,7 @@ export async function getDashboardStats(days: number = 30): Promise<DashboardSta
         WHERE "createdAt" >= ${startDate}::timestamp
         GROUP BY 1
       ),
-      daily_ratings AS (
+      MATERIALIZED daily_ratings AS (
         SELECT 
           date_trunc('day', "createdAt")::date as date,
           COUNT(*)::integer as ratings
@@ -96,7 +121,7 @@ export async function getDashboardStats(days: number = 30): Promise<DashboardSta
         WHERE "createdAt" >= ${startDate}::timestamp
         GROUP BY 1
       ),
-      daily_comments AS (
+      MATERIALIZED daily_comments AS (
         SELECT 
           date_trunc('day', "createdAt")::date as date,
           COUNT(*)::integer as comments
@@ -117,33 +142,21 @@ export async function getDashboardStats(days: number = 30): Promise<DashboardSta
     `
   ])
 
-  const totalCounts = (counts as any[])[0]
-  const newCounts_ = (newCounts as any[])[0]
-
-  return {
-    total: {
-      users: Number(totalCounts.users),
-      apps: Number(totalCounts.apps),
-      downloads: Number(totalCounts.downloads),
-      ratings: Number(totalCounts.ratings),
-      comments: Number(totalCounts.comments),
-    },
-    new: {
-      users: Number(newCounts_.users),
-      apps: Number(newCounts_.apps),
-      downloads: Number(newCounts_.downloads),
-      ratings: Number(newCounts_.ratings),
-      comments: Number(newCounts_.comments),
-    },
-    categoryDistribution: categoryDistribution,
-    dailyStats: (dailyStats as any[]).map(stat => ({
-      date: stat.date,
-      downloads: Number(stat.downloads),
-      ratings: Number(stat.ratings),
-      comments: Number(stat.comments)
-    }))
+  const stats: DashboardStats = {
+    total: counts[0],
+    new: newCounts[0],
+    categoryDistribution,
+    dailyStats
   }
-}
+
+  // Update cache
+  statsCache.set(days, {
+    data: stats,
+    timestamp: Date.now()
+  })
+
+  return stats
+})
 
 export async function count(dateRange?: { from: Date; to: Date }) {
   const where = dateRange

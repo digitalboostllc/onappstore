@@ -1,5 +1,38 @@
-import { prisma } from "@/lib/db"
+import { prisma } from "@/lib/prisma"
 import { Prisma } from "@prisma/client"
+import { cache } from "react"
+
+// Cache duration (5 minutes)
+const CACHE_TIME = 5 * 60 * 1000
+
+// Cache for users list
+const usersListCache = new Map<string, {
+  data: any
+  timestamp: number
+}>()
+
+// Cache for user details
+const userDetailsCache = new Map<string, {
+  data: any
+  timestamp: number
+}>()
+
+// Helper to check if cache is valid
+function isCacheValid(timestamp: number) {
+  return Date.now() - timestamp < CACHE_TIME
+}
+
+// Helper to generate cache key for users list
+function getUsersListCacheKey(params: GetUsersParams): string {
+  return JSON.stringify({
+    search: params.search || "",
+    role: params.role || "",
+    status: params.status || "",
+    sort: params.sort || "newest",
+    page: params.page || 1,
+    limit: params.limit || 10,
+  })
+}
 
 export interface GetUsersParams {
   search?: string
@@ -10,12 +43,7 @@ export interface GetUsersParams {
   limit?: number
 }
 
-export interface UpdateUserData {
-  isAdmin?: boolean
-  isBanned?: boolean
-}
-
-interface UserWithCounts {
+export interface UserWithCounts {
   id: string
   name: string | null
   email: string
@@ -33,6 +61,7 @@ interface UserWithCounts {
   }
 }
 
+// Optimized user select
 const userSelect = {
   id: true,
   name: true,
@@ -55,16 +84,27 @@ const userSelect = {
       ratings: true,
     },
   },
-} satisfies Prisma.UserSelect
+} as const satisfies Prisma.UserSelect
 
-export async function getUsers({
+export const getUsers = cache(async ({
   search,
   role,
   status,
   sort = "newest",
   page = 1,
   limit = 10,
-}: GetUsersParams = {}) {
+}: GetUsersParams = {}): Promise<{
+  users: UserWithCounts[]
+  total: number
+  pages: number
+}> => {
+  // Check cache first
+  const cacheKey = getUsersListCacheKey({ search, role, status, sort, page, limit })
+  const cached = usersListCache.get(cacheKey)
+  if (cached && isCacheValid(cached.timestamp)) {
+    return cached.data
+  }
+
   const where = {
     ...(search && {
       OR: [
@@ -102,27 +142,86 @@ export async function getUsers({
     },
   }))
 
-  return {
-    users: transformedUsers as unknown as UserWithCounts[],
+  const result = {
+    users: transformedUsers as UserWithCounts[],
     total,
     pages,
   }
-}
 
-export async function updateUser(userId: string, data: UpdateUserData) {
-  const user = await prisma.user.update({
-    where: { id: userId },
-    data,
+  // Update cache
+  usersListCache.set(cacheKey, {
+    data: result,
+    timestamp: Date.now(),
+  })
+
+  return result
+})
+
+export const getUserById = cache(async (id: string): Promise<UserWithCounts | null> => {
+  // Check cache first
+  const cached = userDetailsCache.get(id)
+  if (cached && isCacheValid(cached.timestamp)) {
+    return cached.data
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id },
     select: userSelect,
   })
 
-  return {
+  if (!user) {
+    return null
+  }
+
+  const transformedUser = {
     ...user,
     _count: {
       ...user._count,
       reviews: user._count.ratings,
     },
-  } as unknown as UserWithCounts
+  } as UserWithCounts
+
+  // Update cache
+  userDetailsCache.set(id, {
+    data: transformedUser,
+    timestamp: Date.now(),
+  })
+
+  return transformedUser
+})
+
+export const updateUser = async (
+  id: string,
+  data: {
+    name?: string
+    email?: string
+    isAdmin?: boolean
+    isBanned?: boolean
+  }
+) => {
+  const user = await prisma.user.update({
+    where: { id },
+    data,
+    select: userSelect,
+  })
+
+  // Invalidate caches
+  userDetailsCache.delete(id)
+  usersListCache.clear() // Clear all list caches as this update might affect any list
+
+  return user
+}
+
+export const deleteUser = async (id: string) => {
+  const user = await prisma.user.delete({
+    where: { id },
+  })
+
+  // Invalidate caches
+  userDetailsCache.delete(id)
+  usersListCache.clear() // Clear all list caches
+
+  return user
 }
 
 export async function resetUserPassword(userId: string) {
@@ -131,10 +230,4 @@ export async function resetUserPassword(userId: string) {
   // 2. Send an email to the user with a reset link
   // 3. Create an API endpoint to handle the reset
   throw new Error("Not implemented")
-}
-
-export async function deleteUser(userId: string) {
-  return prisma.user.delete({
-    where: { id: userId },
-  })
 } 
