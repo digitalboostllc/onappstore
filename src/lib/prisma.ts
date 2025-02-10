@@ -115,18 +115,25 @@ const prismaClientSingleton = () => {
     ],
     datasources: { 
       db: { 
-        url: `${process.env.SUPABASE_POSTGRES_URL_NON_POOLING}?pgbouncer=true&connection_limit=1&pool_timeout=20`
+        url: `${process.env.SUPABASE_POSTGRES_URL_NON_POOLING}?pgbouncer=true&connection_limit=1&pool_timeout=20&statement_cache_size=0&prepared_statement_cache_size=0`
       } 
     }
   })
 
-  // Add query caching middleware
+  // Add query caching middleware with cleanup
   client.$use(async (params: any, next: any) => {
+    // Generate a unique key for this query
     const cacheKey = JSON.stringify(params)
     const cached = queryCache.get(cacheKey)
     
     if (cached) {
       return cached
+    }
+
+    // Add a random suffix to prepared statement names to avoid conflicts
+    if (params.action === 'queryRaw' || params.action === 'executeRaw') {
+      const randomSuffix = Math.random().toString(36).substring(7)
+      params.query = params.query.replace(/PREPARE\s+(\w+)/, `PREPARE $1_${randomSuffix}`)
     }
 
     const start = performance.now()
@@ -139,7 +146,11 @@ const prismaClientSingleton = () => {
     }
 
     if (duration > 1000) {
-      console.warn(`Slow query detected (${duration}ms):`, params)
+      console.warn(`Slow query detected (${duration}ms):`, {
+        model: params.model,
+        action: params.action,
+        duration: `${duration}ms`
+      })
     }
 
     return result
@@ -151,7 +162,6 @@ const prismaClientSingleton = () => {
   // Simplified middleware for serverless environment
   client.$use(async (params, next) => {
     const start = Date.now()
-    const queryId = `${params.model}_${params.action}_${Date.now()}`
 
     try {
       // Execute with timeout (14s to stay under Vercel's 15s default)
