@@ -1,0 +1,131 @@
+# Development Guidelines
+
+## Tech Stack
+- **Framework**: Next.js 13+ with App Router
+- **Database**: PostgreSQL via Supabase
+- **ORM**: Prisma
+- **UI**: ShadCN UI (preferred over Radix)
+- **Deployment**: Vercel
+- **Authentication**: NextAuth.js
+- **State Management**: Zustand
+- **Form Handling**: React Hook Form + Zod
+
+## Database Practices
+1. **Connection Management**:
+   - Use pooled connections for regular queries
+   - Use direct connections for migrations
+   - Configure proper timeouts and limits
+
+2. **Query Optimization**:
+   - Implement proper indexes
+   - Use caching for frequent queries
+   - Avoid N+1 queries
+   - Use transactions where appropriate
+
+## Environment Variables
+1. **Production**:
+   - All configuration in Vercel project settings
+   - Never store sensitive data in vercel.json
+   - Use appropriate connection strings for Supabase
+
+2. **Development**:
+   - Use .env for local development
+   - Keep .env.example updated
+   - Document all required variables
+
+## Deployment Process
+1. **Version Control**:
+   - All deployments from tagged releases
+   - Feature branches for new development
+   - Pull requests for code review
+
+2. **Environment**:
+   - Production on Vercel
+   - Preview deployments for PRs
+   - Staging environment for testing
+
+## Performance Guidelines
+1. **Database**:
+   - Implement query caching
+   - Use connection pooling
+   - Monitor query performance
+   - Set appropriate timeouts
+
+2. **API Routes**:
+   - Keep under 10s execution time
+   - Implement proper error handling
+   - Use appropriate HTTP status codes
+   - Cache responses where possible
+
+3. **Frontend**:
+   - Use proper loading states
+   - Implement error boundaries
+   - Optimize images and assets
+   - Use proper code splitting
+
+## Error Handling
+1. **Backend**:
+   - Log errors appropriately
+   - Return user-friendly messages
+   - Implement proper status codes
+   - Handle edge cases
+
+2. **Frontend**:
+   - Show user-friendly error messages
+   - Implement fallback UI
+   - Handle network errors
+   - Provide retry mechanisms
+
+## Serverless Considerations
+1. **Cold Starts**:
+   - Minimize initialization code
+   - Use connection pooling
+   - Implement proper caching
+
+2. **Resource Limits**:
+   - Stay within memory limits (1024MB)
+   - Keep function size under 50MB
+   - Monitor execution times
+
+## Code Style
+1. **TypeScript**:
+   - Use strict mode
+   - Proper type definitions
+   - No any types unless necessary
+   - Document complex types
+
+2. **Components**:
+   - Use ShadCN UI components
+   - Implement proper prop types
+   - Keep components focused
+   - Document complex logic
+
+3. **API Routes**:
+   - Proper input validation
+   - Clear error messages
+   - Consistent response format
+   - Document endpoints
+
+## Testing
+1. **Unit Tests**:
+   - Test critical business logic
+   - Mock external dependencies
+   - Use proper test coverage
+
+2. **Integration Tests**:
+   - Test API endpoints
+   - Test database operations
+   - Test authentication flows
+
+## Documentation
+1. **Code**:
+   - Clear comments for complex logic
+   - JSDoc for public functions
+   - Update README.md
+   - Document environment setup
+
+2. **API**:
+   - Document all endpoints
+   - Include request/response examples
+   - Document error codes
+   - Keep documentation updated 

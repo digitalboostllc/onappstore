@@ -2,6 +2,64 @@ import { PrismaClient } from "@prisma/client"
 import { performance } from "perf_hooks"
 
 /**
+ * Development & Deployment Rules
+ * 
+ * Architecture:
+ * - Next.js 13+ App Router
+ * - Serverless deployment on Vercel
+ * - Supabase for PostgreSQL database
+ * - Prisma as ORM with connection pooling
+ * 
+ * Database Connections:
+ * 1. Use two database URLs:
+ *    - SUPABASE_POSTGRES_PRISMA_URL: For pooled connections (with pgBouncer)
+ *    - SUPABASE_POSTGRES_URL_NON_POOLING: For direct connections (migrations/schema changes)
+ * 
+ * Environment Variables:
+ * 1. All configuration in Vercel project settings
+ * 2. Never store in vercel.json
+ * 3. Local development uses .env
+ * 4. Production uses Vercel environment variables
+ * 
+ * Deployment Process:
+ * 1. All deployments from tagged releases
+ * 2. Automatic deployments on push to main
+ * 3. Preview deployments for pull requests
+ * 
+ * Performance Optimization:
+ * 1. Query Optimization:
+ *    - Use proper indexes
+ *    - Minimize N+1 queries
+ *    - Implement caching where appropriate
+ * 
+ * 2. Connection Management:
+ *    - Pool connections in production
+ *    - Limit concurrent connections
+ *    - Implement proper timeouts
+ * 
+ * 3. Error Handling:
+ *    - Graceful degradation
+ *    - Proper error logging
+ *    - User-friendly error messages
+ * 
+ * Serverless Considerations:
+ * 1. Cold Starts:
+ *    - Minimize initialization code
+ *    - Use connection pooling
+ *    - Implement proper caching
+ * 
+ * 2. Timeouts:
+ *    - Vercel timeout: 15s (default)
+ *    - Database queries: 14s max
+ *    - API routes: 10s target
+ * 
+ * 3. Resource Limits:
+ *    - Memory: 1024MB
+ *    - Function size: 50MB
+ *    - Concurrent executions: Based on plan
+ */
+
+/**
  * Serverless-Optimized Prisma Client
  * 
  * Build-time Considerations:
