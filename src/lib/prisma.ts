@@ -3,6 +3,10 @@ import { PrismaClient } from "@prisma/client"
 /**
  * Serverless-Optimized Prisma Client
  * 
+ * Vercel Pro Plan Limits:
+ * - Default timeout: 15 seconds
+ * - Maximum timeout: 300 seconds
+ * 
  * Key Optimizations:
  * 1. No Connection Reuse:
  *    - Create fresh connection for each request
@@ -18,6 +22,11 @@ import { PrismaClient } from "@prisma/client"
  *    - Minimal connection options
  *    - No connection pooling
  *    - Fast fail on errors
+ * 
+ * 4. Timeouts:
+ *    - Query timeout: 14 seconds (below Vercel's 15s default)
+ *    - Long query warning: 5 seconds
+ *    - Disconnect timeout: 2 seconds
  */
 
 // Global type for Prisma instance
@@ -37,47 +46,67 @@ const prismaClientSingleton = () => {
     const start = Date.now()
 
     try {
-      // Execute with timeout
+      // Execute with timeout (14s to stay under Vercel's 15s default)
       const result = await Promise.race([
         next(params),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('Query timeout')), 9000))
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Query timeout - exceeded 14s limit')), 14000)
+        )
       ])
 
-      // Log slow queries
+      // Log slow queries (over 5s)
       const duration = Date.now() - start
-      if (duration > 1000) {
-        console.warn('Slow query:', {
+      if (duration > 5000) {
+        console.warn('Long-running query detected:', {
           operation: params.action,
           model: params.model,
-          duration: `${duration}ms`
+          duration: `${duration}ms`,
+          warning: 'Query took more than 5 seconds'
         })
       }
 
       return result
     } catch (error) {
       // Enhanced error logging
+      const duration = Date.now() - start
       console.error('Query error:', {
         operation: params.action,
         model: params.model,
-        duration: `${Date.now() - start}ms`,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        duration: `${duration}ms`,
+        error: error instanceof Error ? error.message : 'Unknown error',
+        timestamp: new Date().toISOString()
       })
 
       // Always disconnect on error
-      await client.$disconnect()
+      await Promise.race([
+        client.$disconnect(),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Disconnect timeout')), 2000)
+        )
+      ])
       
       throw error
     } finally {
       // Aggressive cleanup after each query
       try {
-        await client.$executeRaw`DEALLOCATE ALL`
+        await Promise.race([
+          client.$executeRaw`DEALLOCATE ALL`,
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Cleanup timeout')), 2000)
+          )
+        ])
       } catch (e) {
         // Ignore cleanup errors
       }
       
       // Force disconnect after each query
       try {
-        await client.$disconnect()
+        await Promise.race([
+          client.$disconnect(),
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Disconnect timeout')), 2000)
+          )
+        ])
       } catch (e) {
         // Ignore disconnect errors
       }
@@ -95,10 +124,15 @@ if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
 }
 
-// Minimal cleanup function
+// Minimal cleanup function with timeout
 const cleanup = async () => {
   try {
-    await prisma.$disconnect()
+    await Promise.race([
+      prisma.$disconnect(),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Final cleanup timeout')), 2000)
+      )
+    ])
   } catch (e) {
     // Ignore cleanup errors
   }
