@@ -35,7 +35,9 @@ export async function POST(request: NextRequest) {
     const filename = `${crypto.randomUUID()}.${ext}`
     
     // Create directories if they don't exist
-    const baseDir = path.join(process.cwd(), 'public/uploads')
+    const baseDir = process.env.NODE_ENV === 'production' 
+      ? path.join('/tmp/uploads')
+      : path.join(process.cwd(), 'public/uploads')
     const typeDir = path.join(baseDir, type)
     await mkdir(typeDir, { recursive: true })
 
