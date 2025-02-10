@@ -43,39 +43,45 @@ const prismaClientSingleton = () => {
       db: {
         url: process.env.SUPABASE_POSTGRES_URL_NON_POOLING
       }
-    },
-
-    // Performance optimizations
-    __internal: {
-      useUds: false, // Disable Unix domain sockets
-      disableQueryParameterParsing: true, // Prevent prepared statements
-      engineProtocol: 'json-rpc', // More efficient protocol
-    },
-
-    // Query engine configuration
-    engineConfig: {
-      connectionTimeout: 10000, // 10 seconds
-      requiredTransactionIsolationLevel: 'ReadCommitted' // Optimal for serverless
     }
-  } as any)
+  })
 
-  // Optimized middleware
+  // Optimized middleware for Vercel's environment
   client.$use(async (params, next) => {
+    const start = Date.now()
+
     try {
       // Add query timeout for Vercel's 10s limit
       const result = await Promise.race([
         next(params),
         new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Query timeout')), 9000)
+          setTimeout(() => reject(new Error('Query timeout - exceeded 9s limit')), 9000)
         )
       ])
+
+      // Log slow queries in production
+      const duration = Date.now() - start
+      if (duration > 1000) { // Log queries taking more than 1s
+        console.warn('Slow query detected:', {
+          operation: params.action,
+          model: params.model,
+          duration: `${duration}ms`
+        })
+      }
+
       return result
     } catch (error) {
-      // Log error with params for debugging
+      // Enhanced error logging
       console.error('Database operation error:', {
         operation: params.action,
         model: params.model,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        args: params.args,
+        duration: `${Date.now() - start}ms`,
+        error: error instanceof Error ? {
+          message: error.message,
+          name: error.name,
+          stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        } : 'Unknown error'
       })
       throw error
     }
@@ -98,7 +104,7 @@ const cleanup = async () => {
     await Promise.race([
       prisma.$disconnect(),
       new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Disconnect timeout')), 5000)
+        setTimeout(() => reject(new Error('Disconnect timeout - exceeded 5s')), 5000)
       )
     ])
   } catch (e) {
