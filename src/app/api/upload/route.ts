@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { writeFile, mkdir } from "fs/promises"
-import path from "path"
+import { put } from '@vercel/blob'
 import crypto from "crypto"
 import sharp from "sharp"
 
@@ -24,37 +23,30 @@ export async function POST(request: NextRequest) {
 
     // If it's an image, process it with sharp
     let processedBuffer = buffer
+    let contentType = file.type
     if (file.type.startsWith('image/')) {
       processedBuffer = await sharp(buffer)
         .png({ quality: 90 })
         .toBuffer()
+      contentType = 'image/png'
     }
 
     // Generate unique filename
     const ext = file.type.startsWith('image/') ? 'png' : file.type.split("/")[1] || "bin"
     const filename = `${crypto.randomUUID()}.${ext}`
     
-    // Create directories if they don't exist
-    const baseDir = process.env.NODE_ENV === 'production' 
-      ? path.join('/tmp/uploads')
-      : path.join(process.cwd(), 'public/uploads')
-    const typeDir = path.join(baseDir, type)
-    await mkdir(typeDir, { recursive: true })
+    // Construct the path based on type and appId
+    const pathname = appId 
+      ? `${type}/${appId}/${filename}`
+      : `${type}/${filename}`
 
-    // Create app directory if appId is provided
-    const uploadDir = appId 
-      ? path.join(typeDir, appId)
-      : typeDir
-    await mkdir(uploadDir, { recursive: true })
-
-    // Write file
-    const filePath = path.join(uploadDir, filename)
-    await writeFile(filePath, processedBuffer)
+    // Upload to Vercel Blob
+    const blob = await put(pathname, processedBuffer, {
+      contentType,
+      access: 'public',
+    })
     
-    // Return the public URL (relative to /public)
-    const url = `/uploads/${type}${appId ? `/${appId}` : ''}/${filename}`
-    
-    return NextResponse.json({ url })
+    return NextResponse.json({ url: blob.url })
   } catch (error: any) {
     console.error("[UPLOAD_ERROR]", error)
     return NextResponse.json(
