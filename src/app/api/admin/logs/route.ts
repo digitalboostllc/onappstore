@@ -45,4 +45,32 @@ export async function GET(request: Request) {
       { status: 500 }
     )
   }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    // Check admin access
+    const user = await getCurrentUser()
+    if (!user?.isAdmin) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
+
+    // Clear logs
+    const success = await dbLogger.clearLogs()
+    
+    if (success) {
+      return NextResponse.json({ message: "Logs cleared successfully" })
+    } else {
+      return NextResponse.json(
+        { error: "No logs file found or failed to clear" },
+        { status: 404 }
+      )
+    }
+  } catch (error) {
+    console.error("[CLEAR_LOGS]", error)
+    return NextResponse.json(
+      { error: "Failed to clear logs" },
+      { status: 500 }
+    )
+  }
 } 

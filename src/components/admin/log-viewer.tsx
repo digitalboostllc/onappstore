@@ -3,7 +3,18 @@
 import { useEffect, useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Loader2, RefreshCw } from "lucide-react"
+import { Loader2, RefreshCw, Trash2 } from "lucide-react"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 interface Log {
   timestamp: string
@@ -14,6 +25,12 @@ interface Log {
   model?: string
   duration?: string
   error?: any
+  request?: {
+    path: string
+    method: string
+    host: string
+    userAgent: string
+  }
   [key: string]: any
 }
 
@@ -21,6 +38,7 @@ export function LogViewer() {
   const [logs, setLogs] = useState<Log[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [clearingLogs, setClearingLogs] = useState(false)
 
   const fetchLogs = async () => {
     try {
@@ -34,6 +52,21 @@ export function LogViewer() {
       setError(e instanceof Error ? e.message : 'Failed to fetch logs')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const clearLogs = async () => {
+    try {
+      setClearingLogs(true)
+      const response = await fetch('/api/admin/logs', {
+        method: 'DELETE'
+      })
+      if (!response.ok) throw new Error('Failed to clear logs')
+      await fetchLogs() // Refresh logs after clearing
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to clear logs')
+    } finally {
+      setClearingLogs(false)
     }
   }
 
@@ -73,7 +106,35 @@ export function LogViewer() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-2">
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="destructive" size="sm" disabled={clearingLogs}>
+              {clearingLogs ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <Trash2 className="h-4 w-4 mr-2" />
+              )}
+              Clear Logs
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Clear All Logs?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action will clear all logs but create a backup file first.
+                This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={clearLogs}>
+                Clear Logs
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
         <Button onClick={fetchLogs} variant="outline" size="sm">
           <RefreshCw className="h-4 w-4 mr-2" />
           Refresh
@@ -97,6 +158,15 @@ export function LogViewer() {
                 </span>
                 <span className="font-semibold">{log.event}</span>
               </div>
+
+              {/* Request Context */}
+              {log.request && (
+                <div className="pl-4 text-muted-foreground text-xs">
+                  <div>Path: {log.request.path}</div>
+                  <div>Method: {log.request.method}</div>
+                  <div>Host: {log.request.host}</div>
+                </div>
+              )}
 
               {/* Query Details */}
               {log.queryId && (

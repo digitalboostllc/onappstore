@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 import fs from 'fs'
 import path from 'path'
+import { headers } from 'next/headers'
 
 /**
  * Serverless-Optimized Prisma Client
@@ -41,12 +42,32 @@ class DbLogger {
     return `[${timestamp}] ${JSON.stringify(entry)}\n`
   }
 
-  static log(type: 'info' | 'error' | 'warn', data: any) {
+  private static async getRequestContext() {
+    try {
+      const headersList = await headers()
+      return {
+        path: headersList.get('x-invoke-path') || 'unknown',
+        method: headersList.get('x-invoke-method') || 'unknown',
+        host: headersList.get('host') || 'unknown',
+        userAgent: headersList.get('user-agent') || 'unknown'
+      }
+    } catch (e) {
+      return {
+        path: 'unknown',
+        method: 'unknown',
+        host: 'unknown',
+        userAgent: 'unknown'
+      }
+    }
+  }
+
+  static async log(type: 'info' | 'error' | 'warn', data: any) {
     const logEntry = {
       type,
       environment: process.env.NODE_ENV,
       region: process.env.VERCEL_REGION || 'local',
       deploymentId: process.env.VERCEL_DEPLOYMENT_ID || 'local',
+      request: await this.getRequestContext(),
       ...data
     }
 
@@ -71,6 +92,22 @@ class DbLogger {
     } catch (e) {
       console.error('Failed to read log file:', e)
       return []
+    }
+  }
+
+  static async clearLogs(): Promise<boolean> {
+    try {
+      // Create backup before clearing
+      if (fs.existsSync(this.logFile)) {
+        const backupFile = `${this.logFile}.${Date.now()}.backup`
+        fs.copyFileSync(this.logFile, backupFile)
+        fs.writeFileSync(this.logFile, '') // Clear the file
+        return true
+      }
+      return false
+    } catch (e) {
+      console.error('Failed to clear logs:', e)
+      return false
     }
   }
 
