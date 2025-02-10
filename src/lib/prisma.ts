@@ -54,15 +54,14 @@ const prismaClientSingleton = () => {
     const start = Date.now()
     const queryId = `${params.model}_${params.action}_${Date.now()}`
 
-    // Wait if there's an active query for the same model/action
-    while (activeQueries.has(`${params.model}_${params.action}`)) {
-      await new Promise(resolve => setTimeout(resolve, 100))
-    }
-
-    // Mark this query as active
-    activeQueries.add(`${params.model}_${params.action}`)
-
     try {
+      // Clean up any existing prepared statements before each query
+      try {
+        await client.$executeRawUnsafe('DEALLOCATE ALL')
+      } catch (e) {
+        // Ignore cleanup errors
+      }
+
       // Execute with timeout (14s to stay under Vercel's 15s default)
       const result = await Promise.race([
         next(params),
@@ -104,28 +103,9 @@ const prismaClientSingleton = () => {
       
       throw error
     } finally {
-      // Remove this query from active set
-      activeQueries.delete(`${params.model}_${params.action}`)
-
-      // Aggressive cleanup after each query
+      // Clean up after each query
       try {
-        // Only cleanup if no other queries are active
-        if (activeQueries.size === 0) {
-          await Promise.race([
-            client.$executeRaw`DEALLOCATE ALL`,
-            new Promise((_, reject) => 
-              setTimeout(() => reject(new Error('Cleanup timeout')), 2000)
-            )
-          ])
-
-          // Force disconnect after cleanup
-          await Promise.race([
-            client.$disconnect(),
-            new Promise((_, reject) => 
-              setTimeout(() => reject(new Error('Disconnect timeout')), 2000)
-            )
-          ])
-        }
+        await client.$executeRawUnsafe('DEALLOCATE ALL')
       } catch (e) {
         // Ignore cleanup errors
       }
