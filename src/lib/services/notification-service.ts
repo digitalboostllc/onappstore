@@ -1,5 +1,36 @@
 import { prisma } from "@/lib/prisma"
-import type { Prisma } from "@prisma/client"
+import { cache } from "react"
+import type { Notification } from "@prisma/client"
+
+// Cache duration (1 minute for notifications)
+const CACHE_TIME = 60 * 1000
+
+// Cache for user notifications
+const notificationsCache = new Map<string, {
+  data: {
+    notifications: Notification[]
+    total: number
+    page: number
+    totalPages: number
+  }
+  timestamp: number
+}>()
+
+// Cache for unread counts
+const unreadCountCache = new Map<string, {
+  data: number
+  timestamp: number
+}>()
+
+// Helper to check if cache is valid
+function isCacheValid(timestamp: number) {
+  return Date.now() - timestamp < CACHE_TIME
+}
+
+// Helper to generate cache key
+function getNotificationsCacheKey(userId: string, page: number, limit: number): string {
+  return `${userId}-${page}-${limit}`
+}
 
 export type NotificationType = "APP_UPDATE" | "REVIEW" | "SYSTEM"
 
@@ -13,35 +44,62 @@ export const notificationService = {
       data?: Record<string, any>
     }
   ) {
-    return prisma.notification.create({
+    const notification = await prisma.notification.create({
       data: {
         ...data,
         userId,
       },
     })
+
+    // Invalidate caches for this user
+    this.invalidateUserCaches(userId)
+
+    return notification
   },
 
   async markAsRead(id: string, userId: string) {
-    return prisma.notification.update({
+    const notification = await prisma.notification.update({
       where: { id, userId },
       data: { read: true },
     })
+
+    // Invalidate caches for this user
+    this.invalidateUserCaches(userId)
+
+    return notification
   },
 
   async markAllAsRead(userId: string) {
-    return prisma.notification.updateMany({
+    const result = await prisma.notification.updateMany({
       where: { userId, read: false },
       data: { read: true },
     })
+
+    // Invalidate caches for this user
+    this.invalidateUserCaches(userId)
+
+    return result
   },
 
   async deleteNotification(id: string, userId: string) {
-    return prisma.notification.delete({
+    const notification = await prisma.notification.delete({
       where: { id, userId },
     })
+
+    // Invalidate caches for this user
+    this.invalidateUserCaches(userId)
+
+    return notification
   },
 
-  async getUserNotifications(userId: string, { page = 1, limit = 10 } = {}) {
+  getUserNotifications: cache(async (userId: string, { page = 1, limit = 10 } = {}) => {
+    // Check cache first
+    const cacheKey = getNotificationsCacheKey(userId, page, limit)
+    const cached = notificationsCache.get(cacheKey)
+    if (cached && isCacheValid(cached.timestamp)) {
+      return cached.data
+    }
+
     const [notifications, total] = await Promise.all([
       prisma.notification.findMany({
         where: { userId },
@@ -54,19 +112,41 @@ export const notificationService = {
       }),
     ])
 
-    return {
+    const result = {
       notifications,
       total,
       page,
       totalPages: Math.ceil(total / limit),
     }
-  },
 
-  async getUnreadCount(userId: string) {
-    return prisma.notification.count({
+    // Update cache
+    notificationsCache.set(cacheKey, {
+      data: result,
+      timestamp: Date.now(),
+    })
+
+    return result
+  }),
+
+  getUnreadCount: cache(async (userId: string) => {
+    // Check cache first
+    const cached = unreadCountCache.get(userId)
+    if (cached && isCacheValid(cached.timestamp)) {
+      return cached.data
+    }
+
+    const count = await prisma.notification.count({
       where: { userId, read: false },
     })
-  },
+
+    // Update cache
+    unreadCountCache.set(userId, {
+      data: count,
+      timestamp: Date.now(),
+    })
+
+    return count
+  }),
 
   // Helper methods for creating specific types of notifications
   async notifyAppUpdate(userId: string, appName: string, version: string) {
@@ -94,4 +174,16 @@ export const notificationService = {
       message,
     })
   },
+
+  // Cache invalidation methods
+  invalidateUserCaches(userId: string) {
+    // Clear all notification caches for this user
+    for (const [key] of notificationsCache) {
+      if (key.startsWith(userId)) {
+        notificationsCache.delete(key)
+      }
+    }
+    // Clear unread count cache
+    unreadCountCache.delete(userId)
+  }
 } 
