@@ -393,4 +393,6 @@ export const adminService = {
   invalidateDashboardStatsCache() {
     dashboardStatsCache.data = null
   }
-} 
+}
+
+export const { getUserStats, getUserActivity } = adminService 

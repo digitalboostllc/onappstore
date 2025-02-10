@@ -54,7 +54,7 @@ export async function PATCH(
     const json = await request.json()
     const body = updateCollectionSchema.parse(json)
 
-    const collection = await collectionService.updateCollection(id, user.id, body)
+    const collection = await collectionService.updateCollection(id, body)
     return NextResponse.json(collection)
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -78,7 +78,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    await collectionService.deleteCollection(id, user.id)
+    await collectionService.deleteCollection(id)
     return new NextResponse(null, { status: 204 })
   } catch (error) {
     return NextResponse.json({ error: "Internal Error" }, { status: 500 })

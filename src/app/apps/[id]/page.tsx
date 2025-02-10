@@ -59,27 +59,30 @@ export default async function AppPage(props: any) {
           <AppVersions app={app} />
           <AppFeedback app={app} />
 
-          {similarApps.length > 0 && (
-            <>
-              <Separator className="my-8" />
-              <section>
-                <h2 className="text-2xl font-bold tracking-tight mb-6">Similar Apps</h2>
-                <AppGrid
-                  apps={similarApps.map(app => ({
-                    ...app,
-                    release_notes: null,
-                    versions: [],
-                    ratings: app.ratings.map(rating => ({
-                      ...rating,
-                      userId: rating.user.id
-                    }))
-                  }))}
-                  total={similarApps.length}
-                  pages={1}
-                  currentPage={1}
-                />
-              </section>
-            </>
+          {similarApps && similarApps.length > 0 && (
+            <section className="w-full py-12 md:py-24 lg:py-32 border-t bg-muted/30">
+              <div className="container">
+                <div className="flex flex-col items-center justify-between gap-4 md:flex-row mb-8">
+                  <div className="flex flex-col items-start gap-2">
+                    <h2 className="text-3xl font-bold tracking-tighter">Similar Apps</h2>
+                    <p className="text-muted-foreground">
+                      You might also like these apps
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-8">
+                  <AppGrid
+                    apps={similarApps?.map(app => ({
+                      ...app,
+                      averageRating: app.averageRating || 0
+                    })) || []}
+                    total={similarApps?.length || 0}
+                    pages={1}
+                    currentPage={1}
+                  />
+                </div>
+              </div>
+            </section>
           )}
         </main>
       </div>
