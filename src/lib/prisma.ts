@@ -115,7 +115,7 @@ const prismaClientSingleton = () => {
     ],
     datasources: { 
       db: { 
-        url: `${process.env.SUPABASE_POSTGRES_URL_NON_POOLING}?connection_limit=5&pool_timeout=10&connect_timeout=5`
+        url: `${process.env.SUPABASE_POSTGRES_URL_NON_POOLING}?pgbouncer=true&connection_limit=1&pool_timeout=20`
       } 
     }
   })
@@ -148,18 +148,10 @@ const prismaClientSingleton = () => {
   // Track active queries to prevent conflicts
   const activeQueries = new Set<string>()
 
-  // Aggressive middleware for serverless environment
+  // Simplified middleware for serverless environment
   client.$use(async (params, next) => {
     const start = Date.now()
     const queryId = `${params.model}_${params.action}_${Date.now()}`
-
-    // Wait if there's an active query for the same model/action
-    while (activeQueries.has(`${params.model}_${params.action}`)) {
-      await new Promise(resolve => setTimeout(resolve, 100))
-    }
-
-    // Mark this query as active
-    activeQueries.add(`${params.model}_${params.action}`)
 
     try {
       // Execute with timeout (14s to stay under Vercel's 15s default)
@@ -192,43 +184,8 @@ const prismaClientSingleton = () => {
         error: error instanceof Error ? error.message : 'Unknown error',
         timestamp: new Date().toISOString()
       })
-
-      // Always disconnect on error
-      await Promise.race([
-        client.$disconnect(),
-        new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Disconnect timeout')), 2000)
-        )
-      ])
       
       throw error
-    } finally {
-      // Remove this query from active set
-      activeQueries.delete(`${params.model}_${params.action}`)
-
-      // Aggressive cleanup after each query
-      try {
-        // Only cleanup if no other queries are active
-        if (activeQueries.size === 0) {
-          await Promise.race([
-            client.$executeRaw`DEALLOCATE ALL`,
-            new Promise((_, reject) => 
-              setTimeout(() => reject(new Error('Cleanup timeout')), 2000)
-            )
-          ])
-
-          // Force disconnect after cleanup
-          await Promise.race([
-            client.$disconnect(),
-            new Promise((_, reject) => 
-              setTimeout(() => reject(new Error('Disconnect timeout')), 2000)
-            )
-          ])
-        }
-      } catch (e) {
-        // Ignore cleanup errors
-        console.warn('Cleanup error:', e)
-      }
     }
   })
 
