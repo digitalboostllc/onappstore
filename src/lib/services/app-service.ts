@@ -29,6 +29,15 @@ const similarAppsCache = new Map<string, {
   timestamp: number
 }>()
 
+// Cache for popular tags
+let popularTagsCache: {
+  data: { tag: string; count: number }[] | null
+  timestamp: number
+} = {
+  data: null,
+  timestamp: 0
+}
+
 // Helper to check if cache is valid
 function isCacheValid(timestamp: number) {
   return Date.now() - timestamp < CACHE_TIME
@@ -662,7 +671,12 @@ export const getSimilarApps = cache(async (id: string, limit = 4) => {
   return transformed
 })
 
-export async function getPopularTags(limit = 10): Promise<{ tag: string; count: number }[]> {
+export const getPopularTags = cache(async (limit = 10): Promise<{ tag: string; count: number }[]> => {
+  // Check cache first
+  if (popularTagsCache.data && isCacheValid(popularTagsCache.timestamp)) {
+    return popularTagsCache.data.slice(0, limit)
+  }
+
   const apps = await prisma.app.findMany({
     where: {
       published: true,
@@ -679,8 +693,16 @@ export async function getPopularTags(limit = 10): Promise<{ tag: string; count: 
     return acc
   }, {})
 
-  return Object.entries(tagCounts)
+  const result = Object.entries(tagCounts)
     .sort(([, a], [, b]) => (b as number) - (a as number))
-    .slice(0, limit)
     .map(([tag, count]) => ({ tag, count: count as number }))
-} 
+
+  // Update cache with full result
+  popularTagsCache = {
+    data: result,
+    timestamp: Date.now(),
+  }
+
+  // Return only requested limit
+  return result.slice(0, limit)
+}) 
