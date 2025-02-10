@@ -18,30 +18,49 @@ const prismaClientSingleton = () => {
 
   // Middleware for handling database operations
   client.$use(async (params, next) => {
-    try {
-      const result = await next(params)
-      return result
-    } catch (error) {
-      console.error('Database operation error:', error)
-      
-      // Disconnect on error to clear prepared statements
-      if (error instanceof Error && error.message.includes('prepared statement')) {
-        try {
-          await client.$disconnect()
-          // Reconnect after a short delay
-          setTimeout(async () => {
-            try {
-              await client.$connect()
-            } catch (reconnectError) {
-              console.error('Failed to reconnect:', reconnectError)
+    const MAX_RETRIES = 3
+    let retries = 0
+
+    while (retries < MAX_RETRIES) {
+      try {
+        const result = await next(params)
+        return result
+      } catch (error) {
+        retries++
+        console.error(`Database operation error (attempt ${retries}/${MAX_RETRIES}):`, error)
+        
+        // Check for prepared statement error
+        if (error instanceof Error && 
+            (error.message.includes('prepared statement') || 
+             (error as any)?.code === '42P05')) {
+          console.log('Handling prepared statement error...')
+          
+          try {
+            // Force disconnect to clear prepared statements
+            await client.$disconnect()
+            
+            // Wait before reconnecting
+            await new Promise(resolve => setTimeout(resolve, 1000))
+            
+            // Reconnect
+            await client.$connect()
+            
+            // If this was the last retry, throw the error
+            if (retries === MAX_RETRIES) {
+              throw error
             }
-          }, 1000)
-        } catch (disconnectError) {
-          console.warn('Failed to disconnect:', disconnectError)
+            
+            // Otherwise continue to retry
+            continue
+          } catch (reconnectError) {
+            console.error('Error during reconnection:', reconnectError)
+            throw error
+          }
         }
+        
+        // For other types of errors, throw immediately
+        throw error
       }
-      
-      throw error
     }
   })
 
@@ -56,24 +75,25 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Handle cleanup on process events
-process.on('beforeExit', async () => {
+const cleanup = async () => {
   await prisma.$disconnect()
-})
+}
 
+// Handle cleanup for different process events
+process.on('beforeExit', cleanup)
 process.on('SIGINT', async () => {
-  await prisma.$disconnect()
+  await cleanup()
   process.exit(0)
 })
-
 process.on('SIGTERM', async () => {
-  await prisma.$disconnect()
+  await cleanup()
   process.exit(0)
 })
 
 // Error handling
 process.on('uncaughtException', async (error) => {
   console.error('Uncaught Exception:', error)
-  await prisma.$disconnect()
+  await cleanup()
   if (process.env.NODE_ENV !== 'production') {
     process.exit(1)
   }
@@ -81,7 +101,7 @@ process.on('uncaughtException', async (error) => {
 
 process.on('unhandledRejection', async (error) => {
   console.error('Unhandled Rejection:', error)
-  await prisma.$disconnect()
+  await cleanup()
   if (process.env.NODE_ENV !== 'production') {
     process.exit(1)
   }
