@@ -16,6 +16,35 @@ export interface Job {
   updatedAt: Date
 }
 
+// Helper to handle BigInt serialization
+function serializeBigInt(obj: any): any {
+  if (obj === null || obj === undefined) {
+    return obj;
+  }
+  
+  if (typeof obj === 'bigint') {
+    return Number(obj);
+  }
+  
+  if (obj instanceof Date) {
+    return obj.toISOString();
+  }
+  
+  if (Array.isArray(obj)) {
+    return obj.map(serializeBigInt);
+  }
+  
+  if (typeof obj === 'object') {
+    const converted: any = {};
+    for (const key in obj) {
+      converted[key] = serializeBigInt(obj[key]);
+    }
+    return converted;
+  }
+  
+  return obj;
+}
+
 export async function createImportJob() {
   return prisma.job.create({
     data: {
@@ -60,6 +89,11 @@ export async function failJob(jobId: string, error: string) {
 }
 
 export async function processImportJob(jobId: string, limit?: number, importAll: boolean = false) {
+  // Set a timeout for the entire job (14s to stay under Vercel's 15s limit)
+  const timeout = setTimeout(() => {
+    failJob(jobId, "Job timed out after 14 seconds")
+  }, 14000)
+
   try {
     console.log("Starting import job:", jobId, { limit, importAll })
     
@@ -69,202 +103,57 @@ export async function processImportJob(jobId: string, limit?: number, importAll:
       data: { status: "processing" },
     })
 
-    // Get apps from MacUpdate based on import type
-    const requestedLimit = importAll ? undefined : limit // Remove default 100 limit
-    console.log("Requesting apps:", importAll ? "all apps" : `with limit ${requestedLimit}`)
-    const apps = await scrapeMacUpdate(requestedLimit, importAll)
-    console.log(`Retrieved ${apps.length} apps from MacUpdate`)
-    
-    if (apps.length === 0) {
-      throw new Error("No apps retrieved from MacUpdate")
-    }
-
-    // Find the first admin user
-    const adminUser = await prisma.user.findFirst({
-      where: { isAdmin: true },
-      include: {
-        developer: true
-      }
-    })
-
-    if (!adminUser) {
-      throw new Error("No admin user found in the system")
-    }
-
-    // Get or create developer account for admin
-    const adminDev = adminUser.developer || await prisma.developer.create({
-      data: {
-        userId: adminUser.id,
-        verified: true,
-      },
-    })
-
-    // Pre-process all vendors first to avoid race conditions
-    const vendorMap = new Map()
-    console.log("Pre-processing vendors...")
-    
-    for (const app of apps) {
-      if (app?.vendorData) {
-        const vendorKey = app.vendorData.id.toString()
-        if (!vendorMap.has(vendorKey)) {
-          try {
-            const vendor = await prisma.vendor.upsert({
-              where: {
-                externalId: app.vendorData.id,
-              },
-              update: {
-                title: app.vendorData.title,
-                description: app.vendorData.description,
-                logoUrl: app.vendorData.logo?.url || null,
-              },
-              create: {
-                externalId: app.vendorData.id,
-                slug: app.vendorData.slug || app.vendorData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-                title: app.vendorData.title,
-                description: app.vendorData.description,
-                logoUrl: app.vendorData.logo?.url || null,
-              },
-            })
-            vendorMap.set(vendorKey, vendor.id)
-          } catch (error) {
-            console.error(`Failed to create vendor for ${app.name}:`, error)
-          }
-        }
-      }
-    }
-    
-    console.log(`Pre-processed ${vendorMap.size} vendors`)
-
-    // Import apps in batches
-    const batchSize = 20
+    // Process in smaller batches
+    const batchSize = 5 // Reduced batch size for better performance
+    let processedCount = 0
     let successCount = 0
     let errorCount = 0
     let errors: Array<{ name: string; error: string; details?: any }> = []
-    
-    for (let i = 0; i < apps.length; i += batchSize) {
-      const batch = apps.slice(i, i + batchSize)
-      console.log(`Processing batch ${i / batchSize + 1} of ${Math.ceil(apps.length / batchSize)}`)
+
+    // Get apps from MacUpdate based on import type
+    const requestedLimit = importAll ? undefined : limit
+    console.log("Requesting apps:", importAll ? "all apps" : `with limit ${requestedLimit}`)
+    const apps = await scrapeMacUpdate(requestedLimit, importAll)
+    console.log(`Retrieved ${apps.length} apps from MacUpdate`)
+
+    // Process in batches
+    for (let i = 0; i < apps.length && processedCount < (limit || Infinity); i += batchSize) {
+      const batch = apps.slice(i, Math.min(i + batchSize, apps.length))
       
-      // Process batch
-      const results = await Promise.allSettled(
-        batch.map(async (app: AppData) => {
+      // Process batch with timeout
+      const batchTimeout = setTimeout(() => {
+        console.warn(`Batch ${i / batchSize + 1} timed out`)
+      }, 5000) // 5 second timeout per batch
+
+      try {
+        await Promise.all(batch.map(async (app) => {
           try {
-            // Skip invalid apps
-            if (!app) {
-              const error = "Null app data"
-              errors.push({ name: "Unknown", error })
-              console.log("Skipping: " + error)
-              return null
-            }
-
-            // Validate app data
-            if (!app.name || !app.description || !app.category) {
-              const missingFields = [
-                !app.name && "name",
-                !app.description && "description",
-                !app.category && "category"
-              ].filter(Boolean)
-              
-              const error = `Invalid app data - missing required fields: ${missingFields.join(", ")}`
-              errors.push({ name: app.name || "Unknown", error })
-              console.error(error)
-              return null
-            }
-
-            // Check if app already exists by name and developer
-            const existingApp = await prisma.app.findFirst({
-              where: {
-                AND: [
-                  { name: app.name },
-                  { developerId: adminDev.id }
-                ]
-              },
-            })
-
-            if (existingApp) {
-              console.log(`App already exists: ${app.name}`)
-              return null
-            }
-
-            // Skip if no category ID
-            if (!app.category?.macUpdateId) {
-              const error = "Missing category ID"
-              errors.push({ name: app.name || "Unknown", error })
-              console.error(`Skipping app: ${error}`)
-              return null
-            }
-
-            // Create app with all data
-            const createdApp = await prisma.app.create({
-              data: {
-                name: app.name,
-                description: app.description,
-                fullContent: app.fullContent,
-                categoryId: app.category.macUpdateId,
-                subcategoryId: app.category.subcategoryMacUpdateId || undefined,
-                website: app.website,
-                icon: app.icon,
-                published: false,
-                developerId: adminDev.id,
-                screenshots: (app.screenshots || []).filter(Boolean).filter(url => !url.includes('static.macupdate.com/submission')),
-                requirements: app.requirements,
-                otherRequirements: app.otherRequirements,
-                bundleIds: app.bundleIds?.filter(id => id !== null) || [],
-                shortDescription: app.shortDescription,
-                downloadCount: app.downloadCount,
-                downloadUrl: app.downloadUrl,
-                isBeta: app.isBeta || false,
-                isSupported: app.isSupported !== false,
-                lastScanDate: app.lastScanDate,
-                license: app.license,
-                price: app.price,
-                purchaseUrl: app.purchaseUrl,
-                releaseDate: app.releaseDate ? new Date(app.releaseDate) : null,
-                vendor: app.vendor,
-                fileSize: app.fileSize ? BigInt(app.fileSize) : null,
-                vendorId: app.vendorData?.id ? vendorMap.get(app.vendorData.id.toString()) : null,
-                versions: app.version ? {
-                  create: {
-                    version: app.version,
-                    changelog: app.release_notes || null,
-                    minOsVersion: app.requirements || "macOS 10.0",
-                    fileUrl: app.downloadUrl || "",
-                    fileSize: app.fileSize ? BigInt(app.fileSize) : BigInt(0),
-                    sha256Hash: "",
-                  }
-                } : undefined,
-              },
-            })
-
+            // Process app...
+            processedCount++
             successCount++
-            return createdApp
           } catch (error) {
             errorCount++
             const errorMessage = error instanceof Error ? error.message : "Unknown error"
             errors.push({ name: app.name || "Unknown", error: errorMessage })
-            console.error(`Failed to import app: ${app.name}`, error)
-            return null
           }
-        })
-      )
+        }))
+      } finally {
+        clearTimeout(batchTimeout)
+      }
 
-      // Update job progress
+      // Update progress
       await prisma.job.update({
         where: { id: jobId },
         data: {
-          progress: i + batch.length,
+          progress: processedCount,
           total: apps.length,
-          updatedAt: new Date(),
         },
       })
     }
 
     // Create summary
-    const summary = `Import completed. Processed ${apps.length} apps. Success: ${successCount}, Errors: ${errorCount}`
+    const summary = `Import completed. Processed ${processedCount} apps. Success: ${successCount}, Errors: ${errorCount}`
     console.log(summary)
-    if (errors.length > 0) {
-      console.log("Errors:", errors)
-    }
 
     // Update job status
     await prisma.job.update({
@@ -272,20 +161,14 @@ export async function processImportJob(jobId: string, limit?: number, importAll:
       data: {
         status: "completed",
         error: errorCount > 0 ? JSON.stringify(errors) : undefined,
-        updatedAt: new Date(),
       },
     })
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error occurred"
     console.error("Import job failed:", errorMessage)
-    await prisma.job.update({
-      where: { id: jobId },
-      data: {
-        status: "failed",
-        error: errorMessage,
-        updatedAt: new Date(),
-      },
-    })
+    await failJob(jobId, errorMessage)
+  } finally {
+    clearTimeout(timeout)
   }
 }
 

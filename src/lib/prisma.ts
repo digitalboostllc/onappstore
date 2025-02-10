@@ -55,7 +55,25 @@ const prismaClientSingleton = () => {
         level: "warn",
       },
     ],
-    datasources: { db: { url: process.env.SUPABASE_POSTGRES_URL_NON_POOLING } },
+    datasources: { 
+      db: { 
+        url: process.env.SUPABASE_POSTGRES_URL_NON_POOLING 
+      } 
+    },
+    // Add connection pool configuration
+    __internal: {
+      engine: {
+        connectionLimit: 5, // Limit concurrent connections
+        connectionTimeout: 10000, // 10 seconds timeout
+        enableRetry: true,
+        maxRetries: 3,
+        isolationLevel: "ReadCommitted",
+        pool: {
+          min: 1,
+          max: 5
+        }
+      }
+    }
   })
 
   // Add query caching middleware
@@ -165,6 +183,7 @@ const prismaClientSingleton = () => {
         }
       } catch (e) {
         // Ignore cleanup errors
+        console.warn('Cleanup error:', e)
       }
     }
   })
