@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client"
+import { performance } from "perf_hooks"
 
 /**
  * Serverless-Optimized Prisma Client
@@ -34,16 +35,52 @@ import { PrismaClient } from "@prisma/client"
  *    - Disconnect timeout: 2 seconds
  */
 
-// Global type for Prisma instance
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined
-}
+// Add query caching
+const queryCache = new Map()
 
 // Create Prisma client with minimal options
 const prismaClientSingleton = () => {
   const client = new PrismaClient({
-    log: process.env.NODE_ENV === 'production' ? ['error'] : ['query', 'error', 'warn'],
+    log: [
+      {
+        emit: "event",
+        level: "query",
+      },
+      {
+        emit: "event",
+        level: "error",
+      },
+      {
+        emit: "event",
+        level: "warn",
+      },
+    ],
     datasources: { db: { url: process.env.SUPABASE_POSTGRES_URL_NON_POOLING } },
+  })
+
+  // Add query caching middleware
+  client.$use(async (params: any, next: any) => {
+    const cacheKey = JSON.stringify(params)
+    const cached = queryCache.get(cacheKey)
+    
+    if (cached) {
+      return cached
+    }
+
+    const start = performance.now()
+    const result = await next(params)
+    const duration = performance.now() - start
+
+    if (result) {
+      queryCache.set(cacheKey, result)
+      setTimeout(() => queryCache.delete(cacheKey), 60 * 1000)
+    }
+
+    if (duration > 1000) {
+      console.warn(`Slow query detected (${duration}ms):`, params)
+    }
+
+    return result
   })
 
   // Track active queries to prevent conflicts
@@ -54,14 +91,15 @@ const prismaClientSingleton = () => {
     const start = Date.now()
     const queryId = `${params.model}_${params.action}_${Date.now()}`
 
-    try {
-      // Clean up any existing prepared statements before each query
-      try {
-        await client.$executeRawUnsafe('DEALLOCATE ALL')
-      } catch (e) {
-        // Ignore cleanup errors
-      }
+    // Wait if there's an active query for the same model/action
+    while (activeQueries.has(`${params.model}_${params.action}`)) {
+      await new Promise(resolve => setTimeout(resolve, 100))
+    }
 
+    // Mark this query as active
+    activeQueries.add(`${params.model}_${params.action}`)
+
+    try {
       // Execute with timeout (14s to stay under Vercel's 15s default)
       const result = await Promise.race([
         next(params),
@@ -103,9 +141,28 @@ const prismaClientSingleton = () => {
       
       throw error
     } finally {
-      // Clean up after each query
+      // Remove this query from active set
+      activeQueries.delete(`${params.model}_${params.action}`)
+
+      // Aggressive cleanup after each query
       try {
-        await client.$executeRawUnsafe('DEALLOCATE ALL')
+        // Only cleanup if no other queries are active
+        if (activeQueries.size === 0) {
+          await Promise.race([
+            client.$executeRaw`DEALLOCATE ALL`,
+            new Promise((_, reject) => 
+              setTimeout(() => reject(new Error('Cleanup timeout')), 2000)
+            )
+          ])
+
+          // Force disconnect after cleanup
+          await Promise.race([
+            client.$disconnect(),
+            new Promise((_, reject) => 
+              setTimeout(() => reject(new Error('Disconnect timeout')), 2000)
+            )
+          ])
+        }
       } catch (e) {
         // Ignore cleanup errors
       }
@@ -113,6 +170,13 @@ const prismaClientSingleton = () => {
   })
 
   return client
+}
+
+type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>
+
+// Global type for Prisma instance
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClientSingleton | undefined
 }
 
 // Create singleton instance
@@ -123,17 +187,34 @@ if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
 }
 
+// Log query events
+prisma.$on("query", (e: any) => {
+  if (e.duration > 1000) {
+    console.warn("Long running query:", {
+      query: e.query,
+      duration: e.duration,
+      timestamp: e.timestamp,
+    })
+  }
+})
+
+// Log error events
+prisma.$on("error", (e: any) => {
+  console.error("Prisma Error:", {
+    message: e.message,
+    target: e.target,
+    timestamp: e.timestamp,
+  })
+})
+
 // Minimal cleanup function with timeout
 const cleanup = async () => {
   try {
-    await Promise.race([
-      prisma.$disconnect(),
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Final cleanup timeout')), 2000)
-      )
-    ])
-  } catch (e) {
-    // Ignore cleanup errors
+    await prisma.$disconnect()
+    console.log("Successfully disconnected Prisma Client")
+  } catch (error) {
+    console.error("Error disconnecting Prisma Client:", error)
+    process.exit(1)
   }
 }
 

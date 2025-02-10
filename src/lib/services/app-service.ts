@@ -24,6 +24,10 @@ export type GetAppsParams = {
   published?: boolean
 }
 
+export type CacheOptions = {
+  revalidate?: number
+}
+
 export type AppVersion = {
   id: string
   version: string
@@ -183,25 +187,30 @@ type AppWithDetails = Omit<PrismaApp, 'fileSize'> & {
 
 export type { AppWithDetails }
 
-export async function getApps({
-  search,
-  categories,
-  category,
-  tags,
-  sort = "recent",
-  price = "all",
-  updated = "all",
-  rating = "all",
-  minRating,
-  maxRating,
-  minDownloads,
-  maxDownloads,
-  dateFrom,
-  dateTo,
-  page = 1,
-  limit = 10,
-  published,
-}: GetAppsParams = {}): Promise<GetAppsResult> {
+export async function getApps(
+  params: GetAppsParams = {},
+  cacheOptions?: CacheOptions
+): Promise<GetAppsResult> {
+  const {
+    search,
+    categories,
+    category,
+    tags,
+    sort = "recent",
+    price = "all",
+    updated = "all",
+    rating = "all",
+    minRating,
+    maxRating,
+    minDownloads,
+    maxDownloads,
+    dateFrom,
+    dateTo,
+    page = 1,
+    limit = 10,
+    published,
+  } = params
+
   const where: any = {}
   let orderBy: any = { createdAt: "desc" }
 

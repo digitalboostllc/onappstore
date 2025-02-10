@@ -28,7 +28,7 @@ import { getMetaTags, getDefaultMetaTags } from "@/lib/meta"
 import { SearchForm } from "@/components/search-form"
 
 export const dynamic = 'force-dynamic'
-export const revalidate = 0
+export const revalidate = 60 // Cache for 1 minute
 
 const categories = [
   {
@@ -99,7 +99,9 @@ export default async function Home() {
       sort: "popular",
       page: 1,
       limit: 6,
+      published: true,
     })
+
     apps = result.apps
   } catch (error) {
     console.error('Error fetching apps:', error)
