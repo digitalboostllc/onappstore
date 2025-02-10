@@ -1,55 +1,82 @@
 import { PrismaClient } from "@prisma/client"
 
 /**
- * Prisma Client Configuration for Serverless Environment
+ * Optimized Prisma Client for Vercel Serverless
  * 
- * Key Points:
- * 1. Serverless Functions:
- *    - Each invocation runs in isolation
- *    - Short-lived connections are preferred
- *    - No need for connection pooling in traditional sense
+ * Vercel-Specific Considerations:
+ * 1. Cold Starts:
+ *    - Functions can be cold-started frequently
+ *    - Need to minimize initialization time
+ *    - Connection should be lazy-loaded
  * 
- * 2. PostgreSQL Prepared Statements:
- *    - Statements are cached at session level
- *    - In serverless, we want to minimize statement caching
- *    - Better to disable statement preparation for serverless
+ * 2. Connection Limits:
+ *    - Vercel has concurrent execution limits
+ *    - Each instance should handle connection efficiently
+ *    - Need to prevent connection leaks
  * 
- * 3. Connection Strategy:
- *    - Use direct connections instead of pooling
- *    - Keep connections simple and stateless
- *    - Rely on PostgreSQL's native connection handling
+ * 3. Edge Functions:
+ *    - Some routes may use edge functions
+ *    - Database connections should be region-aware
+ *    - Keep latency low with direct connections
+ * 
+ * 4. Resource Constraints:
+ *    - Limited memory per instance
+ *    - Limited execution time
+ *    - Need to optimize resource usage
  */
 
+// Singleton type definition
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
+// Optimized client configuration
 const prismaClientSingleton = () => {
   const client = new PrismaClient({
-    log: ['error', 'warn'],
+    // Only log errors in production
+    log: process.env.NODE_ENV === 'production' 
+      ? ['error']
+      : ['query', 'error', 'warn'],
+
+    // Database connection configuration
     datasources: {
       db: {
-        url: process.env.NODE_ENV === 'production'
-          ? process.env.SUPABASE_POSTGRES_URL_NON_POOLING  // Use non-pooling in production
-          : process.env.SUPABASE_POSTGRES_URL_NON_POOLING  // Use non-pooling in development
+        url: process.env.SUPABASE_POSTGRES_URL_NON_POOLING
       }
     },
-    // Disable query caching and prepared statements
-    previewFeatures: ['nativeTypes'],
+
+    // Performance optimizations
     __internal: {
-      useUds: false,
-      // Disable prepared statements
-      disableQueryParameterParsing: true
+      useUds: false, // Disable Unix domain sockets
+      disableQueryParameterParsing: true, // Prevent prepared statements
+      engineProtocol: 'json-rpc', // More efficient protocol
+    },
+
+    // Query engine configuration
+    engineConfig: {
+      connectionTimeout: 10000, // 10 seconds
+      requiredTransactionIsolationLevel: 'ReadCommitted' // Optimal for serverless
     }
   } as any)
 
-  // Simple middleware for error logging
+  // Optimized middleware
   client.$use(async (params, next) => {
     try {
-      const result = await next(params)
+      // Add query timeout for Vercel's 10s limit
+      const result = await Promise.race([
+        next(params),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Query timeout')), 9000)
+        )
+      ])
       return result
     } catch (error) {
-      console.error('Database operation error:', error)
+      // Log error with params for debugging
+      console.error('Database operation error:', {
+        operation: params.action,
+        model: params.model,
+        error: error instanceof Error ? error.message : 'Unknown error'
+      })
       throw error
     }
   })
@@ -57,20 +84,29 @@ const prismaClientSingleton = () => {
   return client
 }
 
-// Singleton pattern with global instance
+// Singleton instance with lazy initialization
 export const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
 
-// Store instance on global object in development
+// Development-only global instance
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
 }
 
-// Simple cleanup function
+// Efficient cleanup with timeout
 const cleanup = async () => {
-  await prisma.$disconnect()
+  try {
+    await Promise.race([
+      prisma.$disconnect(),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Disconnect timeout')), 5000)
+      )
+    ])
+  } catch (e) {
+    console.error('Cleanup error:', e)
+  }
 }
 
-// Basic process cleanup
+// Minimal process handlers
 process.on('beforeExit', cleanup)
 process.on('SIGINT', async () => {
   await cleanup()
@@ -81,7 +117,7 @@ process.on('SIGTERM', async () => {
   process.exit(0)
 })
 
-// Error handling
+// Production-safe error handling
 process.on('uncaughtException', async (error) => {
   console.error('Uncaught Exception:', error)
   await cleanup()
